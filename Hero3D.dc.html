@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<style>
+  [data-hero3d] { position: relative; width: 100%; height: clamp(280px, 42vw, 560px); overflow: hidden; background: var(--color-bg); }
+  [data-hero3d] canvas { display: block; width: 100%; height: 100%; }
+  [data-hero3d-fallback] { position: absolute; inset: 0; width: 100%; height: 100%; }
+  [data-hero3d-fallback] rect { transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--fd, 0ms); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero3d-fallback] rect { transition: none; }
+  }
+</style>
+</helmet>
+<div data-hero3d aria-hidden="true">
+  <sc-if value="{{ showThree }}" hint-placeholder-val="{{ false }}">
+    <canvas ref="{{ canvasRef }}"></canvas>
+  </sc-if>
+  <sc-if value="{{ showFallback }}" hint-placeholder-val="{{ false }}">
+    <svg data-hero3d-fallback viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet">
+      <sc-for list="{{ planks }}" as="p" hint-placeholder-count="12">
+        <rect x="{{ p.x }}" y="{{ p.y }}" width="{{ p.w }}" height="{{ p.h }}" fill="{{ p.fill }}" style="{{ p.style }}"></rect>
+      </sc-for>
+    </svg>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:420}}">
+/* Cinematic plank-assembly intro for the homepage hero. Two independent
+   render paths, chosen once and never mixed mid-session:
+   - three: a WebGL scene where 12 wood planks fly in from scattered start
+     poses and settle into a pallet (3 runners + 9 deck boards), with a slow
+     camera dolly-in and a warm key light casting real shadows.
+   - fallback: the same 12-plank layout as flat SVG rects, animated purely
+     with CSS transform/opacity (compositor-only, no canvas) for phones
+     that can't hold a smooth WebGL frame rate, for browsers without WebGL,
+     and for prefers-reduced-motion (shown already assembled, no motion).
+   The three path is watched for its own first second of real frame times;
+   if it can't hold ~24fps on THIS device, it tears itself down and hands
+   off to fallback rather than limping through a janky animation. */
+class Component extends DCLogic {
+  state = { mode: 'pending' };
+
+  componentDidMount() {
+    this._reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (this._reduced || !this._hasWebGL()) {
+      this.setState({ mode: 'fallback' });
+      return;
+    }
+    this.setState({ mode: 'three' }, () => this._initThree());
+  }
+
+  componentWillUnmount() {
+    this._unmounted = true;
+    this._teardownThree();
+  }
+
+  _hasWebGL() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* Three.js loads from a CDN <script> in this component's own <helmet> —
+     it may still be mid-flight when componentDidMount fires. Poll rather
+     than trust load order; give up after ~8s and hand off to the CSS
+     fallback so a slow/blocked CDN never leaves a blank hero band. */
+  _initThree() {
+    if (!this.canvas || !this.canvas.isConnected) return;
+    if (window.THREE) { this._startThree(); return; }
+    const startedAt = Date.now();
+    this._waitTimer = setInterval(() => {
+      if (window.THREE) {
+        clearInterval(this._waitTimer);
+        this._startThree();
+      } else if (Date.now() - startedAt > 8000) {
+        clearInterval(this._waitTimer);
+        this._fallBack();
+      }
+    }, 80);
+  }
+
+  _fallBack() {
+    this._teardownThree();
+    if (this.state.mode !== 'fallback') this.setState({ mode: 'fallback' });
+  }
+
+  _teardownThree() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    this._raf = null;
+    if (this._waitTimer) clearInterval(this._waitTimer);
+    this._waitTimer = null;
+    if (this._ro) { this._ro.disconnect(); this._ro = null; }
+    if (this._disposables) {
+      this._disposables.forEach((d) => { try { d.dispose(); } catch (e) {} });
+      this._disposables = null;
+    }
+    if (this._renderer) {
+      try { this._renderer.dispose(); this._renderer.forceContextLoss && this._renderer.forceContextLoss(); } catch (e) {}
+      this._renderer = null;
+    }
+    this._scene = null;
+    this._camera = null;
+  }
+
+  _startThree() {
+    const THREE = window.THREE;
+    const canvas = this.canvas;
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    } catch (e) {
+      this._fallBack();
+      return;
+    }
+    this._renderer = renderer;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    this._scene = scene;
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+    this._camera = camera;
+
+    const hemi = new THREE.HemisphereLight(0xfdf3e7, 0x2c2009, 0.65);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffd9ad, 1.15);
+    key.position.set(6, 10, 6);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.camera.left = -8; key.shadow.camera.right = 8;
+    key.shadow.camera.top = 8; key.shadow.camera.bottom = -8;
+    key.shadow.camera.updateProjectionMatrix();
+    scene.add(key);
+    const fill = new THREE.DirectionalLight(0xfff3e6, 0.35);
+    fill.position.set(-7, 4, -5);
+    scene.add(fill);
+
+    const groundGeo = new THREE.PlaneGeometry(60, 60);
+    const groundMat = new THREE.MeshStandardMaterial({ color: 0xfbf9f6, roughness: 1 });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.72;
+    ground.receiveShadow = true;
+    scene.add(ground);
+    this._disposables = [groundGeo, groundMat];
+
+    // Layout: 3 long runners (skids) on the ground, 9 deck boards laid
+    // across them — a simplified, stylised pallet, not an engineering
+    // drawing, sized to read clearly in a shallow hero band.
+    const runnerColor = 0x8a5a34;
+    const deckColor = 0xb99872;
+    const planks = [];
+    const runnerGeo = new THREE.BoxGeometry(0.55, 0.5, 7.6);
+    this._disposables.push(runnerGeo);
+    [-3.1, 0, 3.1].forEach((x) => {
+      const mat = new THREE.MeshStandardMaterial({ color: runnerColor, roughness: 0.75 });
+      this._disposables.push(mat);
+      const m = new THREE.Mesh(runnerGeo, mat);
+      m.castShadow = true; m.receiveShadow = true;
+      planks.push({ mesh: m, finalPos: new THREE.Vector3(x, -0.47, 0), finalRot: new THREE.Euler(0, 0, 0) });
+    });
+    const deckGeo = new THREE.BoxGeometry(7.4, 0.34, 0.62);
+    this._disposables.push(deckGeo);
+    for (let i = 0; i < 9; i++) {
+      const z = -3.6 + i * 0.9;
+      const mat = new THREE.MeshStandardMaterial({ color: deckColor, roughness: 0.7 });
+      this._disposables.push(mat);
+      const m = new THREE.Mesh(deckGeo, mat);
+      m.castShadow = true; m.receiveShadow = true;
+      planks.push({ mesh: m, finalPos: new THREE.Vector3(0, -0.05, z), finalRot: new THREE.Euler(0, 0, 0) });
+    }
+
+    // Scattered starting pose per plank: offset outward from its final slot
+    // and tumbled, so each piece visibly flies in and rights itself.
+    planks.forEach((p, i) => {
+      const angle = (i / planks.length) * Math.PI * 2;
+      const spread = 5.5 + (i % 3) * 1.4;
+      p.startPos = new THREE.Vector3(
+        p.finalPos.x + Math.cos(angle) * spread,
+        p.finalPos.y + 3.2 + (i % 4) * 0.9,
+        p.finalPos.z + Math.sin(angle) * spread
+      );
+      p.startRot = new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+      p.mesh.position.copy(p.startPos);
+      p.mesh.rotation.copy(p.startRot);
+      p.delay = i * 70;
+      scene.add(p.mesh);
+    });
+    this._planks = planks;
+
+    camera.position.set(0, 6.4, 15);
+    camera.lookAt(0, -0.2, 0);
+    this._camStart = camera.position.clone();
+    this._camEnd = new THREE.Vector3(0, 3.1, 9.4);
+
+    this._ro = new ResizeObserver(() => this._resize());
+    this._ro.observe(canvas.parentElement);
+    this._resize();
+
+    const DURATION = 2400;
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+    const start = performance.now();
+    let frames = 0;
+    let sumDelta = 0;
+    let lastT = start;
+    let watchdogDone = false;
+    const WATCH_WINDOW = 900;
+
+    const tick = (now) => {
+      const delta = now - lastT;
+      lastT = now;
+      frames++;
+      if (!watchdogDone) {
+        sumDelta += delta;
+        if (now - start >= WATCH_WINDOW) {
+          watchdogDone = true;
+          const avgFps = 1000 / (sumDelta / frames);
+          if (avgFps < 24) { this._fallBack(); return; }
+        }
+      }
+
+      const camT = Math.min(1, (now - start) / (DURATION + 600));
+      camera.position.lerpVectors(this._camStart, this._camEnd, easeOutCubic(camT));
+      camera.lookAt(0, -0.2, 0);
+
+      planks.forEach((p) => {
+        const local = now - start - p.delay;
+        const t = Math.max(0, Math.min(1, local / DURATION));
+        const e = easeOutCubic(t);
+        p.mesh.position.lerpVectors(p.startPos, p.finalPos, e);
+        p.mesh.rotation.x = p.startRot.x + (p.finalRot.x - p.startRot.x) * e;
+        p.mesh.rotation.y = p.startRot.y + (p.finalRot.y - p.startRot.y) * e;
+        p.mesh.rotation.z = p.startRot.z + (p.finalRot.z - p.startRot.z) * e;
+      });
+
+      // Once every plank has eased to e=1, this naturally holds on an
+      // almost-still frame — a constantly-spinning hero reads as a loading
+      // spinner, not a premium product shot.
+      renderer.render(scene, camera);
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  _resize() {
+    if (!this._renderer || !this.canvas) return;
+    const el = this.canvas.parentElement;
+    const w = el.clientWidth || 1;
+    const h = el.clientHeight || 1;
+    this._renderer.setSize(w, h, false);
+    this._camera.aspect = w / h;
+    this._camera.updateProjectionMatrix();
+  }
+
+  /* Static plank layout for the CSS/SVG fallback — same 3-runner /
+     9-deck-board pallet, expressed as flat rects so it costs nothing but a
+     handful of compositor-only transform transitions. */
+  _fallbackPlanks() {
+    const reduced = this._reduced;
+    const items = [];
+    const runners = [60, 190, 320];
+    runners.forEach((x, i) => {
+      items.push({
+        x, y: 150, w: 22, h: 90, fill: '#8a5a34',
+        style: reduced
+          ? 'transform: translate(0,0) rotate(0deg);'
+          : 'transform: translate(' + (i % 2 ? 90 : -90) + 'px, -60px) rotate(' + (i % 2 ? 24 : -24) + 'deg); --fd: ' + (i * 90) + 'ms;',
+      });
+    });
+    for (let i = 0; i < 9; i++) {
+      const y = 60 + i * 10;
+      items.push({
+        x: 40, y, w: 320, h: 7, fill: '#b99872',
+        style: reduced
+          ? 'transform: translate(0,0) rotate(0deg);'
+          : 'transform: translate(' + (i % 2 ? 140 : -140) + 'px, ' + (-40 - i * 6) + 'px) rotate(' + (i % 2 ? -14 : 14) + 'deg); --fd: ' + (240 + i * 70) + 'ms;',
+      });
+    }
+    return items;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Flip the fallback rects to their assembled transform one tick after
+    // mount, so the browser paints the scattered start pose first and the
+    // CSS transition actually has something to animate from.
+    if (this.state.mode === 'fallback' && !this._fallbackArmed && !this._reduced) {
+      this._fallbackArmed = true;
+      requestAnimationFrame(() => requestAnimationFrame(() => { if (!this._unmounted) this.forceUpdate(); }));
+    }
+  }
+
+  renderVals() {
+    return {
+      showThree: this.state.mode === 'three',
+      showFallback: this.state.mode === 'fallback',
+      canvasRef: (el) => { this.canvas = el; },
+      planks: this.state.mode === 'fallback' ? this._assembledOrScattered() : [],
+    };
+  }
+
+  _assembledOrScattered() {
+    if (!this._fallbackData) this._fallbackData = this._fallbackPlanks();
+    if (this._reduced || this._fallbackArmed) {
+      return this._fallbackData.map((p) => Object.assign({}, p, { style: 'transform: translate(0,0) rotate(0deg);' }));
+    }
+    return this._fallbackData;
+  }
+}
+</script>
+</body>
+</html>
