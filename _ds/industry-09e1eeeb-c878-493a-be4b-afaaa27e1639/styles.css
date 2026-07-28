@@ -98,8 +98,11 @@ h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-headi
 .blueprint > .corner.br { bottom: -6px; right: -6px; }
 
 .duotone{position:relative;overflow:hidden}
+/* A wash, not a full recolor: real product photos stay recognizable (the
+   wood must still read as wood) while the accent hue ties every frame to
+   one house look. */
 .duotone::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:var(--color-accent);mix-blend-mode:color}
+  background:var(--color-accent);opacity:0.35;mix-blend-mode:color}
 
 /* ══════════════════════════════════════════════════════════════════════════
    Components — built with the tokens above. Plain CSS
@@ -204,6 +207,23 @@ textarea.input { min-height: 90px; resize: vertical; }
 .seg-opt:has(input:checked) { background: var(--color-accent); color: var(--color-bg); }
 .seg-opt:not(:has(input:checked)):hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
 .seg-opt:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+
+/* — eyebrow label (used above nearly every section heading site-wide) — */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--color-accent-700);
+}
+.eyebrow-dash { width: 24px; height: 1px; background: var(--color-accent); display: block; flex: none; }
+.eyebrow-block {
+  display: block; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--color-accent-700);
+}
+
+/* — wood-toned panel: a muted natural-wood surface for structural sections
+   (footer, dividers) that need warmth without the CTA punch of the orange
+   accent ramp — */
+.panel-wood { background: var(--color-accent-2-100); color: var(--color-text); }
 
 /* — cards — */
 .card {

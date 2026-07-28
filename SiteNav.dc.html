@@ -60,11 +60,13 @@
   .btn-primary::after { content: ''; position: absolute; inset: 0 auto 0 -60%; width: 45%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent); transform: translateX(0); transition: transform 0.75s cubic-bezier(0.2,0.7,0.2,1); pointer-events: none; }
   .btn-primary:hover::after { transform: translateX(360%); }
 
-  /* card + image micro-interactions */
-  [data-card] { transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; box-shadow: 0 1px 2px rgba(36,31,27,0.04), 0 10px 26px -18px rgba(36,31,27,0.30); }
+  /* card + image micro-interactions — a hairline gold-orange top edge lifts
+     in on hover, echoing the shield mark's gold line without adding weight
+     at rest (border-top is present but transparent, so no layout shift). */
+  [data-card] { position: relative; border-top: 2px solid transparent; transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease, border-color 0.35s ease; box-shadow: 0 1px 2px rgba(36,31,27,0.04), 0 10px 26px -18px rgba(36,31,27,0.30); }
   html.js-reveal [data-card][data-reveal] { transition: opacity 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), transform 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), box-shadow 0.4s ease; }
   html.js-reveal [data-card][data-reveal].is-in { transition: opacity 0.5s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; }
-  [data-card]:hover { transform: translateY(-5px); box-shadow: 0 3px 6px rgba(36,31,27,0.06), 0 30px 56px -26px rgba(36,31,27,0.38); }
+  [data-card]:hover { transform: translateY(-5px); box-shadow: 0 3px 6px rgba(36,31,27,0.06), 0 30px 56px -26px rgba(36,31,27,0.38); border-top-color: var(--color-accent-500); }
   [data-zoom] { overflow: hidden; }
   [data-zoom] img { transition: transform 0.9s cubic-bezier(0.2,0.7,0.2,1); }
   [data-card]:hover [data-zoom] img, [data-zoom]:hover img { transform: scale(1.055); }
