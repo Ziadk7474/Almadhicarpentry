@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
+<script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
+<style>
+  /* Pinned counts, not auto-fit: any auto-fit min can resolve to 3-of-4 at some
+     width and orphan the Contact column. 4 / 2+2 / 1 never leaves a stray. */
+  [data-foot-grid] { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1120px) { [data-foot-grid] { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { [data-foot-grid] { grid-template-columns: 1fr; } }
+</style>
+</helmet>
+<div>
+  <div aria-hidden="true" style="position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 90; pointer-events: none;">
+    <div style="height: 100%; background: var(--color-accent); transform-origin: 0 50%; transform: scaleX({{ progress }});"></div>
+  </div>
+
+  <footer style="background: var(--color-accent-200); color: var(--color-text);">
+    <div data-foot-grid style="max-width: 1360px; margin: 0 auto; padding: 64px clamp(16px, 3vw, 40px) 34px; display: grid; gap: clamp(28px, 4vw, 56px);">
+      <div>
+        <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.05em; text-transform: uppercase;">Al Madhi Carpentry</span>
+        <p style="font-size: 15px; line-height: 24px; margin: 14px 0 0; max-width: 34ch; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Pallets in every grade, size and quality since 2003, and chip shaped wood shavings since 2025. Made in Al Sajaa, Sharjah and delivered across the UAE.</p>
+        <div style="display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
+          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);">Est. 2003</span>
+          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);">Factory direct</span>
+          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);">UAE wide</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">Pages</span>
+        <a href="index.dc.html" style="font-size: 15px; color: var(--color-text);">Home</a>
+        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Pallets</a>
+        <a href="Wood-Shavings.dc.html" style="font-size: 15px; color: var(--color-text);">Wood shavings</a>
+        <a href="About.dc.html" style="font-size: 15px; color: var(--color-text);">About us</a>
+        <a href="Gallery.dc.html" style="font-size: 15px; color: var(--color-text);">Factory gallery</a>
+        <a href="Contact.dc.html" style="font-size: 15px; color: var(--color-text);">Contact</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">Products</span>
+        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">New pallets</a>
+        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Used &amp; old pallets</a>
+        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Pallet recycling</a>
+        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Made-to-size pallets</a>
+        <a href="Wood-Shavings.dc.html" style="font-size: 15px; color: var(--color-text);">Wood shavings, by the sack</a>
+        <a href="Wood-Shavings.dc.html" style="font-size: 15px; color: var(--color-text);">Used wood &amp; boards</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">Contact</span>
+        <a href="tel:+971505974922" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.02em; color: var(--color-text);">050 597 4922</a>
+        <a href="mailto:almadhicarpentry@yahoo.com" style="font-size: 15px; color: var(--color-text); word-break: break-all;">almadhicarpentry@yahoo.com</a>
+        <p style="font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Al Sajaa Industrial Area<br />Sharjah, United Arab Emirates</p>
+        <p style="font-size: 15px; line-height: 24px; margin: 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Monday to Saturday<br />06:00 &ndash; 18:00</p>
+      </div>
+    </div>
+    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 16%, transparent);">
+      <div style="max-width: 1360px; margin: 0 auto; padding: 18px clamp(16px, 3vw, 40px) 92px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: color-mix(in srgb, var(--color-text) 62%, transparent);">
+        <span>&copy; 2026 Al Madhi Carpentry. All rights reserved.</span>
+        <span>Wooden pallet &amp; wood shaving manufacturer &middot; Sharjah, UAE</span>
+      </div>
+    </div>
+  </footer>
+
+  <div data-float-cta style="position: fixed; right: 20px; bottom: 20px; z-index: 80; display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+    <sc-if value="{{ scrolled }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ toTop }}" aria-label="Back to top" style="width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; background: color-mix(in srgb, #f2f2f3 88%, transparent); backdrop-filter: blur(10px); border: 1px solid var(--color-divider); color: var(--color-text);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+      </button>
+    </sc-if>
+    <sc-if value="{{ showCta }}" hint-placeholder-val="{{ false }}">
+      <a href="https://wa.me/971505974922?text=Hello%20Al%20Madhi%20Carpentry%2C%20I%20would%20like%20a%20quotation." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" style="display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; background: var(--color-accent-700); color: #ffffff; border: 0; min-height: 48px; font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.07em; text-transform: uppercase; box-shadow: var(--shadow-lg);">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
+        WhatsApp us
+      </a>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:520}}">
+class Component extends DCLogic {
+  state = { progress: 0, scrolled: false, pastHero: false };
+  componentDidMount() {
+    this._p = -1;
+    this._s = null;
+    const sync = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+      const s = h.scrollTop > 700;
+      // The CTA is pinned to the viewport bottom and knows nothing about what sits
+      // there, so on short viewports it landed on the hero's headline figure at rest.
+      // Hold it back until the hero is scrolled past.
+      const past = h.scrollTop > 220;
+      if (Math.abs(p - this._p) < 0.002 && s === this._s && past === this._past) return;
+      this._p = p;
+      this._s = s;
+      this._past = past;
+      this.setState({ progress: p, scrolled: s, pastHero: past });
+    };
+    this.onScroll = sync;
+    window.addEventListener('scroll', sync, { passive: true });
+    const poll = () => { sync(); this.raf = requestAnimationFrame(poll); };
+    poll();
+    this.slowSync = setInterval(sync, 200);
+    sync();
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); clearInterval(this.slowSync); window.removeEventListener('scroll', this.onScroll); }
+  renderVals() {
+    return {
+      progress: this.state.progress,
+      scrolled: this.state.scrolled,
+      showCta: this.state.pastHero,
+      toTop: () => {
+        const de = document.documentElement;
+        const from = de.scrollTop || window.pageYOffset || 0;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { de.scrollTop = 0; return; }
+        const t0 = performance.now();
+        const tick = (now) => {
+          const p = Math.min(1, (now - t0) / 600);
+          de.scrollTop = from * (1 - (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

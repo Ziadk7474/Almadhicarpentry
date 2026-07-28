@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
+<script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
+<style>
+  /* The DC host wrappers compute a fixed viewport height (540px) while content
+     overflows, which caps the sticky header's containing block to one screen and
+     lets it scroll away. Let those boxes grow with their content instead. */
+  html, body, #dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
+  body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  button, summary, [role='button'] { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--color-accent-700); outline-offset: 3px; }
+
+  /* premium button treatment, applied site-wide */
+  .btn { position: relative; overflow: hidden; transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.28s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.28s ease; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: var(--color-accent-700); border-color: var(--color-accent-700); color: #fff; box-shadow: 0 1px 2px rgba(30,50,70,0.10), 0 10px 22px -14px rgba(30,50,70,0.55); }
+  .btn-primary:hover { background: var(--color-accent-800); border-color: var(--color-accent-800); box-shadow: 0 2px 5px rgba(30,50,70,0.12), 0 18px 34px -16px rgba(30,50,70,0.55); }
+  .btn-secondary { background: transparent; border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent); color: var(--color-text); }
+  .btn-secondary:hover { background: #fff; border-color: var(--color-accent); color: var(--color-accent-800); box-shadow: 0 12px 26px -18px rgba(30,50,70,0.5); }
+
+  /* Scroll reveal is progressive enhancement: content ships visible and is only
+     hidden once the logic class adds the js-reveal flag to the root element.
+     If the observer never fires, nothing is ever hidden. */
+  html.js-reveal [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), transform 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms); }
+  html.js-reveal [data-reveal].is-in { opacity: 1; transform: none; }
+
+  /* Mask wipe — image panels uncover upward. Also additive: without .js-reveal
+     the clip is absent and the picture simply shows. */
+  html.js-reveal [data-wipe] { clip-path: inset(0 0 100% 0); transition: clip-path 1.05s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms); }
+  html.js-reveal [data-wipe].is-in { clip-path: inset(0 0 0 0); }
+
+  /* Per-line text stagger. Lines are already in the markup as block spans. */
+  html.js-reveal [data-lines] > span { display: block; opacity: 0; transform: translateY(0.42em); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+  html.js-reveal [data-lines] > span:nth-child(2) { transition-delay: 0.1s; }
+  html.js-reveal [data-lines] > span:nth-child(3) { transition-delay: 0.2s; }
+  html.js-reveal [data-lines].is-in > span { opacity: 1; transform: none; }
+
+  /* Parallax: the observer sets --py from scroll position. */
+  [data-parallax] { will-change: auto; }
+  [data-parallax] img { transform: translate3d(0, var(--py, 0px), 0) scale(1.09); transition: transform 0.1s linear; }
+
+  /* Marquee */
+  [data-marquee] { display: flex; overflow: hidden; gap: 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+  [data-marquee] > div { display: flex; flex: none; gap: 0; animation: amc-marquee 38s linear infinite; }
+  [data-marquee]:hover > div { animation-play-state: paused; }
+  @keyframes amc-marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-100%,0,0); } }
+
+  /* Buttons get a light sweep on hover */
+  .btn-primary::after { content: ''; position: absolute; inset: 0 auto 0 -60%; width: 45%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent); transform: translateX(0); transition: transform 0.75s cubic-bezier(0.2,0.7,0.2,1); pointer-events: none; }
+  .btn-primary:hover::after { transform: translateX(360%); }
+
+  /* card + image micro-interactions */
+  [data-card] { transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; box-shadow: 0 1px 2px rgba(30,50,70,0.04), 0 10px 26px -18px rgba(30,50,70,0.30); }
+  html.js-reveal [data-card][data-reveal] { transition: opacity 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), transform 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), box-shadow 0.4s ease; }
+  html.js-reveal [data-card][data-reveal].is-in { transition: opacity 0.5s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; }
+  [data-card]:hover { transform: translateY(-5px); box-shadow: 0 3px 6px rgba(30,50,70,0.06), 0 30px 56px -26px rgba(30,50,70,0.38); }
+  [data-zoom] { overflow: hidden; }
+  [data-zoom] img { transition: transform 0.9s cubic-bezier(0.2,0.7,0.2,1); }
+  [data-card]:hover [data-zoom] img, [data-zoom]:hover img { transform: scale(1.055); }
+
+  /* link sweep in the header */
+  [data-nav] { position: relative; color: color-mix(in srgb, var(--color-text) 70%, transparent); transition: color 0.22s ease; }
+  [data-nav]::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--color-accent); transform: scaleX(0); transform-origin: 100% 50%; transition: transform 0.34s cubic-bezier(0.2,0.7,0.2,1); }
+  [data-nav]:hover { color: var(--color-text); }
+  [data-nav]:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+  [data-nav][aria-current='page'] { color: var(--color-text); }
+  [data-nav][aria-current='page']::after { transform: scaleX(1); }
+
+  summary::-webkit-details-marker { display: none; }
+  summary::marker { content: ''; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js-reveal [data-reveal] { opacity: 1 !important; transform: none !important; transition: none; }
+    html.js-reveal [data-wipe] { clip-path: none !important; transition: none; }
+    html.js-reveal [data-lines] > span { opacity: 1 !important; transform: none !important; transition: none; }
+    [data-parallax] img { transform: none !important; }
+    [data-marquee] > div { animation: none !important; }
+    .btn-primary::after { display: none; }
+    .btn, [data-card], [data-zoom] img, [data-nav]::after { transition: none; }
+    .btn:hover, [data-card]:hover { transform: none; }
+  }
+</style>
+</helmet>
+<header ref="{{ headerRef }}" style="background: color-mix(in srgb, #eef6ff 78%, transparent); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid {{ borderColor }}; box-shadow: {{ shadow }}; transition: box-shadow 0.3s ease, border-color 0.3s ease;">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); height: {{ barHeight }}; display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); transition: height 0.32s cubic-bezier(0.2,0.7,0.2,1);">
+    <a href="index.dc.html" style="display: flex; align-items: center; gap: 12px; flex: none; color: var(--color-text);">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" aria-hidden="true" style="flex: none;"><path d="M2 6h20M2 12h20M2 18h20M6 6v12M18 6v12" /></svg>
+      <span style="display: flex; flex-direction: column; gap: 3px;">
+        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: 0.035em; text-transform: uppercase;">Al Madhi Carpentry</span>
+        <span style="font-size: 10.5px; line-height: 1; letter-spacing: 0.17em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 46%, transparent);">Sharjah &middot; Since 2003</span>
+      </span>
+    </a>
+    <nav style="margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 1.9vw, 28px);" data-desktop-nav>
+      <a data-nav href="index.dc.html" aria-current="{{ isHome }}" style="font-size: 14.5px; font-weight: 500; white-space: nowrap;">Home</a>
+      <a data-nav href="Pallets.dc.html" aria-current="{{ isPallets }}" style="font-size: 14.5px; font-weight: 500; white-space: nowrap;">Pallets</a>
+      <a data-nav href="Wood-Shavings.dc.html" aria-current="{{ isShavings }}" style="font-size: 14.5px; font-weight: 500; white-space: nowrap;">Wood shavings</a>
+      <a data-nav href="About.dc.html" aria-current="{{ isAbout }}" style="font-size: 14.5px; font-weight: 500; white-space: nowrap;">About</a>
+      <a data-nav href="Gallery.dc.html" aria-current="{{ isGallery }}" style="font-size: 14.5px; font-weight: 500; white-space: nowrap;">Factory</a>
+      <a data-nav href="Contact.dc.html" aria-current="{{ isContact }}" style="font-size: 14.5px; font-weight: 500; white-space: nowrap;">Contact</a>
+    </nav>
+    <span style="display: flex; align-items: center; gap: 16px; flex: none;" data-desktop-cta>
+      <a href="tel:+971505974922" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 500; color: var(--color-text);" title="{{ statusHint }}">
+        <i style="width: 7px; height: 7px; border-radius: 50%; display: block; background: {{ statusColor }}; box-shadow: 0 0 0 3px {{ statusHalo }};"></i>050 597 4922
+      </a>
+      <button type="button" class="btn btn-primary" onClick="{{ requestQuote }}" style="font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px 20px; min-height: 42px; display: inline-flex; align-items: center; gap: 9px;">
+        Get a quote
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </button>
+    </span>
+    <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="flex: none; display: none; background: transparent; border: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); width: 44px; height: 44px; align-items: center; justify-content: center; color: var(--color-text);" data-burger>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">{{ burgerPath }}</svg>
+    </button>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); background: #eef6ff;">
+      <div style="max-width: 1360px; margin: 0 auto; padding: 8px clamp(16px, 3vw, 40px) 24px; display: flex; flex-direction: column;">
+        <a href="index.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Home</a>
+        <a href="Pallets.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Pallets</a>
+        <a href="Wood-Shavings.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Wood shavings</a>
+        <a href="About.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">About</a>
+        <a href="Gallery.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Factory</a>
+        <a href="Contact.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Contact</a>
+        <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onClick="{{ requestQuote }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">Get a quote</button>
+          <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">050 597 4922</a>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:100},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;pallets&quot;,&quot;shavings&quot;,&quot;about&quot;,&quot;gallery&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false, status: null, scrolled: false };
+
+  componentDidMount() {
+    this.tick();
+    this.timer = setInterval(() => this.tick(), 60000);
+    this.applyResponsive();
+    this.onResize = () => this.applyResponsive();
+    window.addEventListener('resize', this.onResize);
+
+    // The guard tracks the last APPLIED value on an instance field — reading
+    // this.state here would be stale and would apply each update one event late.
+    this._scrolled = null;
+    const sync = () => {
+      const s = (document.documentElement.scrollTop || window.pageYOffset || 0) > 24;
+      if (s === this._scrolled) return;
+      this._scrolled = s;
+      this.setState({ scrolled: s });
+    };
+    this.onScroll = sync;
+    window.addEventListener('scroll', sync, { passive: true });
+    // rAF backup, for hosts that throttle or never dispatch scroll events.
+    const poll = () => { sync(); this.rafScroll = requestAnimationFrame(poll); };
+    poll();
+    this.slowSync = setInterval(sync, 200);
+    sync();
+
+    this.startReveals();
+    this.startCounters();
+
+    // Safety net: whatever happens to rAF or IntersectionObserver in this host,
+    // nothing may stay hidden or stuck at zero.
+    // Recurring, not one-shot: child DCs (the quote form, filtered lists) mount
+    // after the first pass, so a single timeout would leave them hidden forever.
+    let sweeps = 0;
+    this.failsafe = setInterval(() => {
+      this.revealEverything();
+      if (++sweeps > 14) clearInterval(this.failsafe);
+    }, 700);
+  }
+
+  /* Scroll-linked parallax on [data-parallax] panels. Shares the header's sync
+     loop timing; writes a CSS var so the transform stays on the compositor. */
+  startParallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const step = () => {
+      const vh = document.documentElement.clientHeight || 1;
+      document.querySelectorAll('[data-parallax]').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        const mid = r.top + r.height / 2;
+        const range = parseFloat(el.getAttribute('data-parallax')) || 40;
+        el.style.setProperty('--py', (((vh / 2 - mid) / vh) * range).toFixed(2) + 'px');
+      });
+      this.rafPar = requestAnimationFrame(step);
+    };
+    step();
+  }
+
+  revealEverything() {
+    document.querySelectorAll('[data-reveal]:not(.is-in), [data-wipe]:not(.is-in), [data-lines]:not(.is-in)').forEach((el) => {
+      el.style.setProperty('--d', '0ms');
+      el.classList.add('is-in');
+      // Inline as well as the class: a child DC re-render can swap the node the
+      // class was applied to, and inline styles survive what the cascade cannot.
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.clipPath = 'none';
+      if (el.hasAttribute('data-lines')) {
+        Array.prototype.forEach.call(el.children, (c) => { c.style.opacity = '1'; c.style.transform = 'none'; });
+      }
+    });
+    document.querySelectorAll('[data-count]').forEach((el) => {
+      if (el.dataset.counted === '1') return;
+      el.dataset.counted = '1';
+      const t = parseFloat(el.getAttribute('data-count'));
+      if (isNaN(t)) return;
+      const dec = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      el.textContent = (el.getAttribute('data-prefix') || '') + (dec ? t.toFixed(dec) : t.toLocaleString('en-US')) + (el.getAttribute('data-suffix') || '');
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    clearInterval(this.failsafe);
+    clearInterval(this.slowSync);
+    window.removeEventListener('resize', this.onResize);
+    cancelAnimationFrame(this.rafScroll);
+    cancelAnimationFrame(this.rafPar);
+    window.removeEventListener('scroll', this.onScroll);
+    if (this.io) this.io.disconnect();
+    if (this.cio) this.cio.disconnect();
+    if (this.mo) this.mo.disconnect();
+  }
+
+  /* Reveal every [data-reveal] on the page, staggered within its own group. */
+  startReveals() {
+    if (typeof IntersectionObserver === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Only now, with an observer available, is it safe to hide anything.
+    document.documentElement.classList.add('js-reveal');
+    this.io = new IntersectionObserver(
+      (entries) => {
+        const hits = entries.filter((e) => e.isIntersecting).map((e) => e.target);
+        hits.forEach((el) => {
+          const group = el.parentElement ? Array.from(el.parentElement.children).filter((c) => c.hasAttribute && c.hasAttribute('data-reveal')) : [el];
+          const idx = Math.max(0, group.indexOf(el));
+          el.style.setProperty('--d', Math.min(idx, 6) * 80 + 'ms');
+          el.classList.add('is-in');
+          this.io.unobserve(el);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    const observeAll = () => {
+      document.querySelectorAll('[data-reveal]:not(.is-in), [data-wipe]:not(.is-in), [data-lines]:not(.is-in)').forEach((el) => this.io.observe(el));
+    };
+    observeAll();
+    this.mo = new MutationObserver(observeAll);
+    this.mo.observe(document.body, { childList: true, subtree: true });
+    this.startParallax();
+  }
+
+  /* Count [data-count] numbers up when they scroll into view. */
+  startCounters() {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const render = (el, v) => {
+      const dec = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      const n = dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+      el.textContent = (el.getAttribute('data-prefix') || '') + n + (el.getAttribute('data-suffix') || '');
+    };
+    this.cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          this.cio.unobserve(el);
+          const target = parseFloat(el.getAttribute('data-count'));
+          if (isNaN(target)) return;
+          if (reduce) { render(el, target); return; }
+          const t0 = performance.now();
+          const step = (now) => {
+            const p = Math.min(1, (now - t0) / 1500);
+            render(el, target * (1 - Math.pow(1 - p, 3)));
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+      },
+      { threshold: 0.4 }
+    );
+    document.querySelectorAll('[data-count]').forEach((el) => { render(el, 0); this.cio.observe(el); });
+  }
+
+  applyResponsive() {
+    const narrow = window.innerWidth <= 1100;
+    const nav = document.querySelector('[data-desktop-nav]');
+    const cta = document.querySelector('[data-desktop-cta]');
+    const burger = document.querySelector('[data-burger]');
+    if (nav) nav.style.display = narrow ? 'none' : 'flex';
+    if (cta) cta.style.display = narrow ? 'none' : 'flex';
+    if (burger) { burger.style.display = narrow ? 'flex' : 'none'; burger.style.marginLeft = narrow ? 'auto' : ''; }
+    if (!narrow && this.state.menuOpen) this.setState({ menuOpen: false });
+  }
+
+  tick() {
+    const now = new Date();
+    const gulf = new Date(now.getTime() + (now.getTimezoneOffset() + 240) * 60000);
+    const day = gulf.getDay();
+    const mins = gulf.getHours() * 60 + gulf.getMinutes();
+    this.setState({ status: { open: day >= 1 && day <= 6 && mins >= 360 && mins < 1080 } });
+  }
+
+  renderVals() {
+    const s = this.state.status;
+    const open = !!(s && s.open);
+    const cur = (k) => (this.props.active === k ? 'page' : undefined);
+    const sc = this.state.scrolled;
+    return {
+      headerRef: (el) => { this.header = el; },
+      barHeight: sc ? '62px' : '78px',
+      shadow: sc ? '0 1px 0 rgba(30,50,70,0.04), 0 14px 30px -22px rgba(30,50,70,0.45)' : 'none',
+      borderColor: sc ? 'transparent' : 'color-mix(in srgb, #1d1f20 9%, transparent)',
+      menuOpen: this.state.menuOpen,
+      burgerPath: this.state.menuOpen
+        ? React.createElement('path', { d: 'M6 6l12 12M18 6L6 18' })
+        : React.createElement('path', { d: 'M3 6h18M3 12h18M3 18h18' }),
+      toggleMenu: () => this.setState((st) => ({ menuOpen: !st.menuOpen })),
+      requestQuote: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
+      statusColor: open ? '#3f9153' : 'color-mix(in srgb, #1d1f20 28%, transparent)',
+      statusHalo: open ? 'rgba(63,145,83,0.18)' : 'transparent',
+      statusHint: open ? 'The yard is open now — Monday to Saturday, 06:00–18:00' : 'Closed now — Monday to Saturday, 06:00–18:00',
+      isHome: cur('home'), isPallets: cur('pallets'), isShavings: cur('shavings'),
+      isAbout: cur('about'), isGallery: cur('gallery'), isContact: cur('contact'),
+    };
+  }
+}
+</script>
+</body>
+</html>

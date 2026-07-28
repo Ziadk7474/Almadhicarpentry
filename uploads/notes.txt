@@ -1,0 +1,313 @@
+Here's a master prompt you can give Claude. It's written as if you're hiring a world-class UI/UX designer and senior frontend engineer.
+───
+MASTER REDESIGN PROMPT
+You are an award-winning UI/UX Designer, Senior Frontend Engineer, Brand Designer, Motion Designer, and Conversion Rate Optimization expert.
+Completely redesign this Al Madhi Carpentry website from scratch.
+Do NOT simply improve it.
+Reimagine it as a premium, world-class website that feels like a modern SaaS application combined with Apple's design language, Linear.app, Stripe, Framer, and Tesla.
+The website should immediately make visitors trust the company and feel they are dealing directly with one of the UAE's leading pallet manufacturers.
+The result should feel worth AED 100,000+.
+───
+Goal
+Transform this into the most professional pallet manufacturing website in the UAE.
+Everything must be polished.
+No placeholder content.
+No fake functionality.
+No unfinished sections.
+Everything should feel premium.
+───
+Design Style
+Use a modern futuristic Glassmorphism (Tinted Glass) theme.
+Think:
+• Apple VisionOS • Linear • Stripe • Framer • Arc Browser • Raycast • Tesla
+NOT gaming style.
+Professional.
+Elegant.
+Premium.
+Industrial.
+Minimal.
+Luxury.
+───
+Color Palette
+Primary: Deep Navy (#071B34)
+Secondary: Royal Blue
+Accent: Gold (#D6A647)
+Background: Soft white with tinted glass sections
+Cards: Glass effect with blur
+Shadows: Soft
+Rounded corners: 18-24px
+Borders: Subtle transparent borders
+Use gradients everywhere tastefully.
+───
+Typography
+Use premium fonts.
+Headings: Inter / Satoshi / General Sans
+Body: Inter
+Large bold headings.
+Excellent spacing.
+Readable typography.
+Perfect hierarchy.
+───
+Images
+Replace ALL existing images.
+Use ONLY high-quality real photographs.
+NO stock-looking low quality images.
+Use:
+• Real wooden pallets • Manufacturing process • Factory workers • Warehouse • Forklifts • Delivery trucks • Heavy-duty pallets • Export pallets • New pallets • Used pallets • Wooden boards • Loading operations • UAE industrial warehouses
+Images should look premium.
+───
+Hero Section
+Create an amazing hero.
+Large headline.
+Professional subtitle.
+Glass CTA buttons.
+Animated background.
+Floating pallet illustrations.
+Trust badges.
+Statistics.
+Company Since 2003.
+Delivery across UAE.
+───
+Include
+✔ 20+ Years Experience
+✔ UAE Wide Delivery
+✔ Custom Sizes
+✔ Heavy Duty Pallets
+✔ Factory Direct
+✔ Fast Production
+───
+Professional Sections
+Redesign every section.
+Make every section unique.
+Possible sections:
+Hero
+Trusted by Businesses
+Our Products
+Why Choose Us
+Manufacturing Process
+Industries Served
+Featured Projects
+Customer Reviews
+Company Statistics
+Factory Gallery
+FAQ
+Contact
+Map
+Footer
+───
+Product Cards
+Redesign all cards.
+Glass cards.
+Hover animations.
+Large images.
+Specifications.
+Load Capacity
+Dimensions
+Material
+Availability
+Quick Quote Button
+WhatsApp Button
+───
+Quote System
+THIS IS IMPORTANT.
+Whenever user clicks
+Request Quote
+Get Quote
+Quick Quote
+Product Quote
+or any Quote button...
+DO NOT navigate to another page.
+Instead:
+Smoothly scroll to the Contact Form.
+Automatically open the quote message box.
+Automatically focus the message textarea.
+Pre-fill the message.
+Example:
+Hello Al Madhi Carpentry,
+I would like to request a quotation for:
+Product: Heavy Duty Wooden Pallets
+Quantity:
+Size:
+Delivery Location:
+Thank you.
+The cursor should already be active.
+───
+Contact Form
+Modern glass card.
+Validation.
+Icons.
+Professional spacing.
+Fields:
+Name
+Company
+Phone
+Email
+Product
+Quantity
+Size
+Delivery Location
+Message
+Send Button
+WhatsApp Button
+Call Button
+───
+WhatsApp
+Professional WhatsApp integration.
+Floating WhatsApp button.
+Clicking should open WhatsApp with pre-filled message.
+No broken links.
+───
+Animations
+Everything should feel alive.
+Use:
+Smooth scrolling
+Fade
+Slide
+Parallax
+Glass reflections
+Floating cards
+Mouse hover effects
+Magnetic buttons
+Count-up statistics
+Image zoom
+Scroll reveal
+Gradient animations
+Loading transitions
+Shimmer effects
+Micro interactions
+No lag.
+60fps.
+───
+Performance
+Extremely optimized.
+Fast loading.
+Lazy loading.
+Responsive images.
+Modern CSS.
+Minimal JavaScript.
+No unnecessary libraries.
+Lighthouse Score:
+95+
+───
+Mobile
+Perfect responsiveness.
+Looks like a native mobile app.
+Excellent spacing.
+Floating bottom navigation.
+Large touch buttons.
+Fast.
+───
+Navigation
+Sticky glass navbar.
+Blur effect.
+Smooth transitions.
+Active menu highlighting.
+Elegant mobile menu.
+───
+Product Page
+Beautiful filtering.
+Categories.
+Search.
+Large cards.
+Professional layouts.
+Smooth animations.
+───
+Reviews
+Use realistic testimonials.
+5-star ratings.
+Company names.
+Professional formatting.
+───
+Statistics
+Animated counters.
+20+ Years
+100,000+ Pallets Manufactured
+500+ Clients
+UAE Delivery
+24 Hour Quotes
+───
+About Section
+Professional company story.
+Factory images.
+Timeline.
+Core values.
+Mission.
+Vision.
+Quality standards.
+───
+Gallery
+Beautiful masonry layout.
+Lightbox.
+Image zoom.
+Smooth transitions.
+───
+Footer
+Luxury footer.
+Quick links.
+Products.
+Contact.
+Google Maps.
+Social links.
+Business hours.
+Copyright.
+───
+Functionality
+Everything MUST work perfectly.
+No broken buttons.
+No dead links.
+No JavaScript errors.
+No console warnings.
+No placeholder buttons.
+Every button must have a real action.
+───
+SEO
+Proper semantic HTML.
+Meta Tags.
+Schema.org.
+Open Graph.
+Twitter Cards.
+Structured Data.
+Fast indexing.
+Accessible.
+───
+Accessibility
+Keyboard navigation.
+ARIA labels.
+Contrast.
+Screen reader support.
+Focus states.
+───
+Code Quality
+Clean architecture.
+Organized CSS.
+Modular JavaScript.
+Readable code.
+Reusable components.
+No duplicate code.
+Maintainable.
+───
+Extra Premium Features
+Add features like:
+• Scroll progress indicator
+• Glass floating action buttons
+• Animated statistics
+• Interactive manufacturing timeline
+• Before/After pallet comparison
+• Premium hover effects
+• Ripple button effects
+• Skeleton loading
+• Smooth page transitions
+• Animated background gradients
+• Factory location section
+• Live business status (Open/Closed)
+• Delivery coverage map
+• Premium FAQ accordion
+• Elegant loading animation
+• Professional empty states
+───
+Final Goal
+The final result should not look like a normal HTML website.
+It should feel like a premium web application built in 2026.
+Visitors should instantly trust the company.
+The website should be visually stunning, incredibly smooth, fully functional, and leave a "Wow" impression within the first five seconds.
+Every detail should reflect a modern, premium industrial brand while maintaining excellent usability, performance, accessibility, and mobile responsiveness. No placeholders, no unfinished components, and no broken functionality—deliver production-ready quality throughout.

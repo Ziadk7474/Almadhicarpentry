@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Factory Gallery — Al Madhi Carpentry, Al Sajaa Sharjah</title>
+<meta name="description" content="Inside the Al Madhi Carpentry works in Al Sajaa, Sharjah: the saw floor, the nailing bench, finished pallet stacks, the shavings line and loading operations." />
+<link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
+<script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
+<script src="image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; text-wrap: pretty; background: var(--color-accent-100); }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent-800); }
+  button[aria-current='true'] { background: var(--color-accent-700) !important; color: #fff !important; border-color: var(--color-accent-700) !important; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</helmet>
+<dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="gallery" hint-size="100%,79px"></dc-import>
+
+<main>
+  <section style="padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+      <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); margin: 0 0 20px;"><i style="width: 24px; height: 1px; background: var(--color-accent); display: block;"></i>The works</span>
+      <h1 data-lines data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(40px, 5.6vw, 76px); line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Inside the yard</h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 80%, transparent);">Eighteen frames from the Al Sajaa works &mdash; wood intake through to the truck. Select a frame to enlarge it. Every photograph is printed in the house duotone.</p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px;">
+        <button type="button" onClick="{{ setAll }}" aria-current="{{ isAll }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Everything</button>
+        <button type="button" onClick="{{ setFloor }}" aria-current="{{ isFloor }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Saw floor</button>
+        <button type="button" onClick="{{ setStock }}" aria-current="{{ isStock }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Finished stock</button>
+        <button type="button" onClick="{{ setShav }}" aria-current="{{ isShav }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Shavings line</button>
+        <button type="button" onClick="{{ setLoad }}" aria-current="{{ isLoad }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Loading &amp; delivery</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 clamp(48px, 6vw, 80px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: clamp(22px, 3vw, 40px);">
+        <sc-for list="{{ frames }}" as="f" hint-placeholder-count="12">
+          <figure data-card data-reveal style="margin: 0; grid-column: {{ f.span }}; background: #ffffff;">
+            <button type="button" data-zoom data-wipe data-reveal onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="display: block; width: 100%; padding: 0; border: 0; background: var(--color-accent-100); cursor: {{ f.cursor }};">
+              <img src="{{ f.img }}" alt="{{ f.caption }}" style="width: 100%; height: auto; aspect-ratio: {{ f.ratio }}; object-fit: cover;" />
+            </button>
+            <figcaption style="display: flex; justify-content: space-between; gap: 14px; align-items: baseline; padding: 15px 18px 17px; font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 72%, transparent);">
+              <span>{{ f.caption }}</span>
+              <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 52%, transparent); white-space: nowrap;">{{ f.no }}</span>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+      <p style="font-size: 14px; line-height: 22px; margin: 34px 0 0; max-width: 62ch; color: color-mix(in srgb, var(--color-text) 60%, transparent);">Send us more photographs from the floor and we will place them here &mdash; the grid takes any number of frames.</p>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 clamp(48px, 6vw, 80px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: var(--color-accent-200); padding: clamp(28px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; align-items: center;">
+        <div>
+          <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px, 3vw, 38px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">Come and see the yard</h2>
+          <p style="font-size: 15.5px; line-height: 25px; margin: 14px 0 0; max-width: 48ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">Customers are welcome at Al Sajaa any working day between 06:00 and 18:00. Bring a carton or a sample pallet and we will measure it with you on the bench.</p>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+          <a class="btn btn-primary" href="Contact.dc.html" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 24px; min-height: 48px;">Directions &amp; contact</a>
+          <button type="button" class="btn btn-secondary" onClick="{{ quoteAny }}" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 24px; min-height: 48px;">Request a quote</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dc-import name="QuoteForm" hint-size="100%,720px"></dc-import>
+<dc-import name="SiteFooter" hint-size="100%,480px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const FRAMES = [
+  { id: 'f01', cat: 'floor', img: 'assets/pallet-wall-grid.jpg', caption: 'Wood intake, stock waiting to be cut' },
+  { id: 'f02', cat: 'floor', img: 'assets/pallet-studio-new-a.png', caption: 'New pallet off the bench' },
+  { id: 'f03', cat: 'floor', img: 'assets/pallet-studio-new-b.png', caption: 'Lighter build, same bench' },
+  { id: 'f04', cat: 'floor', img: 'assets/pallet-blocks-closeup.jpg', caption: 'Boards recovered from old pallets' },
+  { id: 'f05', cat: 'floor', img: 'assets/pallet-studio-old.png', caption: 'Used pallet checked before it ships' },
+  { id: 'f06', cat: 'floor', img: 'assets/pallet-stack-closeup.jpg', caption: 'Close on the block and board joint' },
+  { id: 'f07', cat: 'stock', img: 'assets/yard-stacks-golden.jpg', caption: 'Finished stacks across the yard' },
+  { id: 'f08', cat: 'stock', img: 'assets/pallet-light.webp', caption: 'Standard 100 × 120 cm run' },
+  { id: 'f09', cat: 'stock', img: 'assets/pallet-used.webp', caption: 'Used stock, graded and sorted' },
+  { id: 'f10', cat: 'stock', img: 'assets/pallets-weathered-old.jpg', caption: 'Older pallets, sold as seen' },
+  { id: 'f11', cat: 'stock', img: 'assets/pallet-rows-aisle.jpg', caption: 'Rows waiting on collection' },
+  { id: 'f12', cat: 'stock', img: 'assets/pallet-yard-wide.jpg', caption: 'The yard at full stock' },
+  { id: 'f13', cat: 'shav', img: 'assets/shavings-hand-chips.png', caption: 'Chips straight off the saw' },
+  { id: 'f14', cat: 'shav', img: 'assets/shavings-pile-rake.jpg', caption: 'The shavings heap' },
+  { id: 'f15', cat: 'shav', img: 'assets/shavings-sacks-open.png', caption: 'Sacks filled loose, never pressed' },
+  { id: 'f16', cat: 'shav', img: 'assets/shavings.webp', caption: 'Close on the chip shape' },
+  { id: 'f17', cat: 'load', img: 'assets/truck-shaving-sacks-a.png', caption: 'Shavings sacks loaded for the round' },
+  { id: 'f18', cat: 'load', img: 'assets/truck-pallets-loaded.png', caption: 'Pallets strapped and away' },
+];
+
+class Component extends DCLogic {
+  state = { cat: 'all', open: null };
+  renderVals() {
+    const { cat, open } = this.state;
+    const list = FRAMES.filter((f) => cat === 'all' || f.cat === cat);
+    const on = (k) => (cat === k ? 'true' : undefined);
+    return {
+      frames: list.map((f, i) => {
+        const isOpen = open === f.id;
+        return {
+          id: f.id,
+          caption: f.caption,
+          img: f.img,
+          no: 'FR ' + String(i + 1).padStart(2, '0'),
+          span: isOpen ? '1 / -1' : 'auto',
+          ratio: isOpen ? '21 / 9' : '4 / 3',
+          cursor: isOpen ? 'zoom-out' : 'zoom-in',
+          open: isOpen,
+          toggle: () => this.setState((s) => ({ open: s.open === f.id ? null : f.id })),
+        };
+      }),
+      isAll: on('all'), isFloor: on('floor'), isStock: on('stock'), isShav: on('shav'), isLoad: on('load'),
+      setAll: () => this.setState({ cat: 'all', open: null }),
+      setFloor: () => this.setState({ cat: 'floor', open: null }),
+      setStock: () => this.setState({ cat: 'stock', open: null }),
+      setShav: () => this.setState({ cat: 'shav', open: null }),
+      setLoad: () => this.setState({ cat: 'load', open: null }),
+      quoteAny: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Wooden Pallets — New, Old, Used &amp; Recycled | Al Madhi Carpentry Sharjah</title>
+<meta name="description" content="Wooden pallets in every grade, size and quality from Al Sajaa Industrial Area, Sharjah. New pallets made from wood, old and used pallets, recycled pallets and used wood. Built to your size, delivered across the UAE." />
+<link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
+<script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
+<style>
+  body { background: var(--color-accent-100); }
+  a { color: var(--color-accent-700); text-decoration: none; }
+  a:hover { color: var(--color-accent-800); }
+  button[aria-current='true'] { background: var(--color-accent-700) !important; color: #fff !important; border-color: var(--color-accent-700) !important; }
+</style>
+</helmet>
+<dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
+
+<main>
+  <section style="padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(20px, 3vw, 44px); align-items: end;">
+        <div>
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 22px;">
+            <i style="width: 24px; height: 1px; background: var(--color-accent); display: block;"></i>The pallet range
+          </span>
+          <h1 data-lines data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(44px, 6vw, 88px); line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Every grade,<br />size and quality</h1>
+        </div>
+        <p style="font-size: 17px; line-height: 28px; max-width: 46ch; margin: 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">New pallets made from wood, old and used pallets, recycled pallets and used wood &mdash; all out of our yard in Al Sajaa, Sharjah. Tell us the size and what it carries and we will quote it the same working day.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="position: sticky; top: 79px; z-index: 40; background: color-mix(in srgb, #eef6ff 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 14px clamp(16px, 3vw, 40px); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);">
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button type="button" onClick="{{ catAll }}" aria-current="{{ isAll }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">All &middot; 9</button>
+        <button type="button" onClick="{{ catNew }}" aria-current="{{ isNew }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">New</button>
+        <button type="button" onClick="{{ catUsed }}" aria-current="{{ isUsed }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Used &amp; old</button>
+        <button type="button" onClick="{{ catRecycle }}" aria-current="{{ isRecycle }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Recycling</button>
+        <button type="button" onClick="{{ catCustom }}" aria-current="{{ isCustom }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">Made to size</button>
+      </div>
+      <label style="margin-left: auto; display: flex; align-items: center; gap: 9px; min-width: 220px; flex: 0 1 300px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="color-mix(in srgb, currentColor 55%, transparent)" stroke-width="1.5" aria-hidden="true" style="flex: none;"><circle cx="11" cy="11" r="7" /><path d="m20 20-4.3-4.3" /></svg>
+        <input class="input" type="search" value="{{ query }}" onChange="{{ setQuery }}" placeholder="Search size, condition, use…" aria-label="Search the pallet range" />
+      </label>
+    </div>
+  </section>
+
+  <section style="padding: clamp(28px, 4vw, 52px) 0 clamp(40px, 5vw, 72px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+      <p style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); margin: 0 0 24px;">{{ resultLabel }}</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+        <sc-for list="{{ items }}" as="item" hint-placeholder-count="6">
+          <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+            <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-accent-100);">
+              <img src="{{ item.img }}" alt="{{ item.name }}" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+            </div>
+            <div style="padding: clamp(22px, 2.6vw, 30px); display: flex; flex-direction: column; gap: 13px; flex: 1;">
+              <div style="display: flex; justify-content: space-between; gap: 12px; align-items: baseline;">
+                <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">{{ item.code }}</span>
+                <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 11px; background: var(--color-accent-100); color: var(--color-accent-800); white-space: nowrap;">{{ item.stock }}</span>
+              </div>
+              <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: 26px; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; margin: 0;">{{ item.name }}</h2>
+              <p style="font-size: 15px; line-height: 24px; margin: 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">{{ item.desc }}</p>
+              <dl style="margin: 6px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 8px 18px; font-size: 14px; line-height: 20px; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--color-text) 9%, transparent);">
+                <dt style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 52%, transparent); align-self: center;">Condition</dt>
+                <dd style="margin: 0;">{{ item.condition }}</dd>
+                <dt style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 52%, transparent); align-self: center;">Sizes</dt>
+                <dd style="margin: 0;">{{ item.size }}</dd>
+                <dt style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 52%, transparent); align-self: center;">Suits</dt>
+                <dd style="margin: 0;">{{ item.suits }}</dd>
+              </dl>
+              <div style="display: flex; gap: 9px; flex-wrap: wrap; margin-top: auto; padding-top: 22px;">
+                <button type="button" class="btn btn-primary" onClick="{{ item.quote }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 13px 20px; min-height: 46px;">Quick quote</button>
+                <a class="btn btn-secondary" href="{{ item.wa }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 13px 20px; min-height: 46px;">WhatsApp</a>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+        <div style="background: #ffffff; padding: clamp(36px, 5vw, 56px) 30px; text-align: center;">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 26px; letter-spacing: 0.02em; text-transform: uppercase; margin: 0;">Nothing here matches that</h3>
+          <p style="font-size: 15px; line-height: 24px; margin: 12px auto 22px; max-width: 46ch; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Most of what leaves this yard is made to order, so a size we do not list is usually still a size we can build. Tell us the measurement.</p>
+          <button type="button" class="btn btn-primary" onClick="{{ quoteCustom }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; min-height: 48px;">Ask for a custom build</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 clamp(44px, 6vw, 76px);">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: var(--color-accent-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
+        <div>
+          <span style="display: block; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 14px;">Sizes &amp; specification</span>
+          <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 46px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">We build to the size you give us</h2>
+          <p style="font-size: 16px; line-height: 27px; margin: 20px 0 0; max-width: 50ch; color: color-mix(in srgb, var(--color-text) 74%, transparent);">Board count, board thickness, spacing and base height all change with the job, so we do not publish a fixed specification &mdash; we quote against your measurement or your sample. Bring a carton, a drawing, a photo, or the pallet you use now.</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px;">
+            <button type="button" class="btn btn-primary" onClick="{{ quoteCustom }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; min-height: 48px;">Send your size</button>
+            <a class="btn btn-secondary" href="Gallery.dc.html" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">See the yard</a>
+          </div>
+        </div>
+        <div data-zoom data-wipe data-reveal data-parallax="34" style="background: var(--color-accent-100);">
+          <img src="assets/pallet-rows-aisle.jpg" alt="Rows of finished wooden pallets stacked in the yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dc-import name="QuoteForm" hint-size="100%,720px"></dc-import>
+<dc-import name="SiteFooter" hint-size="100%,480px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATALOG = [
+  { id: 'nhd', img: 'assets/pallet-studio-new-a.png', code: 'AMC / P-01', name: 'New pallet — heavy duty', cats: ['new'],
+    stock: 'Made to order', condition: 'New wood, built to order', size: 'Any size you give us',
+    suits: 'Steel, chemicals, heavy manufacturing',
+    desc: 'Built new from wood for the heaviest loads we handle. Thicker boards and extra nailing where the weight sits. Board count and thickness are set by what it has to carry.' },
+  { id: 'nld', img: 'assets/pallet-studio-new-b.png', code: 'AMC / P-02', name: 'New pallet — light duty', cats: ['new'],
+    stock: 'Made to order', condition: 'New wood, built to order', size: 'Any size you give us',
+    suits: 'Food, retail, general cargo',
+    desc: 'The economical new pallet. Light enough to move by hand, which suits food and beverage, retail and pharma work where the load is not extreme.' },
+  { id: 'std', img: 'assets/pallet-light.webp', code: 'AMC / P-03', name: 'Standard pallet — 100 × 120 cm', cats: ['new'],
+    stock: 'Usually in stock', condition: 'New', size: '100 × 120 cm',
+    suits: 'Warehousing, export, day-to-day handling',
+    desc: 'Our most requested size, kept in the yard for urgent orders. If you need a few hundred quickly, this is the one that ships first.' },
+  { id: 'ugd', img: 'assets/pallet-studio-old.png', code: 'AMC / P-04', name: 'Used pallet — good grade', cats: ['used'],
+    stock: 'In stock', condition: 'Used, checked and sound', size: 'Assorted, mostly 100 × 120 cm',
+    suits: 'In-plant movement, one-way export',
+    desc: 'Second-hand pallets with sound structure and only cosmetic wear. Checked for broken boards and loose blocks before they leave the yard.' },
+  { id: 'uec', img: 'assets/pallet-used.webp', code: 'AMC / P-05', name: 'Used pallet — economy', cats: ['used'],
+    stock: 'In stock', condition: 'Used, serviceable', size: 'Assorted',
+    suits: 'Short runs, storage, low-cost shipping',
+    desc: 'Working pallets at the lowest price we sell. Marked and weathered, but they hold together and do the job for storage and short trips.' },
+  { id: 'old', img: 'assets/pallets-weathered-old.jpg', code: 'AMC / P-06', name: 'Old pallets', cats: ['used', 'recycle'],
+    stock: 'In stock', condition: 'Old, sold as seen', size: 'Assorted',
+    suits: 'Craft, dunnage, one-trip use',
+    desc: 'Older stock sold as seen, by the piece or the lot. Popular with workshops, craft buyers and anyone who needs cheap dunnage rather than a rated deck.' },
+  { id: 'rec', img: 'assets/pallet-blocks-closeup.jpg', code: 'AMC / P-07', name: 'Pallet recycling &amp; repair', cats: ['recycle'],
+    stock: 'Ongoing', condition: 'Repaired and re-graded', size: 'Yours or ours',
+    suits: 'Companies with pallets piling up',
+    desc: 'We take old pallets in, repair what can be repaired and re-grade the rest. If you have pallets accumulating in your yard, we will look at buying or collecting them.' },
+  { id: 'uwd', img: 'assets/pallet-wall-grid.jpg', code: 'AMC / P-08', name: 'Used wood &amp; boards', cats: ['recycle'],
+    stock: 'In stock', condition: 'Reclaimed wood', size: 'Mixed lengths',
+    suits: 'Site work, crating, repairs, fuel',
+    desc: 'Loose reclaimed boards and offcuts from dismantled pallets. Sold by the lot for site work, crating, repairs and general use.' },
+  { id: 'blk', img: 'assets/yard-stacks-sky.jpg', code: 'AMC / P-09', name: 'Mixed pallets — bulk lot', cats: ['used', 'custom'],
+    stock: 'Immediate pickup', condition: 'Mixed, usable', size: 'Assorted sizes',
+    suits: 'Volume buyers, exporters, traders',
+    desc: 'Assorted pallets in usable condition, sold by the lot for buyers who need large quantities fast. Cheapest per piece if you collect from Al Sajaa yourself.' },
+];
+
+class Component extends DCLogic {
+  state = { cat: 'all', q: '' };
+
+  quote(product) { window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product } })); }
+
+  renderVals() {
+    const { cat, q } = this.state;
+    const needle = q.trim().toLowerCase();
+    const items = CATALOG.filter((p) => {
+      if (cat !== 'all' && p.cats.indexOf(cat) === -1) return false;
+      if (!needle) return true;
+      return [p.name, p.desc, p.condition, p.size, p.suits, p.stock].join(' ').toLowerCase().indexOf(needle) > -1;
+    }).map((p) =>
+      Object.assign({}, p, {
+        name: p.name.replace('&amp;', '&'),
+        quote: () => this.quote(p.name.replace('&amp;', '&')),
+        wa: 'https://wa.me/971505974922?text=' + encodeURIComponent('Hello Al Madhi Carpentry, I need a price for: ' + p.name.replace('&amp;', '&') + '.'),
+      })
+    );
+    const on = (k) => (cat === k ? 'true' : undefined);
+    return {
+      items,
+      empty: items.length === 0,
+      resultLabel: items.length === 1 ? 'Showing 1 of 9' : 'Showing ' + items.length + ' of 9',
+      query: q,
+      setQuery: (e) => this.setState({ q: e.target.value }),
+      catAll: () => this.setState({ cat: 'all' }),
+      catNew: () => this.setState({ cat: 'new' }),
+      catUsed: () => this.setState({ cat: 'used' }),
+      catRecycle: () => this.setState({ cat: 'recycle' }),
+      catCustom: () => this.setState({ cat: 'custom' }),
+      isAll: on('all'), isNew: on('new'), isUsed: on('used'), isRecycle: on('recycle'), isCustom: on('custom'),
+      quoteCustom: () => this.quote('Made-to-size pallet'),
+    };
+  }
+}
+</script>
+</body>
+</html>

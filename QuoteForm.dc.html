@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
+<script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
+</helmet>
+<section id="quote" ref="{{ rootRef }}" style="padding: 84px 0 96px; scroll-margin-top: 120px;">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); margin: 0 0 20px;"><i style="width: 24px; height: 1px; background: var(--color-accent); display: block;"></i>The order desk</span>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(28px, 4vw, 64px); align-items: start;">
+      <div>
+        <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(34px, 4.4vw, 54px); line-height: 0.94; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Send the size.<br />We will price it.</h2>
+        <p style="font-size: 16px; line-height: 26px; max-width: 46ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent);">The size and what the pallet has to carry is enough to start a quote. For shavings, tell us how many sacks. Quotes go out the same working day.</p>
+        <div style="margin-top: 32px; padding: 28px; display: grid; gap: 14px; background: #ffffff;">
+          <div style="display: flex; gap: 12px; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); width: 78px; flex: none;">Phone</span>
+            <a href="tel:+971505974922" style="font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.02em;">050 597 4922</a>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); width: 78px; flex: none;">Email</span>
+            <a href="mailto:almadhicarpentry@yahoo.com" style="font-size: 15px; word-break: break-all;">almadhicarpentry@yahoo.com</a>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); width: 78px; flex: none;">Yard</span>
+            <span style="font-size: 15px; line-height: 22px;">Al Sajaa Industrial Area, Sharjah<br />Monday to Saturday, 06:00 &ndash; 18:00</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: clamp(26px, 3.5vw, 44px); background: #ffffff;">
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="display: grid; gap: 16px; justify-items: start; padding: 30px 0;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 26px; letter-spacing: 0.02em; text-transform: uppercase; margin: 0;">Your enquiry is ready to send</h3>
+            <p style="font-size: 15px; line-height: 24px; margin: 0; max-width: 44ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">We opened your mail app with every detail filled in. If nothing appeared, WhatsApp us instead &mdash; the same details are one tap away.</p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a class="btn btn-primary" href="{{ waHref }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 18px;">Send on WhatsApp</a>
+              <button type="button" class="btn btn-secondary" onClick="{{ reset }}" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 18px;">Write another</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}" noValidate="{{ true }}">
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 24px; letter-spacing: 0.02em; text-transform: uppercase; margin: 0 0 20px;">Quotation request</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
+              <label class="field"><label>Your name *</label><input class="input" name="name" value="{{ vName }}" onChange="{{ set }}" placeholder="Full name" /></label>
+              <label class="field"><label>Company</label><input class="input" name="company" value="{{ vCompany }}" onChange="{{ set }}" placeholder="Company name" /></label>
+              <label class="field"><label>Phone *</label><input class="input" name="phone" value="{{ vPhone }}" onChange="{{ set }}" placeholder="05x xxx xxxx" /></label>
+              <label class="field"><label>Email</label><input class="input" name="email" value="{{ vEmail }}" onChange="{{ set }}" placeholder="you@company.ae" /></label>
+              <label class="field"><label>Product</label>
+                <select class="input" name="product" value="{{ vProduct }}" onChange="{{ set }}">
+                  <option>New pallet — heavy duty</option>
+                  <option>New pallet — light duty</option>
+                  <option>Standard pallet — 100 × 120 cm</option>
+                  <option>Used pallet — good grade</option>
+                  <option>Used pallet — economy</option>
+                  <option>Old pallets</option>
+                  <option>Pallet recycling &amp; repair</option>
+                  <option>Used wood &amp; boards</option>
+                  <option>Mixed pallets — bulk lot</option>
+                  <option>Made-to-size pallet</option>
+                  <option>Wood shavings — animal bedding</option>
+                  <option>Wood shavings — workshop absorbent</option>
+                  <option>Wood shavings — packing fill</option>
+                  <option>Wood shavings — bulk load</option>
+                  <option>Other / not sure</option>
+                </select>
+              </label>
+              <label class="field"><label>Quantity</label><input class="input" name="qty" value="{{ vQty }}" onChange="{{ set }}" placeholder="e.g. 200 pallets / 40 sacks" /></label>
+              <label class="field"><label>Size or spec</label><input class="input" name="size" value="{{ vSize }}" onChange="{{ set }}" placeholder="e.g. 100 × 120 cm, carries 800 kg" /></label>
+              <label class="field"><label>Delivery location</label><input class="input" name="place" value="{{ vPlace }}" onChange="{{ set }}" placeholder="Emirate / area" /></label>
+            </div>
+            <label class="field" style="display: block; margin-top: 14px;"><label>Message *</label>
+              <textarea class="input" ref="{{ areaRef }}" name="message" value="{{ vMessage }}" onChange="{{ set }}" rows="7" style="min-height: 150px; line-height: 22px;" placeholder="Tell us what the pallet has to carry, or what the shavings are for."></textarea>
+            </label>
+            <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+              <p style="margin: 12px 0 0; font-size: 14px; color: #9a3b3b;">{{ error }}</p>
+            </sc-if>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+              <button type="submit" class="btn btn-primary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 24px; min-height: 48px;">Send enquiry</button>
+              <a class="btn btn-secondary" href="{{ waHref }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; display: inline-flex; gap: 8px; align-items: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
+                WhatsApp
+              </a>
+              <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; min-height: 48px;">Call</a>
+            </div>
+            <p style="margin: 14px 0 0; font-size: 13px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 60%, transparent);">Name, phone and message are required. Sending opens your mail app with the enquiry written out &mdash; nothing is stored on this site.</p>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:720}}">
+class Component extends DCLogic {
+  state = {
+    f: { name: '', company: '', phone: '', email: '', product: 'New pallet — heavy duty', qty: '', size: '', place: '', message: '' },
+    error: '', sent: false,
+  };
+
+  componentDidMount() {
+    this.onQuote = (e) => this.prefill((e.detail && e.detail.product) || '');
+    window.addEventListener('almadhi:quote', this.onQuote);
+    if (location.hash === '#quote') setTimeout(() => this.scrollHere(), 300);
+  }
+  componentWillUnmount() { window.removeEventListener('almadhi:quote', this.onQuote); }
+
+  scrollHere() {
+    const el = this.root || document.getElementById('quote');
+    if (!el) return;
+    const de = document.documentElement;
+    const from = de.scrollTop || window.pageYOffset || 0;
+    const max = Math.max(0, de.scrollHeight - de.clientHeight);
+    const to = Math.min(max, Math.max(0, from + el.getBoundingClientRect().top - 96));
+    if (Math.abs(to - from) < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { de.scrollTop = to; return; }
+    cancelAnimationFrame(this.scrollRaf);
+    const t0 = performance.now();
+    const dur = 700;
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      de.scrollTop = from + (to - from) * e;
+      if (p < 1) this.scrollRaf = requestAnimationFrame(tick);
+    };
+    this.scrollRaf = requestAnimationFrame(tick);
+  }
+
+  prefill(product) {
+    // Do NOT write a Product line here — submit() already prepends one from the
+    // select field. Two sources produced two contradictory lines in the email.
+    const p = product;
+    const msg = [
+      'Hello Al Madhi Carpentry,',
+      '',
+      'I would like to request a quotation. Details below.',
+      '',
+      'Quantity: ',
+      'Size / spec: ',
+      'Delivery location: ',
+      '',
+      'Thank you.',
+    ].join('\n');
+    this.setState(
+      (s) => ({ sent: false, error: '', f: Object.assign({}, s.f, { product: this.matchOption(p), message: msg }) }),
+      () => {
+        this.scrollHere();
+        setTimeout(() => {
+          const a = this.area;
+          if (!a) return;
+          a.focus({ preventScroll: true });
+          const at = a.value.indexOf('Quantity: ');
+          if (at > -1) a.setSelectionRange(at + 10, at + 10);
+        }, 520);
+      }
+    );
+  }
+
+  matchOption(p) {
+    if (!p) return 'Other / not sure';
+    const opts = ['New pallet — heavy duty', 'New pallet — light duty', 'Standard pallet — 100 × 120 cm', 'Used pallet — good grade', 'Used pallet — economy', 'Old pallets', 'Pallet recycling & repair', 'Used wood & boards', 'Mixed pallets — bulk lot', 'Made-to-size pallet', 'Wood shavings — animal bedding', 'Wood shavings — workshop absorbent', 'Wood shavings — packing fill', 'Wood shavings — bulk load'];
+    return opts.indexOf(p) > -1 ? p : 'Other / not sure';
+  }
+
+  waText() {
+    const f = this.state.f;
+    return ['Hello Al Madhi Carpentry, I would like a quotation.', 'Product: ' + f.product, f.qty ? 'Quantity: ' + f.qty : '', f.size ? 'Size: ' + f.size : '', f.place ? 'Delivery: ' + f.place : '', f.name ? 'Name: ' + f.name : ''].filter(Boolean).join('\n');
+  }
+
+  renderVals() {
+    const f = this.state.f;
+    return {
+      rootRef: (el) => { this.root = el; },
+      areaRef: (el) => { this.area = el; },
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      error: this.state.error,
+      waHref: 'https://wa.me/971505974922?text=' + encodeURIComponent(this.waText()),
+      vName: f.name, vCompany: f.company, vPhone: f.phone, vEmail: f.email,
+      vProduct: f.product, vQty: f.qty, vSize: f.size, vPlace: f.place, vMessage: f.message,
+      set: (e) => {
+        const { name, value } = e.target;
+        this.setState((s) => ({ error: '', f: Object.assign({}, s.f, { [name]: value }) }));
+      },
+      reset: () => this.setState({ sent: false, error: '' }),
+      submit: (e) => {
+        e.preventDefault();
+        if (!f.name.trim() || !f.phone.trim() || !f.message.trim()) {
+          this.setState({ error: 'Please add your name, a phone number and a message so we can price it.' });
+          return;
+        }
+        const body = [
+          'Name: ' + f.name, 'Company: ' + (f.company || '—'), 'Phone: ' + f.phone, 'Email: ' + (f.email || '—'),
+          'Product: ' + f.product, 'Quantity: ' + (f.qty || '—'), 'Size / spec: ' + (f.size || '—'),
+          'Delivery location: ' + (f.place || '—'), '', f.message,
+        ].join('\n');
+        window.location.href = 'mailto:almadhicarpentry@yahoo.com?subject=' + encodeURIComponent('Quotation request — ' + f.name) + '&body=' + encodeURIComponent(body);
+        this.setState({ sent: true });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
