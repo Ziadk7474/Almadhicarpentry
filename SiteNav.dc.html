@@ -24,10 +24,10 @@
   .btn { position: relative; overflow: hidden; transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.28s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.28s ease; }
   .btn:hover { transform: translateY(-2px); }
   .btn:active { transform: translateY(0); }
-  .btn-primary { background: var(--color-accent-700); border-color: var(--color-accent-700); color: #fff; box-shadow: 0 1px 2px rgba(30,50,70,0.10), 0 10px 22px -14px rgba(30,50,70,0.55); }
-  .btn-primary:hover { background: var(--color-accent-800); border-color: var(--color-accent-800); box-shadow: 0 2px 5px rgba(30,50,70,0.12), 0 18px 34px -16px rgba(30,50,70,0.55); }
+  .btn-primary { background: var(--color-accent-700); border-color: var(--color-accent-700); color: #fff; box-shadow: 0 1px 2px rgba(36,31,27,0.10), 0 10px 22px -14px rgba(36,31,27,0.55); }
+  .btn-primary:hover { background: var(--color-accent-800); border-color: var(--color-accent-800); box-shadow: 0 2px 5px rgba(36,31,27,0.12), 0 18px 34px -16px rgba(36,31,27,0.55); }
   .btn-secondary { background: transparent; border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent); color: var(--color-text); }
-  .btn-secondary:hover { background: #fff; border-color: var(--color-accent); color: var(--color-accent-800); box-shadow: 0 12px 26px -18px rgba(30,50,70,0.5); }
+  .btn-secondary:hover { background: #fff; border-color: var(--color-accent); color: var(--color-accent-800); box-shadow: 0 12px 26px -18px rgba(36,31,27,0.5); }
 
   /* Scroll reveal is progressive enhancement: content ships visible and is only
      hidden once the logic class adds the js-reveal flag to the root element.
@@ -61,10 +61,10 @@
   .btn-primary:hover::after { transform: translateX(360%); }
 
   /* card + image micro-interactions */
-  [data-card] { transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; box-shadow: 0 1px 2px rgba(30,50,70,0.04), 0 10px 26px -18px rgba(30,50,70,0.30); }
+  [data-card] { transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; box-shadow: 0 1px 2px rgba(36,31,27,0.04), 0 10px 26px -18px rgba(36,31,27,0.30); }
   html.js-reveal [data-card][data-reveal] { transition: opacity 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), transform 0.75s cubic-bezier(0.2,0.7,0.2,1) var(--d, 0ms), box-shadow 0.4s ease; }
   html.js-reveal [data-card][data-reveal].is-in { transition: opacity 0.5s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease; }
-  [data-card]:hover { transform: translateY(-5px); box-shadow: 0 3px 6px rgba(30,50,70,0.06), 0 30px 56px -26px rgba(30,50,70,0.38); }
+  [data-card]:hover { transform: translateY(-5px); box-shadow: 0 3px 6px rgba(36,31,27,0.06), 0 30px 56px -26px rgba(36,31,27,0.38); }
   [data-zoom] { overflow: hidden; }
   [data-zoom] img { transition: transform 0.9s cubic-bezier(0.2,0.7,0.2,1); }
   [data-card]:hover [data-zoom] img, [data-zoom]:hover img { transform: scale(1.055); }
@@ -92,10 +92,17 @@
   }
 </style>
 </helmet>
-<header ref="{{ headerRef }}" style="background: color-mix(in srgb, #eef6ff 78%, transparent); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid {{ borderColor }}; box-shadow: {{ shadow }}; transition: box-shadow 0.3s ease, border-color 0.3s ease;">
+<header ref="{{ headerRef }}" style="background: color-mix(in srgb, #fbf3e9 80%, transparent); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid {{ borderColor }}; box-shadow: {{ shadow }}; transition: box-shadow 0.3s ease, border-color 0.3s ease;">
   <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); height: {{ barHeight }}; display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); transition: height 0.32s cubic-bezier(0.2,0.7,0.2,1);">
     <a href="index.dc.html" style="display: flex; align-items: center; gap: 12px; flex: none; color: var(--color-text);">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-700)" stroke-width="1.5" aria-hidden="true" style="flex: none;"><path d="M2 6h20M2 12h20M2 18h20M6 6v12M18 6v12" /></svg>
+      <svg width="30" height="38" viewBox="0 0 478 600" aria-hidden="true" style="flex: none;">
+        <path d="M239 28 L452 79 V300 C452 418 342 508 239 568 C136 508 26 418 26 300 V79 Z" fill="#F7F6F1" stroke="#C69320" stroke-width="24" stroke-linejoin="miter"/>
+        <g fill="#082043">
+          <path d="M83 156 H393 V217 H270 V205 H206 V217 H83 Z"/>
+          <path d="M83 246 H206 V256 H270 V246 H393 V306 H270 V294 H206 V306 H83 Z"/>
+          <path d="M83 334 H206 V344 H270 V334 H393 V395 H270 V383 H206 V395 H83 Z"/>
+        </g>
+      </svg>
       <span style="display: flex; flex-direction: column; gap: 3px;">
         <span style="font-family: var(--font-heading); font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: 0.035em; text-transform: uppercase;">Al Madhi Carpentry</span>
         <span style="font-size: 10.5px; line-height: 1; letter-spacing: 0.17em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 46%, transparent);">Sharjah &middot; Since 2003</span>
@@ -123,7 +130,7 @@
     </button>
   </div>
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); background: #eef6ff;">
+    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); background: #fbf3e9;">
       <div style="max-width: 1360px; margin: 0 auto; padding: 8px clamp(16px, 3vw, 40px) 24px; display: flex; flex-direction: column;">
         <a href="index.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Home</a>
         <a href="Pallets.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Pallets</a>
@@ -323,15 +330,15 @@ class Component extends DCLogic {
     return {
       headerRef: (el) => { this.header = el; },
       barHeight: sc ? '62px' : '78px',
-      shadow: sc ? '0 1px 0 rgba(30,50,70,0.04), 0 14px 30px -22px rgba(30,50,70,0.45)' : 'none',
-      borderColor: sc ? 'transparent' : 'color-mix(in srgb, #1d1f20 9%, transparent)',
+      shadow: sc ? '0 1px 0 rgba(36,31,27,0.04), 0 14px 30px -22px rgba(36,31,27,0.45)' : 'none',
+      borderColor: sc ? 'transparent' : 'color-mix(in srgb, #241f1b 9%, transparent)',
       menuOpen: this.state.menuOpen,
       burgerPath: this.state.menuOpen
         ? React.createElement('path', { d: 'M6 6l12 12M18 6L6 18' })
         : React.createElement('path', { d: 'M3 6h18M3 12h18M3 18h18' }),
       toggleMenu: () => this.setState((st) => ({ menuOpen: !st.menuOpen })),
       requestQuote: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
-      statusColor: open ? '#3f9153' : 'color-mix(in srgb, #1d1f20 28%, transparent)',
+      statusColor: open ? '#3f9153' : 'color-mix(in srgb, #241f1b 28%, transparent)',
       statusHalo: open ? 'rgba(63,145,83,0.18)' : 'transparent',
       statusHint: open ? 'The yard is open now — Monday to Saturday, 06:00–18:00' : 'Closed now — Monday to Saturday, 06:00–18:00',
       isHome: cur('home'), isPallets: cur('pallets'), isShavings: cur('shavings'),

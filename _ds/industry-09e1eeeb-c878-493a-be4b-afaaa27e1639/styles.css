@@ -2,44 +2,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;600&display=swap');
 
 :root {
-  --color-bg: #f2f2f3;
-  --color-surface: #e9e9ea;
-  --color-text: #1d1f20;
-  --color-accent: #5980a6;
-  --color-accent-2: #728fab;
-  --color-divider: color-mix(in srgb, #1d1f20 16%, transparent);
+  /* Brand palette — warm white, wood-toned orange, natural wood, charcoal.
+     --color-accent-* is the warm-orange ramp (buttons, links, highlights);
+     --color-accent-2-* is a muted natural-wood ramp for structural surfaces
+     (footers, section dividers, secondary chips). Both share one lightness
+     scale so any step of either ramp matches in visual weight. */
+  --color-bg: #fbf9f6;
+  --color-surface: #f1ece3;
+  --color-text: #241f1b;
+  --color-accent: #a35a20;
+  --color-accent-2: #8b6f52;
+  --color-divider: color-mix(in srgb, #241f1b 16%, transparent);
 
-  /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
-     same step of any role matches the others in visual value. */
-  --color-neutral-100: #f5f5f8;
-  --color-neutral-200: #e7e7ea;
-  --color-neutral-300: #d4d4d7;
-  --color-neutral-400: #b7b7ba;
-  --color-neutral-500: #98989b;
-  --color-neutral-600: #7a7a7d;
-  --color-neutral-700: #5d5d60;
-  --color-neutral-800: #424244;
-  --color-neutral-900: #2b2b2d;
+  --color-neutral-100: #f7f5f2;
+  --color-neutral-200: #eae6e0;
+  --color-neutral-300: #d6cfc5;
+  --color-neutral-400: #b8aea0;
+  --color-neutral-500: #978c7c;
+  --color-neutral-600: #786f60;
+  --color-neutral-700: #5c5448;
+  --color-neutral-800: #423c33;
+  --color-neutral-900: #2a251f;
 
-  --color-accent-100: #eef6ff;
-  --color-accent-200: #d6ebff;
-  --color-accent-300: #b5d9fd;
-  --color-accent-400: #94bce3;
-  --color-accent-500: #749dc4;
-  --color-accent-600: #597ea3;
-  --color-accent-700: #416180;
-  --color-accent-800: #2c455d;
-  --color-accent-900: #1d2d3d;
+  --color-accent-100: #fbf1e7;
+  --color-accent-200: #f3dfc4;
+  --color-accent-300: #e7c398;
+  --color-accent-400: #d8a26b;
+  --color-accent-500: #c6813f;
+  --color-accent-600: #9c5a1e;
+  --color-accent-700: #7e4515;
+  --color-accent-800: #5f3410;
+  --color-accent-900: #3c2009;
 
-  --color-accent-2-100: #eef6ff;
-  --color-accent-2-200: #d6ebff;
-  --color-accent-2-300: #bdd8f2;
-  --color-accent-2-400: #9ebbd8;
-  --color-accent-2-500: #7e9cb8;
-  --color-accent-2-600: #627d98;
-  --color-accent-2-700: #486077;
-  --color-accent-2-800: #314457;
-  --color-accent-2-900: #1f2d3a;
+  --color-accent-2-100: #f4eee5;
+  --color-accent-2-200: #e6d9c8;
+  --color-accent-2-300: #d2bba0;
+  --color-accent-2-400: #b99872;
+  --color-accent-2-500: #9c7850;
+  --color-accent-2-600: #7e5f3d;
+  --color-accent-2-700: #644b2f;
+  --color-accent-2-800: #493622;
+  --color-accent-2-900: #2c2013;
 
   --font-heading: "Barlow Condensed", system-ui, sans-serif;
   --font-heading-weight: 600;
@@ -58,9 +61,9 @@
 
   /* Elevation — derived from the ground: soft ink-tinted shadows on a
      light theme, a hairline edge + ambient darkness on a dark one. */
-  --shadow-sm: 0 1px 2px color-mix(in srgb, #2b2b2d 14%, transparent);
-  --shadow-md: 0 3px 10px color-mix(in srgb, #2b2b2d 16%, transparent);
-  --shadow-lg: 0 12px 32px color-mix(in srgb, #2b2b2d 22%, transparent);
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #241f1b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #241f1b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #241f1b 22%, transparent);
 }
 
 body {

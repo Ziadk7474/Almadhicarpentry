@@ -1,0 +1,8 @@
+<svg viewBox="0 0 478 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Al Madhi Carpentry shield mark">
+  <path d="M239 28 L452 79 V300 C452 418 342 508 239 568 C136 508 26 418 26 300 V79 Z" fill="#F7F6F1" stroke="#C69320" stroke-width="24" stroke-linejoin="miter"/>
+  <g fill="#082043">
+    <path d="M83 156 H393 V217 H270 V205 H206 V217 H83 Z"/>
+    <path d="M83 246 H206 V256 H270 V246 H393 V306 H270 V294 H206 V306 H83 Z"/>
+    <path d="M83 334 H206 V344 H270 V334 H393 V395 H270 V383 H206 V395 H83 Z"/>
+  </g>
+</svg>
