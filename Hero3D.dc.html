@@ -33,6 +33,15 @@
     margin: 0; max-width: 56ch; font-size: clamp(15px, 1.6vw, 18px); line-height: 1.45;
     color: var(--color-text);
   }
+  /* The hero band bottoms out at a 280px min-height on phones — a
+     desktop-sized caption there would eat more than half the band and
+     bury the pallet behind it, so it shrinks further than clamp() alone
+     would take it. */
+  @media (max-width: 640px) {
+    [data-hero3d-caption] { padding: 12px 16px; }
+    [data-hero3d-caption] .eyebrow { font-size: 10.5px; margin-bottom: 4px; }
+    [data-hero3d-caption] p { font-size: 12.5px; line-height: 1.4; max-width: 42ch; }
+  }
   @media (prefers-reduced-motion: reduce) {
     [data-hero3d-fallback] rect { transition: none; }
     [data-hero3d-caption] { transition: none; }
