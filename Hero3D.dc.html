@@ -10,7 +10,7 @@
 <helmet>
 <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <style>
-  [data-hero3d] { position: relative; width: 100%; height: clamp(280px, 42vw, 560px); overflow: hidden; background: var(--color-bg); }
+  [data-hero3d] { position: relative; width: 100%; height: clamp(280px, 42vw, 560px); overflow: hidden; background: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%); }
   [data-hero3d] canvas { display: block; width: 100%; height: 100%; }
   [data-hero3d-fallback] { position: absolute; inset: 0; width: 100%; height: 100%; }
   [data-hero3d-fallback] rect { transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--fd, 0ms); }
@@ -154,11 +154,13 @@ class Component extends DCLogic {
     fill.position.set(-6, 5, -4);
     scene.add(fill);
 
-    // Plain white/light-grey studio backdrop — a seamless sweep, not a
-    // tan/sand landscape. Ground stays a hair off pure white so it can
-    // still pick up the key light's soft shadow.
+    // Seamless studio backdrop: the CSS gradient behind the (alpha:true)
+    // canvas IS the white-to-light-grey sweep, so the ground itself must
+    // never paint a visible color or edge — a ShadowMaterial renders
+    // nothing but the soft shadow it catches, which is what a real floor
+    // in a product shot would show against seamless paper.
     const groundGeo = new THREE.PlaneGeometry(60, 60);
-    const groundMat = new THREE.MeshStandardMaterial({ color: 0xf5f5f5, roughness: 0.95 });
+    const groundMat = new THREE.ShadowMaterial({ opacity: 0.22 });
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.72;
@@ -187,7 +189,7 @@ class Component extends DCLogic {
     const runnerGeo = new THREE.BoxGeometry(0.55, 0.5, 7.6);
     this._disposables.push(runnerGeo);
     [-3.1, 0, 3.1].forEach((x) => {
-      const mat = new THREE.MeshStandardMaterial({ map: runnerTex, color: 0xdcc292, roughness: 0.88 });
+      const mat = new THREE.MeshStandardMaterial({ map: runnerTex, color: 0xc9b890, roughness: 0.94 });
       this._disposables.push(mat);
       const m = new THREE.Mesh(runnerGeo, mat);
       m.castShadow = true; m.receiveShadow = true;
@@ -197,7 +199,7 @@ class Component extends DCLogic {
     this._disposables.push(deckGeo);
     for (let i = 0; i < 9; i++) {
       const z = -3.6 + i * 0.9;
-      const mat = new THREE.MeshStandardMaterial({ map: deckTex, color: 0xe8d3a4, roughness: 0.85 });
+      const mat = new THREE.MeshStandardMaterial({ map: deckTex, color: 0xd9caa3, roughness: 0.92 });
       this._disposables.push(mat);
       const m = new THREE.Mesh(deckGeo, mat);
       m.castShadow = true; m.receiveShadow = true;
@@ -290,7 +292,7 @@ class Component extends DCLogic {
     const c = document.createElement('canvas');
     c.width = w; c.height = h;
     const ctx = c.getContext('2d');
-    ctx.fillStyle = '#e8d3a4';
+    ctx.fillStyle = '#d9caa3';
     ctx.fillRect(0, 0, w, h);
     const streaks = 14;
     for (let i = 0; i < streaks; i++) {
@@ -303,7 +305,7 @@ class Component extends DCLogic {
         const y = yBase + Math.sin(x * freq + phase) * amp;
         if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = 'rgba(160, 122, 72,' + (0.12 + Math.random() * 0.18).toFixed(2) + ')';
+      ctx.strokeStyle = 'rgba(142, 124, 96,' + (0.12 + Math.random() * 0.18).toFixed(2) + ')';
       ctx.lineWidth = 1 + Math.random() * 2;
       ctx.stroke();
     }
@@ -313,9 +315,9 @@ class Component extends DCLogic {
       const ky = 15 + Math.random() * (h - 30);
       const kr = 4 + Math.random() * 4;
       const grad = ctx.createRadialGradient(kx, ky, 0, kx, ky, kr * 2.2);
-      grad.addColorStop(0, 'rgba(120, 88, 50, 0.85)');
-      grad.addColorStop(0.5, 'rgba(140, 104, 60, 0.4)');
-      grad.addColorStop(1, 'rgba(140, 104, 60, 0)');
+      grad.addColorStop(0, 'rgba(108, 92, 68, 0.8)');
+      grad.addColorStop(0.5, 'rgba(124, 108, 84, 0.38)');
+      grad.addColorStop(1, 'rgba(124, 108, 84, 0)');
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.ellipse(kx, ky, kr * 2.2, kr * 1.4, 0, 0, Math.PI * 2);
@@ -346,7 +348,7 @@ class Component extends DCLogic {
     const runners = [60, 190, 320];
     runners.forEach((x, i) => {
       items.push({
-        x, y: 150, w: 22, h: 90, fill: '#dcc292',
+        x, y: 150, w: 22, h: 90, fill: '#c9b890',
         style: reduced
           ? 'transform: translate(0,0) rotate(0deg);'
           : 'transform: translate(' + (i % 2 ? 90 : -90) + 'px, -60px) rotate(' + (i % 2 ? 24 : -24) + 'deg); --fd: ' + (i * 90) + 'ms;',
@@ -355,7 +357,7 @@ class Component extends DCLogic {
     for (let i = 0; i < 9; i++) {
       const y = 60 + i * 10;
       items.push({
-        x: 40, y, w: 320, h: 7, fill: '#e8d3a4',
+        x: 40, y, w: 320, h: 7, fill: '#d9caa3',
         style: reduced
           ? 'transform: translate(0,0) rotate(0deg);'
           : 'transform: translate(' + (i % 2 ? 140 : -140) + 'px, ' + (-40 - i * 6) + 'px) rotate(' + (i % 2 ? -14 : 14) + 'deg); --fd: ' + (240 + i * 70) + 'ms;',

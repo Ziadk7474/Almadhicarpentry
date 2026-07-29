@@ -15,7 +15,12 @@
   --color-bg: #ffffff;
   --color-surface: #f7f7f6;
   --color-text: #241f1b;
-  --color-accent: #a35a20;
+  /* True vibrant orange, no brown undertone — this exact hex is the brand
+     accent, used directly for large text/numbers/decorative flourishes.
+     Small-text contexts (button labels) use --color-accent-600/700 instead:
+     both are the same saturated hue, just calibrated dark enough to hold
+     4.5:1 with white type — using #e8630a there would fail that check. */
+  --color-accent: #e8630a;
   --color-accent-2: #8b6f52;
   --color-divider: color-mix(in srgb, #241f1b 14%, transparent);
 
@@ -29,15 +34,15 @@
   --color-neutral-800: #47443d;
   --color-neutral-900: #2d2b26;
 
-  --color-accent-100: #fbf1e7;
-  --color-accent-200: #f3dfc4;
-  --color-accent-300: #e7c398;
-  --color-accent-400: #d8a26b;
-  --color-accent-500: #c6813f;
-  --color-accent-600: #9c5a1e;
-  --color-accent-700: #7e4515;
-  --color-accent-800: #5f3410;
-  --color-accent-900: #3c2009;
+  --color-accent-100: #fef0e7;
+  --color-accent-200: #fcdeca;
+  --color-accent-300: #f7c3a1;
+  --color-accent-400: #f59656;
+  --color-accent-500: #e8630a;
+  --color-accent-600: #c45308;
+  --color-accent-700: #a04508;
+  --color-accent-800: #7d3708;
+  --color-accent-900: #552607;
 
   --color-accent-2-100: #f4eee5;
   --color-accent-2-200: #e6d9c8;
@@ -177,9 +182,9 @@ figcaption {
 }
 .btn svg { display: block; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-primary { background: var(--color-accent); color: var(--color-bg); }
-.btn-primary:hover { background: var(--color-accent-600); }
-.btn-primary:active { background: var(--color-accent-700); }
+.btn-primary { background: var(--color-accent-600); color: var(--color-bg); }
+.btn-primary:hover { background: var(--color-accent-700); }
+.btn-primary:active { background: var(--color-accent-800); }
 .btn-secondary { border-color: var(--color-info-500); color: var(--color-info-700); }
 .btn-secondary:hover { background: var(--color-info-100); border-color: var(--color-info-700); color: var(--color-info-800); }
 .btn-secondary:active { background: color-mix(in srgb, var(--color-info-500) 16%, transparent); }
