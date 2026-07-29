@@ -21,13 +21,13 @@
   :focus-visible { outline: 2px solid var(--color-accent-700); outline-offset: 3px; }
 
   /* premium button treatment, applied site-wide */
-  .btn { position: relative; overflow: hidden; transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.28s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.28s ease; }
+  .btn { position: relative; overflow: hidden; transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.28s ease; }
   .btn:hover { transform: translateY(-2px); }
-  .btn:active { transform: translateY(0); }
+  .btn:active { transform: translateY(0) scale(0.96); transition-duration: 0.09s; }
   .btn-primary { background: var(--color-accent-700); border-color: var(--color-accent-700); color: #fff; box-shadow: 0 1px 2px rgba(36,31,27,0.10), 0 10px 22px -14px rgba(36,31,27,0.55); }
   .btn-primary:hover { background: var(--color-accent-800); border-color: var(--color-accent-800); box-shadow: 0 2px 5px rgba(36,31,27,0.12), 0 18px 34px -16px rgba(36,31,27,0.55); }
-  .btn-secondary { background: transparent; border: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent); color: var(--color-text); }
-  .btn-secondary:hover { background: #fff; border-color: var(--color-accent); color: var(--color-accent-800); box-shadow: 0 12px 26px -18px rgba(36,31,27,0.5); }
+  .btn-secondary { background: transparent; border: 1px solid var(--color-info-500); color: var(--color-info-700); }
+  .btn-secondary:hover { background: var(--color-info-100); border-color: var(--color-info-700); color: var(--color-info-800); box-shadow: 0 12px 26px -18px rgba(36,31,27,0.4); }
 
   /* Scroll reveal is progressive enhancement: content ships visible and is only
      hidden once the logic class adds the js-reveal flag to the root element.
@@ -94,7 +94,7 @@
   }
 </style>
 </helmet>
-<header ref="{{ headerRef }}" style="background: color-mix(in srgb, #fbf3e9 80%, transparent); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid {{ borderColor }}; box-shadow: {{ shadow }}; transition: box-shadow 0.3s ease, border-color 0.3s ease;">
+<header ref="{{ headerRef }}" style="background: color-mix(in srgb, #ffffff 80%, transparent); backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6); border-bottom: 1px solid {{ borderColor }}; box-shadow: {{ shadow }}; transition: box-shadow 0.3s ease, border-color 0.3s ease;">
   <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); height: {{ barHeight }}; display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); transition: height 0.32s cubic-bezier(0.2,0.7,0.2,1);">
     <a href="index.dc.html" style="display: flex; align-items: center; gap: 12px; flex: none; color: var(--color-text);">
       <svg width="30" height="38" viewBox="0 0 478 600" aria-hidden="true" style="flex: none;">
@@ -132,7 +132,7 @@
     </button>
   </div>
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); background: #fbf3e9;">
+    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); background: #ffffff;">
       <div style="max-width: 1360px; margin: 0 auto; padding: 8px clamp(16px, 3vw, 40px) 24px; display: flex; flex-direction: column;">
         <a href="index.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Home</a>
         <a href="Pallets.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Pallets</a>
@@ -340,7 +340,7 @@ class Component extends DCLogic {
         : React.createElement('path', { d: 'M3 6h18M3 12h18M3 18h18' }),
       toggleMenu: () => this.setState((st) => ({ menuOpen: !st.menuOpen })),
       requestQuote: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
-      statusColor: open ? '#3f9153' : 'color-mix(in srgb, #241f1b 28%, transparent)',
+      statusColor: open ? 'var(--color-success-500)' : 'color-mix(in srgb, #241f1b 28%, transparent)',
       statusHalo: open ? 'rgba(63,145,83,0.18)' : 'transparent',
       statusHint: open ? 'The yard is open now — Monday to Saturday, 06:00–18:00' : 'Closed now — Monday to Saturday, 06:00–18:00',
       isHome: cur('home'), isPallets: cur('pallets'), isShavings: cur('shavings'),

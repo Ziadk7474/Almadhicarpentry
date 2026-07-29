@@ -15,9 +15,9 @@
 <script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
 <style>
   html { scroll-behavior: smooth; }
-  body { margin: 0; text-wrap: pretty; background: var(--color-accent-100); }
-  a { color: var(--color-accent-700); text-decoration: none; }
-  a:hover { color: var(--color-accent-800); }
+  body { margin: 0; text-wrap: pretty; background: var(--color-neutral-100); }
+  a { color: var(--color-info-700); text-decoration: none; }
+  a:hover { color: var(--color-info-800); }
   button[aria-current='true'] { background: var(--color-accent-700) !important; color: #fff !important; border-color: var(--color-accent-700) !important; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
@@ -45,7 +45,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: clamp(22px, 3vw, 40px);">
         <sc-for list="{{ frames }}" as="f" hint-placeholder-count="12">
           <figure data-card data-reveal style="margin: 0; grid-column: {{ f.span }}; background: #ffffff;">
-            <button type="button" class="duotone" data-zoom data-wipe data-reveal onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="display: block; width: 100%; padding: 0; border: 0; background: var(--color-accent-100); cursor: {{ f.cursor }};">
+            <button type="button" class="duotone" data-zoom data-wipe data-reveal onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="display: block; width: 100%; padding: 0; border: 0; background: var(--color-neutral-100); cursor: {{ f.cursor }};">
               <img src="{{ f.img }}" alt="{{ f.caption }}" style="width: 100%; height: auto; aspect-ratio: {{ f.ratio }}; object-fit: cover;" />
             </button>
             <figcaption style="display: flex; justify-content: space-between; gap: 14px; align-items: baseline; padding: 15px 18px 17px; font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 72%, transparent);">
@@ -61,7 +61,7 @@
 
   <section style="padding: 0 0 clamp(48px, 6vw, 80px);">
     <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
-      <div data-reveal style="background: var(--color-accent-200); padding: clamp(28px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; align-items: center;">
+      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(28px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; align-items: center;">
         <div>
           <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px, 3vw, 38px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">Come and see the yard</h2>
           <p style="font-size: 15.5px; line-height: 25px; margin: 14px 0 0; max-width: 48ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">Customers are welcome at Al Sajaa any working day between 06:00 and 18:00. Bring a carton or a sample pallet and we will measure it with you on the bench.</p>

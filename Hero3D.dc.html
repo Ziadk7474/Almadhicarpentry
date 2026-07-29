@@ -35,9 +35,11 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:420}}">
 /* Cinematic plank-assembly intro for the homepage hero. Two independent
    render paths, chosen once and never mixed mid-session:
-   - three: a WebGL scene where 12 wood planks fly in from scattered start
-     poses and settle into a pallet (3 runners + 9 deck boards), with a slow
-     camera dolly-in and a warm key light casting real shadows.
+   - three: a WebGL scene where 12 light-pine planks (procedural wood-grain
+     texture) fly in from scattered start poses and settle into a pallet
+     (3 runners + 9 deck boards), shot from a 3/4 catalogue angle on a
+     plain white/light-grey studio backdrop with soft, even, neutral
+     lighting and a slow camera dolly-in.
    - fallback: the same 12-plank layout as flat SVG rects, animated purely
      with CSS transform/opacity (compositor-only, no canvas) for phones
      that can't hold a smooth WebGL frame rate, for browsers without WebGL,
@@ -133,22 +135,30 @@ class Component extends DCLogic {
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     this._camera = camera;
 
-    const hemi = new THREE.HemisphereLight(0xfdf3e7, 0x2c2009, 0.65);
+    // Soft, even studio lighting — neutral white throughout (no amber/tan
+    // cast), a broad ambient fill so the shadow stays gentle, and a single
+    // key light for one soft shadow rather than hard directional contrast.
+    const hemi = new THREE.HemisphereLight(0xffffff, 0xe4e4e4, 0.9);
     scene.add(hemi);
-    const key = new THREE.DirectionalLight(0xffd9ad, 1.15);
-    key.position.set(6, 10, 6);
+    const key = new THREE.DirectionalLight(0xffffff, 0.85);
+    key.position.set(5, 9, 7);
     key.castShadow = true;
     key.shadow.mapSize.set(1024, 1024);
     key.shadow.camera.left = -8; key.shadow.camera.right = 8;
     key.shadow.camera.top = 8; key.shadow.camera.bottom = -8;
     key.shadow.camera.updateProjectionMatrix();
+    key.shadow.radius = 4;
+    key.shadow.bias = -0.0015;
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xfff3e6, 0.35);
-    fill.position.set(-7, 4, -5);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.4);
+    fill.position.set(-6, 5, -4);
     scene.add(fill);
 
+    // Plain white/light-grey studio backdrop — a seamless sweep, not a
+    // tan/sand landscape. Ground stays a hair off pure white so it can
+    // still pick up the key light's soft shadow.
     const groundGeo = new THREE.PlaneGeometry(60, 60);
-    const groundMat = new THREE.MeshStandardMaterial({ color: 0xfbf9f6, roughness: 1 });
+    const groundMat = new THREE.MeshStandardMaterial({ color: 0xf5f5f5, roughness: 0.95 });
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.72;
@@ -156,16 +166,28 @@ class Component extends DCLogic {
     scene.add(ground);
     this._disposables = [groundGeo, groundMat];
 
+    // Light natural pine, not flat dark-brown — a small procedural wood-grain
+    // texture (canvas-drawn, no external image) gives the matte boards real
+    // grain/streaking instead of a shiny plastic look. Cloned per plank type
+    // so the runners and deck boards can carry different UV repeats while
+    // sharing one GPU upload.
+    const woodTex = this._makeWoodTexture(THREE);
+    const runnerTex = woodTex.clone();
+    runnerTex.needsUpdate = true;
+    runnerTex.repeat.set(1, 5);
+    const deckTex = woodTex.clone();
+    deckTex.needsUpdate = true;
+    deckTex.repeat.set(4, 1);
+    this._disposables.push(woodTex, runnerTex, deckTex);
+
     // Layout: 3 long runners (skids) on the ground, 9 deck boards laid
     // across them — a simplified, stylised pallet, not an engineering
     // drawing, sized to read clearly in a shallow hero band.
-    const runnerColor = 0x8a5a34;
-    const deckColor = 0xb99872;
     const planks = [];
     const runnerGeo = new THREE.BoxGeometry(0.55, 0.5, 7.6);
     this._disposables.push(runnerGeo);
     [-3.1, 0, 3.1].forEach((x) => {
-      const mat = new THREE.MeshStandardMaterial({ color: runnerColor, roughness: 0.75 });
+      const mat = new THREE.MeshStandardMaterial({ map: runnerTex, color: 0xdcc292, roughness: 0.88 });
       this._disposables.push(mat);
       const m = new THREE.Mesh(runnerGeo, mat);
       m.castShadow = true; m.receiveShadow = true;
@@ -175,7 +197,7 @@ class Component extends DCLogic {
     this._disposables.push(deckGeo);
     for (let i = 0; i < 9; i++) {
       const z = -3.6 + i * 0.9;
-      const mat = new THREE.MeshStandardMaterial({ color: deckColor, roughness: 0.7 });
+      const mat = new THREE.MeshStandardMaterial({ map: deckTex, color: 0xe8d3a4, roughness: 0.85 });
       this._disposables.push(mat);
       const m = new THREE.Mesh(deckGeo, mat);
       m.castShadow = true; m.receiveShadow = true;
@@ -200,10 +222,15 @@ class Component extends DCLogic {
     });
     this._planks = planks;
 
-    camera.position.set(0, 6.4, 15);
-    camera.lookAt(0, -0.2, 0);
-    this._camStart = camera.position.clone();
-    this._camEnd = new THREE.Vector3(0, 3.1, 9.4);
+    // 3/4 catalogue angle — up and to the side, so both the top deck and
+    // the side gaps between the runners read clearly, like a product shot.
+    // camStart is camEnd scaled further out along the same sightline, so
+    // the dolly-in is a pure push rather than a re-angling swoop.
+    this._camEnd = new THREE.Vector3(8.5, 3.4, 8.0);
+    this._camStart = this._camEnd.clone().multiplyScalar(1.7);
+    this._camLookAt = new THREE.Vector3(0, -0.15, 0);
+    camera.position.copy(this._camStart);
+    camera.lookAt(this._camLookAt);
 
     this._ro = new ResizeObserver(() => this._resize());
     this._ro.observe(canvas.parentElement);
@@ -233,7 +260,7 @@ class Component extends DCLogic {
 
       const camT = Math.min(1, (now - start) / (DURATION + 600));
       camera.position.lerpVectors(this._camStart, this._camEnd, easeOutCubic(camT));
-      camera.lookAt(0, -0.2, 0);
+      camera.lookAt(this._camLookAt);
 
       planks.forEach((p) => {
         const local = now - start - p.delay;
@@ -252,6 +279,52 @@ class Component extends DCLogic {
       this._raf = requestAnimationFrame(tick);
     };
     this._raf = requestAnimationFrame(tick);
+  }
+
+  /* Procedural light-pine grain — drawn on a canvas so the boards read as
+     real wood (streaks, a couple of knots) rather than flat plastic, with
+     no external image asset. Cheap: one small canvas, cloned per plank
+     type for independent UV repeat. */
+  _makeWoodTexture(THREE) {
+    const w = 256, h = 128;
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#e8d3a4';
+    ctx.fillRect(0, 0, w, h);
+    const streaks = 14;
+    for (let i = 0; i < streaks; i++) {
+      const yBase = (i + 0.5) * (h / streaks);
+      const amp = 3 + Math.random() * 4;
+      const freq = 0.02 + Math.random() * 0.015;
+      const phase = Math.random() * Math.PI * 2;
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = yBase + Math.sin(x * freq + phase) * amp;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(160, 122, 72,' + (0.12 + Math.random() * 0.18).toFixed(2) + ')';
+      ctx.lineWidth = 1 + Math.random() * 2;
+      ctx.stroke();
+    }
+    const knots = 2 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < knots; i++) {
+      const kx = 20 + Math.random() * (w - 40);
+      const ky = 15 + Math.random() * (h - 30);
+      const kr = 4 + Math.random() * 4;
+      const grad = ctx.createRadialGradient(kx, ky, 0, kx, ky, kr * 2.2);
+      grad.addColorStop(0, 'rgba(120, 88, 50, 0.85)');
+      grad.addColorStop(0.5, 'rgba(140, 104, 60, 0.4)');
+      grad.addColorStop(1, 'rgba(140, 104, 60, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.ellipse(kx, ky, kr * 2.2, kr * 1.4, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    return tex;
   }
 
   _resize() {
@@ -273,7 +346,7 @@ class Component extends DCLogic {
     const runners = [60, 190, 320];
     runners.forEach((x, i) => {
       items.push({
-        x, y: 150, w: 22, h: 90, fill: '#8a5a34',
+        x, y: 150, w: 22, h: 90, fill: '#dcc292',
         style: reduced
           ? 'transform: translate(0,0) rotate(0deg);'
           : 'transform: translate(' + (i % 2 ? 90 : -90) + 'px, -60px) rotate(' + (i % 2 ? 24 : -24) + 'deg); --fd: ' + (i * 90) + 'ms;',
@@ -282,7 +355,7 @@ class Component extends DCLogic {
     for (let i = 0; i < 9; i++) {
       const y = 60 + i * 10;
       items.push({
-        x: 40, y, w: 320, h: 7, fill: '#b99872',
+        x: 40, y, w: 320, h: 7, fill: '#e8d3a4',
         style: reduced
           ? 'transform: translate(0,0) rotate(0deg);'
           : 'transform: translate(' + (i % 2 ? 140 : -140) + 'px, ' + (-40 - i * 6) + 'px) rotate(' + (i % 2 ? -14 : 14) + 'deg); --fd: ' + (240 + i * 70) + 'ms;',

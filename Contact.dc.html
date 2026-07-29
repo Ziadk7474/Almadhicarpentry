@@ -15,9 +15,9 @@
 <script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
 <style>
   html { scroll-behavior: smooth; }
-  body { margin: 0; text-wrap: pretty; background: var(--color-accent-100); }
-  a { color: var(--color-accent-700); text-decoration: none; }
-  a:hover { color: var(--color-accent-800); }
+  body { margin: 0; text-wrap: pretty; background: var(--color-neutral-100); }
+  a { color: var(--color-info-700); text-decoration: none; }
+  a:hover { color: var(--color-info-800); }
   /* The floating WhatsApp button overlapped the email address in the contact
      grid — and this page already lists WhatsApp as one of the four cards. */
   [data-float-cta] a[href*="wa.me"] { display: none !important; }
@@ -128,7 +128,7 @@ class Component extends DCLogic {
     }
     return {
       statusLabel: s ? (s.open ? 'The yard is open now' : 'The yard is closed') : 'Yard hours',
-      statusColor: s && s.open ? '#3f9153' : 'color-mix(in srgb, #241f1b 35%, transparent)',
+      statusColor: s && s.open ? 'var(--color-success-500)' : 'color-mix(in srgb, #241f1b 35%, transparent)',
       statusNote: note,
     };
   }

@@ -16,7 +16,7 @@
     <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>The order desk</span>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(28px, 4vw, 64px); align-items: start;">
       <div>
-        <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(34px, 4.4vw, 54px); line-height: 0.94; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Send the size.<br />We will price it.</h2>
+        <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(34px, 4.4vw, 54px); line-height: 0.94; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Send the size.<br />We will price it.</h2>
         <p style="font-size: 16px; line-height: 26px; max-width: 46ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent);">The size and what the pallet has to carry is enough to start a quote. For shavings, tell us how many sacks. Quotes go out the same working day.</p>
         <div style="margin-top: 32px; padding: 28px; display: grid; gap: 14px; background: #ffffff;">
           <div style="display: flex; gap: 12px; align-items: baseline;">
@@ -81,7 +81,7 @@
               <textarea class="input" ref="{{ areaRef }}" name="message" value="{{ vMessage }}" onChange="{{ set }}" rows="7" style="min-height: 150px; line-height: 22px;" placeholder="Tell us what the pallet has to carry, or what the shavings are for."></textarea>
             </label>
             <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
-              <p style="margin: 12px 0 0; font-size: 14px; color: #9a3b3b;">{{ error }}</p>
+              <p style="margin: 12px 0 0; font-size: 14px; color: var(--color-danger-500);">{{ error }}</p>
             </sc-if>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
               <button type="submit" class="btn btn-primary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 24px; min-height: 48px;">Send enquiry</button>
