@@ -25,8 +25,8 @@
 <dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="gallery" hint-size="100%,79px"></dc-import>
 
 <main>
-  <section style="padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+  <section style="padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px); min-height: min(52vh, 420px); display: flex; flex-direction: column; justify-content: center;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>The works</span>
       <h1 data-lines data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(40px, 5.6vw, 76px); line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Inside the yard</h1>
       <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 80%, transparent);">Eighteen frames from the Al Sajaa works &mdash; wood intake through to the truck. Select a frame to enlarge it. Every photograph is printed in the house duotone.</p>
@@ -41,7 +41,7 @@
   </section>
 
   <section style="padding: 0 0 clamp(48px, 6vw, 80px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: clamp(22px, 3vw, 40px);">
         <sc-for list="{{ frames }}" as="f" hint-placeholder-count="12">
           <figure data-card data-reveal style="margin: 0; grid-column: {{ f.span }}; background: #ffffff;">
@@ -59,8 +59,33 @@
     </div>
   </section>
 
+  <section style="padding: 0 0 clamp(40px, 5vw, 68px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <span class="eyebrow-block" style="margin-bottom: 14px;">Beyond this gallery</span>
+      <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 3.2vw, 42px); line-height: 1; letter-spacing: -0.005em; text-transform: uppercase; margin: 0 0 clamp(18px, 2.2vw, 28px); max-width: 22ch;">The yard also runs these lines</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+        <a href="Plastic-Pallets-New.dc.html" data-card data-reveal style="display: block; padding: clamp(20px, 2.2vw, 26px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; text-transform: uppercase; margin: 0;">Plastic pallets</h3>
+          <p style="font-size: 14px; line-height: 21px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">New &amp; used, washable and rot-proof.</p>
+        </a>
+        <a href="Boxes-Crates.dc.html" data-card data-reveal style="display: block; padding: clamp(20px, 2.2vw, 26px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; text-transform: uppercase; margin: 0;">Boxes &amp; crates</h3>
+          <p style="font-size: 14px; line-height: 21px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Export crating for machinery &amp; fragile goods.</p>
+        </a>
+        <a href="Home-Furniture-Pallets.dc.html" data-card data-reveal style="display: block; padding: clamp(20px, 2.2vw, 26px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; text-transform: uppercase; margin: 0;">Home &amp; furniture pallets</h3>
+          <p style="font-size: 14px; line-height: 21px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Sanded and splinter-free for DIY projects.</p>
+        </a>
+        <a href="We-Buy.dc.html" data-card data-reveal style="display: block; padding: clamp(20px, 2.2vw, 26px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; text-transform: uppercase; margin: 0;">We buy wood &amp; pallets</h3>
+          <p style="font-size: 14px; line-height: 21px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Cash in hand, same-day pickup on larger lots.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section style="padding: 0 0 clamp(48px, 6vw, 80px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div data-reveal style="background: var(--color-neutral-200); padding: clamp(28px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; align-items: center;">
         <div>
           <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px, 3vw, 38px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">Come and see the yard</h2>
@@ -82,9 +107,9 @@
 const FRAMES = [
   { id: 'f01', cat: 'floor', img: 'assets/pallet-wall-grid.jpg', caption: 'Wood intake, stock waiting to be cut' },
   { id: 'f02', cat: 'floor', img: 'assets/pallet-studio-new-a.png', caption: 'New pallet off the bench' },
-  { id: 'f03', cat: 'floor', img: 'assets/pallet-studio-new-b.png', caption: 'Lighter build, same bench' },
+  { id: 'f03', cat: 'floor', img: 'assets/pallet-studio-new-b.jpg', caption: 'Lighter build, same bench' },
   { id: 'f04', cat: 'floor', img: 'assets/pallet-blocks-closeup.jpg', caption: 'Boards recovered from old pallets' },
-  { id: 'f05', cat: 'floor', img: 'assets/pallet-studio-old.png', caption: 'Used pallet checked before it ships' },
+  { id: 'f05', cat: 'floor', img: 'assets/pallet-studio-old.jpg', caption: 'Used pallet checked before it ships' },
   { id: 'f06', cat: 'floor', img: 'assets/pallet-stack-closeup.jpg', caption: 'Close on the block and board joint' },
   { id: 'f07', cat: 'stock', img: 'assets/yard-stacks-golden.jpg', caption: 'Finished stacks across the yard' },
   { id: 'f08', cat: 'stock', img: 'assets/pallet-light.webp', caption: 'Standard 100 × 120 cm run' },
@@ -92,12 +117,12 @@ const FRAMES = [
   { id: 'f10', cat: 'stock', img: 'assets/pallets-weathered-old.jpg', caption: 'Older pallets, sold as seen' },
   { id: 'f11', cat: 'stock', img: 'assets/pallet-rows-aisle.jpg', caption: 'Rows waiting on collection' },
   { id: 'f12', cat: 'stock', img: 'assets/pallet-yard-wide.jpg', caption: 'The yard at full stock' },
-  { id: 'f13', cat: 'shav', img: 'assets/shavings-hand-chips.png', caption: 'Chips straight off the saw' },
+  { id: 'f13', cat: 'shav', img: 'assets/shavings-hand-chips.jpg', caption: 'Chips straight off the saw' },
   { id: 'f14', cat: 'shav', img: 'assets/shavings-pile-rake.jpg', caption: 'The shavings heap' },
-  { id: 'f15', cat: 'shav', img: 'assets/shavings-sacks-open.png', caption: 'Sacks filled loose, never pressed' },
+  { id: 'f15', cat: 'shav', img: 'assets/shavings-sacks-open.jpg', caption: 'Sacks filled loose, never pressed' },
   { id: 'f16', cat: 'shav', img: 'assets/shavings.webp', caption: 'Close on the chip shape' },
-  { id: 'f17', cat: 'load', img: 'assets/truck-shaving-sacks-a.png', caption: 'Shavings sacks loaded for the round' },
-  { id: 'f18', cat: 'load', img: 'assets/truck-pallets-loaded.png', caption: 'Pallets strapped and away' },
+  { id: 'f17', cat: 'load', img: 'assets/truck-shaving-sacks-a.jpg', caption: 'Shavings sacks loaded for the round' },
+  { id: 'f18', cat: 'load', img: 'assets/truck-pallets-loaded.jpg', caption: 'Pallets strapped and away' },
 ];
 
 class Component extends DCLogic {

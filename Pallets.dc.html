@@ -23,8 +23,8 @@
 <dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
 
 <main>
-  <section style="padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+  <section style="padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px); min-height: min(48vh, 380px); display: flex; flex-direction: column; justify-content: center;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(20px, 3vw, 44px); align-items: end;">
         <div>
           <span class="eyebrow" style="margin-bottom: 22px;">
@@ -38,7 +38,7 @@
   </section>
 
   <section style="position: sticky; top: 79px; z-index: 40; background: color-mix(in srgb, #ffffff 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 14px clamp(16px, 3vw, 40px); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);">
+    <div style="padding: 14px clamp(16px, 3vw, 40px); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);">
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
         <button type="button" onClick="{{ catAll }}" aria-current="{{ isAll }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">All &middot; 9</button>
         <button type="button" onClick="{{ catNew }}" aria-current="{{ isNew }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">New</button>
@@ -54,7 +54,7 @@
   </section>
 
   <section style="padding: clamp(28px, 4vw, 52px) 0 clamp(40px, 5vw, 72px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <p style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); margin: 0 0 24px;">{{ resultLabel }}</p>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
         <sc-for list="{{ items }}" as="item" hint-placeholder-count="6">
@@ -96,7 +96,7 @@
   </section>
 
   <section style="padding: 0 0 clamp(44px, 6vw, 76px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
         <div>
           <span class="eyebrow-block" style="margin-bottom: 14px;">Sizes &amp; specification</span>
@@ -107,8 +107,8 @@
             <a class="btn btn-secondary" href="Gallery.dc.html" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">See the yard</a>
           </div>
         </div>
-        <div data-zoom data-wipe data-reveal data-parallax="34" style="background: var(--color-neutral-100);">
-          <img src="assets/pallet-rows-aisle.jpg" alt="Rows of finished wooden pallets stacked in the yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+        <div data-zoom data-wipe data-reveal="left" data-parallax="34" style="background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/pallet-rows-aisle.jpg" alt="Rows of finished wooden pallets stacked in the yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@ const CATALOG = [
     stock: 'Made to order', condition: 'New wood, built to order', size: 'Any size you give us',
     suits: 'Steel, chemicals, heavy manufacturing',
     desc: 'Built new from wood for the heaviest loads we handle. Thicker boards and extra nailing where the weight sits. Board count and thickness are set by what it has to carry.' },
-  { id: 'nld', img: 'assets/pallet-studio-new-b.png', code: 'AMC / P-02', name: 'New pallet — light duty', cats: ['new'],
+  { id: 'nld', img: 'assets/pallet-studio-new-b.jpg', code: 'AMC / P-02', name: 'New pallet — light duty', cats: ['new'],
     stock: 'Made to order', condition: 'New wood, built to order', size: 'Any size you give us',
     suits: 'Food, retail, general cargo',
     desc: 'The economical new pallet. Light enough to move by hand, which suits food and beverage, retail and pharma work where the load is not extreme.' },
@@ -132,7 +132,7 @@ const CATALOG = [
     stock: 'Usually in stock', condition: 'New', size: '100 × 120 cm',
     suits: 'Warehousing, export, day-to-day handling',
     desc: 'Our most requested size, kept in the yard for urgent orders. If you need a few hundred quickly, this is the one that ships first.' },
-  { id: 'ugd', img: 'assets/pallet-studio-old.png', code: 'AMC / P-04', name: 'Used pallet — good grade', cats: ['used'],
+  { id: 'ugd', img: 'assets/pallet-studio-old.jpg', code: 'AMC / P-04', name: 'Used pallet — good grade', cats: ['used'],
     stock: 'In stock', condition: 'Used, checked and sound', size: 'Assorted, mostly 100 × 120 cm',
     suits: 'In-plant movement, one-way export',
     desc: 'Second-hand pallets with sound structure and only cosmetic wear. Checked for broken boards and loose blocks before they leave the yard.' },

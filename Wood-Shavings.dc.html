@@ -19,13 +19,22 @@
   a:hover { color: var(--color-info-800); }
   summary::after { content: '+'; float: right; color: var(--color-accent-700); font-weight: 400; }
   details[open] summary::after { content: '\2212'; }
+  @media (max-width: 900px) {
+    /* The 7/5 hero split has no room to breathe below ~900px — stack the
+       text and image full-width instead of squeezing both into narrow
+       columns (this file had no responsive breakpoints at all before). */
+    [data-hero-main], [data-hero-side] { grid-column: span 12 !important; }
+  }
+  @media (max-width: 640px) {
+    [data-hero-main] h1 { font-size: clamp(34px, 9vw, 48px) !important; }
+  }
 </style>
 </helmet>
 <dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="shavings" hint-size="100%,79px"></dc-import>
 
 <main>
-  <section style="padding: clamp(20px, 3vw, 40px) 0 clamp(30px, 4vw, 56px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(10px, 1.2vw, 16px);">
+  <section style="padding: clamp(20px, 3vw, 40px) 0 clamp(30px, 4vw, 56px); min-height: min(84vh, 720px); display: flex; flex-direction: column; justify-content: center;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(10px, 1.2vw, 16px);">
       <div data-hero-main data-reveal style="grid-column: span 7; min-width: 0; background: #ffffff; padding: clamp(28px, 4vw, 58px); display: flex; flex-direction: column; justify-content: center;">
         <span class="eyebrow" style="margin-bottom: 22px;">
           <i class="eyebrow-dash"></i>Since October 2025
@@ -42,8 +51,8 @@
         </div>
       </div>
       <div data-hero-side data-reveal style="grid-column: span 5; min-width: 0; display: grid; grid-template-rows: 1fr auto; gap: clamp(10px, 1.2vw, 16px);">
-        <div data-zoom data-wipe data-reveal data-parallax="46" style="background: var(--color-neutral-100); display: grid; min-height: 260px;">
-          <img src="assets/shavings-hand-chips.png" alt="A handful of chip shaped wood shavings" style="width: 100%; height: 100%; min-height: 260px; object-fit: cover;" />
+        <div data-zoom data-wipe data-reveal="right" data-parallax="46" style="background: var(--color-neutral-100); display: grid; min-height: 260px;">
+          <img src="assets/shavings-hand-chips.jpg" alt="A handful of chip shaped wood shavings" style="width: 100%; height: 100%; min-height: 260px; object-fit: cover;" />
         </div>
         <div style="background: #ffffff; border-top: 3px solid var(--color-accent); color: var(--color-text); padding: clamp(22px, 2.6vw, 32px);">
           <span style="display: block; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700);">Quote turnaround</span>
@@ -55,7 +64,7 @@
   </section>
 
   <section id="uses" style="padding: clamp(30px, 4vw, 56px) 0; scroll-margin-top: 100px;">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(22px, 2.6vw, 36px);">
         <div>
           <span class="eyebrow-block" style="margin-bottom: 14px;">What people use them for</span>
@@ -63,11 +72,11 @@
         </div>
         <p style="font-size: 16.5px; line-height: 27px; max-width: 36ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Same chips out of the same sacks &mdash; how coarse a batch runs decides what it suits best.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
         <sc-for list="{{ uses }}" as="u" hint-placeholder-count="4">
           <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
             <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
-              <img src="{{ u.img }}" alt="{{ u.name }}" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+              <img loading="lazy" src="{{ u.img }}" alt="{{ u.name }}" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
             </div>
             <div style="padding: clamp(22px, 2.6vw, 30px); display: flex; flex-direction: column; gap: 13px; flex: 1;">
               <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">{{ u.code }}</span>
@@ -85,10 +94,10 @@
   </section>
 
   <section style="padding: clamp(30px, 4vw, 56px) 0;">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
-        <div data-zoom data-wipe data-reveal data-parallax="34" style="background: var(--color-neutral-100);">
-          <img src="assets/truck-shaving-sacks-b.png" alt="Sacks of wood shavings loaded on the truck" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+        <div data-zoom data-wipe data-reveal="left" data-parallax="34" style="background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/truck-shaving-sacks-b.jpg" alt="Sacks of wood shavings loaded on the truck" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
         </div>
         <div>
           <span class="eyebrow-block" style="margin-bottom: 14px;">How it ships</span>
@@ -105,7 +114,7 @@
   </section>
 
   <section style="padding: clamp(30px, 4vw, 56px) 0 clamp(20px, 3vw, 36px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <div data-reveal style="background: #ffffff; padding: clamp(28px, 4vw, 58px);">
         <span class="eyebrow-block" style="margin-bottom: 14px;">Shavings questions</span>
         <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 48px); line-height: 0.96; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 34px);">Worth knowing</h2>
@@ -149,9 +158,9 @@ const USES = [
     desc: 'Stables, poultry houses and small animals. The chips stay dry, lift clean and do not mat down the way finer material does.' },
   { id: 'abs', img: 'assets/shavings.webp', code: 'Use 02', name: 'Workshop absorbent', product: 'Wood shavings — workshop absorbent',
     desc: 'Oil, coolant and water on a shop floor. Spread it, leave it, sweep it up. Far cheaper per litre absorbed than mineral granulate.' },
-  { id: 'pak', img: 'assets/shavings-sacks-open.png', code: 'Use 03', name: 'Packing &amp; void fill', product: 'Wood shavings — packing fill',
+  { id: 'pak', img: 'assets/shavings-sacks-open.jpg', code: 'Use 03', name: 'Packing &amp; void fill', product: 'Wood shavings — packing fill',
     desc: 'Cushioning inside crates and cases for glassware, ceramics and machine parts. Usually bought alongside the crate or pallet itself.' },
-  { id: 'lnd', img: 'assets/truck-shaving-sacks-a.png', code: 'Use 04', name: 'Bulk &amp; landscaping', product: 'Wood shavings — bulk load',
+  { id: 'lnd', img: 'assets/truck-shaving-sacks-a.jpg', code: 'Use 04', name: 'Bulk &amp; landscaping', product: 'Wood shavings — bulk load',
     desc: 'By the truckload for mulch, composting and site use. Untreated, no binders, tipped or stacked where you want it.' },
 ];
 

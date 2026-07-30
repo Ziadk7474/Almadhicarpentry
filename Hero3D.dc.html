@@ -8,65 +8,411 @@
 <body>
 <x-dc>
 <helmet>
-<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<!-- This tag lives inside <helmet>, which this runtime compiles by creating
+     a real <script> element with document.createElement and appending it to
+     <head> — never by the browser's own HTML parser encountering it in the
+     initial document. That insertion is already non-blocking (the call that
+     appends it returns immediately; header/headline/buttons elsewhere on the
+     page render independent of when this finishes loading), so `defer` here
+     is inert by spec for a script inserted this way, kept only as an honest
+     signal of intent. The real fix for perceived load lag is the placeholder
+     below, plus _initThree() polling for window.THREE rather than assuming
+     load order — this script can finish whenever it finishes. -->
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
 <style>
-  [data-hero3d] { position: relative; width: 100%; height: clamp(280px, 42vw, 560px); overflow: hidden; background: radial-gradient(ellipse at center, #ffffff 0%, #ffffff 45%, #efe8dd 100%); }
-  [data-hero3d-visual] { position: absolute; inset: 0; width: 100%; height: 100%; }
-  [data-hero3d] canvas { display: block; width: 100%; height: 100%; }
+  /* Full first-screen intro: the header is an overlay (position: fixed, see
+     index.dc.html's dc-import wrapper) rather than a bar that reserves its
+     own layout space, so the hero itself fills the entire viewport height,
+     with the header floating on top of it via z-index. svh (where
+     supported) avoids the mobile address-bar resize jump that plain vh
+     has; the vh line is the fallback for browsers without svh. */
+  [data-hero3d] { position: relative; width: 100%; height: 100vh; height: 100svh; min-height: 460px; overflow: hidden; background: radial-gradient(ellipse at center, #ffffff 0%, #f7f7f6 45%, #e2e3e2 100%); }
+
+  /* Cinematic warehouse backdrop — a real golden-hour yard photo (stacked
+     pallets, natural light beams already in the frame) blurred and masked
+     to the left ~60% of the frame, so it reads as depth/context behind the
+     dark overlay without ever reaching the bright right side where the
+     product shot lives. mask-image (not opacity) is what lets the studio
+     gradient on [data-hero3d] itself show through cleanly on the right —
+     an opacity fade would still leave a faint, muddying wash over the
+     pallet's clean backdrop. */
+  [data-hero3d-warehouse] {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    background-image: url('assets/yard-stacks-golden.jpg');
+    background-size: cover; background-position: 30% 45%;
+    filter: blur(9px) brightness(0.62) saturate(1.08);
+    transform: scale(1.08);
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 46%, transparent 66%);
+    mask-image: linear-gradient(90deg, #000 0%, #000 46%, transparent 66%);
+  }
+  /* The dark scrim is what actually guarantees text contrast — the photo
+     alone is too variable in tone to rely on for AA contrast against
+     cream/white type, so this is a deliberate, independently-tuned layer
+     on top of it, not just "the photo looks dark enough here". */
+  [data-hero3d-scrim] {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg,
+      rgba(12,9,6,0.86) 0%,
+      rgba(12,9,6,0.78) 24%,
+      rgba(12,9,6,0.46) 40%,
+      rgba(12,9,6,0.12) 52%,
+      rgba(12,9,6,0) 62%);
+  }
+  /* Light rays — soft diagonal beams, screen-blended so they only ever
+     brighten, never muddy the dark zone. A slow, barely-perceptible drift
+     (60s+ per cycle) reads as "cinematic" rather than as an obvious loop. */
+  [data-hero3d-rays] { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; mix-blend-mode: screen; opacity: 0.35; }
+  [data-hero3d-rays] i {
+    position: absolute; top: -30%; left: -10%; width: 46%; height: 160%;
+    background: linear-gradient(100deg, transparent 40%, rgba(255,214,150,0.16) 48%, rgba(255,214,150,0.05) 55%, transparent 65%);
+    transform: rotate(12deg);
+    animation: rayDrift 70s ease-in-out infinite;
+  }
+  [data-hero3d-rays] i:nth-child(2) { left: 8%; animation-delay: -22s; opacity: 0.7; }
+  [data-hero3d-rays] i:nth-child(3) { left: 24%; animation-delay: -46s; opacity: 0.5; }
+  @keyframes rayDrift {
+    0%, 100% { transform: rotate(12deg) translateX(0); }
+    50% { transform: rotate(9deg) translateX(3%); }
+  }
+  /* Dust motes — tiny, slow, upward-drifting particles confined to the
+     dark zone. Purely decorative atmosphere, kept cheap (compositor-only
+     transform/opacity, a handful of elements) and switched off entirely
+     under reduced-motion rather than just slowed down, per the rest of
+     this file's convention for looping decorative motion. */
+  [data-hero3d-dust] { position: absolute; inset: 0; width: 60%; height: 100%; overflow: hidden; pointer-events: none; }
+  [data-hero3d-dust] i {
+    position: absolute; bottom: -5%; width: 3px; height: 3px; border-radius: 50%;
+    background: rgba(255,226,180,0.55);
+    animation: dustRise linear infinite;
+  }
+  @keyframes dustRise {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    12% { opacity: 0.8; }
+    88% { opacity: 0.4; }
+    100% { transform: translateY(-115vh) translateX(var(--dx, 20px)); opacity: 0; }
+  }
+  @media (max-width: 900px) {
+    [data-hero3d-warehouse] {
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 48%, transparent 72%);
+      mask-image: linear-gradient(180deg, #000 0%, #000 48%, transparent 72%);
+      background-position: 50% 35%;
+    }
+    [data-hero3d-scrim] {
+      background: linear-gradient(180deg,
+        rgba(12,9,6,0.84) 0%,
+        rgba(12,9,6,0.74) 34%,
+        rgba(12,9,6,0.4) 52%,
+        rgba(12,9,6,0.1) 66%,
+        rgba(12,9,6,0) 76%);
+    }
+    [data-hero3d-dust] { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero3d-rays] i { animation: none; }
+    [data-hero3d-dust] { display: none; }
+  }
+
+  /* The pallet renders in its own right-anchored panel rather than a
+     full-bleed canvas — keeping it clearly in the right half of the frame,
+     with visible separation from the text column instead of straddling the
+     center. _resize() (in the script below) reads this element's own
+     clientWidth/clientHeight, so narrowing it here is enough on its own to
+     correctly re-fit the camera framing; no script changes needed. */
+  [data-hero3d-visual] { position: absolute; top: 0; bottom: 0; left: 54%; right: 0; width: auto; height: 100%; }
+  @media (max-width: 900px) {
+    /* Below the content-stacking breakpoint the pallet gets its own band
+       at the bottom of the hero instead of sharing the frame side-by-side
+       with the text (see [data-hero3d]'s own mobile rule, which is what
+       actually makes this a flex item rather than an absolutely-positioned
+       full-height layer) — min-height keeps it from collapsing to nothing
+       if the text above happens to run long. */
+    [data-hero3d-visual] {
+      position: relative; order: 2; left: auto; right: auto; top: auto; bottom: auto;
+      width: 100%; flex: 1 1 auto; min-height: 220px;
+    }
+  }
+  /* touch-action:none stops the browser's own scroll/zoom gesture from
+     fighting the touch-follow interaction on touch devices. No cursor
+     override — this tilts on hover, it isn't a click-drag, so a grab
+     cursor would be the wrong affordance here. */
+  [data-hero3d] canvas { display: block; width: 100%; height: 100%; touch-action: none; }
   [data-hero3d-fallback] { position: absolute; inset: 0; width: 100%; height: 100%; }
   [data-hero3d-fallback] rect { transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--fd, 0ms); }
 
-  /* Cinematic intro caption — fades/slides in only once the plank assembly
-     has finished (state-driven .is-in class, timed in JS to the assembly's
-     own settle time), using the same fade + rise language as the site's
-     scroll-reveal system. Anchored bottom-center, close under the pallet's
-     footprint/shadow rather than in a disconnected corner — centered
-     horizontally with the model, sitting in the open ground area below it. */
-  [data-hero3d-caption] {
-    position: absolute; left: 50%; bottom: clamp(16px, 3.6vw, 32px);
-    width: max-content; max-width: min(360px, 78%);
-    text-align: center;
-    opacity: 0; transform: translate(-50%, 14px);
-    transition: opacity 0.75s cubic-bezier(0.2,0.7,0.2,1), transform 0.75s cubic-bezier(0.2,0.7,0.2,1);
-    pointer-events: none;
+  /* Lightweight loading state: a plain CSS shimmer placeholder — no image
+     request, nothing to decode — shown the instant the hero paints, before
+     three.js has even finished downloading. Sized/positioned roughly where
+     the assembled pallet ends up so the eventual swap doesn't jump. Crossfades
+     with the real canvas/fallback once the component has decided which one
+     to show (mode moves off 'pending' in componentDidMount, see below), so
+     nothing pops in abruptly. */
+  [data-hero3d-placeholder] {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    opacity: 1; transition: opacity 0.5s ease;
   }
-  [data-hero3d-caption].is-in { opacity: 1; transform: translate(-50%, 0); }
-  [data-hero3d-caption] strong {
-    display: block; font-family: var(--font-heading); font-weight: 600;
-    font-size: clamp(19px, 2.2vw, 25px); letter-spacing: 0.03em; text-transform: uppercase;
-    line-height: 1.1; color: var(--color-text);
+  [data-hero3d-placeholder].is-out { opacity: 0; }
+  [data-hero3d-placeholder-shape] {
+    width: 62%; max-width: 420px; aspect-ratio: 4 / 2.7; border-radius: 4px;
+    background: linear-gradient(100deg,
+      color-mix(in srgb, #241f1b 5%, transparent) 25%,
+      color-mix(in srgb, #241f1b 9%, transparent) 37%,
+      color-mix(in srgb, #241f1b 5%, transparent) 50%);
+    background-size: 200% 100%;
+    animation: hero3dShimmer 1.5s ease-in-out infinite;
   }
-  [data-hero3d-caption] span {
-    display: block; margin-top: 6px; font-size: clamp(13px, 1.3vw, 15px); line-height: 1.4;
-    color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  @keyframes hero3dShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -40% 0; }
+  }
+  [data-hero3d-real] { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; }
+  [data-hero3d-real].is-in { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero3d-placeholder-shape] { animation: none; }
+  }
+
+  /* The hero's actual marketing content — logo, badge, headline, subtitle,
+     CTAs — living inside the dark scrim on the left. This is real above-
+     the-fold content (not a decorative flourish gated behind the 3D
+     assembly), so it animates in quickly on mount via a short stagger,
+     independent of however long the plank assembly takes. Constrained to
+     the width the scrim actually covers so it never bleeds into the
+     bright zone over the pallet. */
+  [data-hero3d-content] {
+    position: absolute; left: clamp(20px, 4.4vw, 64px); top: 50%; transform: translateY(-50%);
+    width: min(640px, 48%);
+    z-index: 2;
+  }
+  /* The headline is the dominant visual element of the hero — sized well
+     past the old "large-ish subhead" scale so it reads at a glance, the
+     same way the badge above it used to try to earn attention with a
+     bordered pill (removed; the type carries the hero on its own now). */
+  [data-hero3d-content] h1 {
+    margin: 0; font-family: var(--font-heading); font-weight: 700;
+    font-size: clamp(52px, 6.6vw, 118px); line-height: 0.92; letter-spacing: -0.01em;
+    text-transform: uppercase; color: #ffffff;
+  }
+  [data-hero3d-content] h1 span { display: block; overflow: hidden; }
+  [data-hero3d-content] h1 span > em {
+    display: block; font-style: normal;
+    opacity: 0; transform: translateY(100%);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  [data-hero3d-content] h1 span:nth-child(2) > em { transition-delay: 0.1s; }
+  [data-hero3d-content] h1 .accent { color: var(--color-accent); }
+  [data-hero3d-content] p {
+    margin: clamp(16px, 2.2vw, 24px) 0 0; max-width: 42ch;
+    font-size: clamp(14px, 1.15vw, 16px); line-height: 1.55;
+    color: color-mix(in srgb, #f7ece0 76%, transparent);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.6s cubic-bezier(0.2,0.7,0.2,1), transform 0.6s cubic-bezier(0.2,0.7,0.2,1);
+    transition-delay: 0.32s;
+  }
+  [data-hero3d-ctas] {
+    display: flex; gap: 12px; flex-wrap: wrap; margin-top: clamp(22px, 3vw, 32px);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.6s cubic-bezier(0.2,0.7,0.2,1), transform 0.6s cubic-bezier(0.2,0.7,0.2,1);
+    transition-delay: 0.42s;
+  }
+  [data-hero3d-ctas] .btn-secondary { border-color: color-mix(in srgb, #f7ece0 40%, transparent); color: #f7ece0; }
+  [data-hero3d-ctas] .btn-secondary:hover { background: color-mix(in srgb, #f7ece0 12%, transparent); border-color: #f7ece0; color: #ffffff; }
+  [data-hero3d-content].is-in p,
+  [data-hero3d-content].is-in [data-hero3d-ctas] { opacity: 1; transform: translateY(0); }
+  [data-hero3d-content].is-in h1 span > em { opacity: 1; transform: translateY(0); }
+  @media (max-width: 900px) {
+    /* Below the stacking breakpoint, text and pallet stop sharing the same
+       overlapping space entirely. Both used to be absolutely positioned
+       layers covering the full hero — fine on desktop where they occupy
+       separate left/right columns, but on mobile (both full-width) that
+       meant the pallet's camera framing, which centers it in whatever
+       height it's given, could drift up under the CTAs. The real fix is
+       structural: [data-hero3d] becomes a column flex container here, and
+       both children go back to being normal (non-absolute) flex items —
+       text takes exactly the height its content needs, the pallet gets
+       whatever remains via flex:1. Nothing is guessed as a percentage, so
+       there's no risk of the text overflowing into the pallet's band or
+       leaving a gap, regardless of how long the headline wraps. */
+    [data-hero3d] { display: flex; flex-direction: column; }
+    [data-hero3d-content] {
+      position: relative; order: 1; left: auto; right: auto; top: auto; transform: none;
+      width: 100%; flex: none;
+      padding: calc(78px + clamp(14px, 3vw, 24px)) clamp(18px, 5vw, 32px) clamp(18px, 4vw, 28px);
+      text-align: center;
+    }
+    [data-hero3d-content] p { margin-left: auto; margin-right: auto; }
+    [data-hero3d-ctas] { justify-content: center; }
+  }
+  @media (max-width: 900px) {
+    /* The desktop scale (up to 118px) is deliberately dramatic — it reads
+       fine against a wide hero with the pallet confined to a separate right
+       panel, but below 900px the content and visual panel share the same
+       stacked space (see [data-hero3d-visual]'s own mobile override), so a
+       headline anywhere near that size would run straight into the pallet
+       and the CTAs beneath it. Capped well below desktop here on purpose. */
+    [data-hero3d-content] h1 { font-size: clamp(30px, 7.4vw, 44px); }
   }
   @media (max-width: 640px) {
-    [data-hero3d-caption] { bottom: 12px; max-width: 86%; }
-    [data-hero3d-caption] strong { font-size: 16px; }
-    [data-hero3d-caption] span { font-size: 11.5px; margin-top: 4px; }
+    [data-hero3d-content] h1 { font-size: clamp(28px, 9vw, 38px); }
   }
   @media (prefers-reduced-motion: reduce) {
     [data-hero3d-fallback] rect { transition: none; }
-    [data-hero3d-caption] { transition: none; }
+    [data-hero3d-content] p, [data-hero3d-ctas], [data-hero3d-content] h1 span > em { transition: none; }
+  }
+
+  /* Drag hint — a one-time affordance nudge, not a permanent UI element:
+     fades in a few seconds after settle (so it never competes with the
+     assembly + big-text beat), and disappears for good the moment the
+     visitor drags once, or on its own after ~9.5s if they never do. The
+     small icon's side-to-side drift is the one animation in this file
+     that repeats indefinitely — acceptable here specifically because the
+     whole element is transient and self-dismissing, not a permanent loop
+     the visitor has to tune out. */
+  [data-hero3d-hint] {
+    /* top offset starts below the overlay header's own bar (78px at rest)
+       — the hero now runs the full viewport height behind that header, so
+       without this the hint would sit directly under the nav/CTA area. */
+    position: absolute; top: calc(78px + clamp(14px, 2.4vw, 22px)); right: clamp(18px, 3.4vw, 30px);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px 9px 12px;
+    font-family: var(--font-heading); font-weight: 600;
+    font-size: clamp(10.5px, 1vw, 12px); letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-text);
+    background: color-mix(in srgb, #ffffff 82%, transparent);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+    box-shadow: 0 8px 20px -14px rgba(36,31,27,0.4);
+    opacity: 0; transform: translateY(-8px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.2,0.7,0.2,1), transform 0.5s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  [data-hero3d-hint].is-in { opacity: 1; transform: translateY(0) scale(1); }
+  [data-hero3d-hint].is-out { opacity: 0; transform: translateY(-8px) scale(0.96); transition-duration: 0.32s; }
+  [data-hero3d-hint] i {
+    width: 15px; height: 15px; flex: none; position: relative;
+    border: 1.5px solid currentColor; border-radius: 3px;
+    animation: hintDrift 1.8s ease-in-out infinite;
+  }
+  [data-hero3d-hint] i::before, [data-hero3d-hint] i::after {
+    content: ''; position: absolute; top: 50%; width: 4px; height: 4px;
+    border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
+    transform: translateY(-50%) rotate(-135deg);
+  }
+  [data-hero3d-hint] i::before { left: -6px; }
+  [data-hero3d-hint] i::after { right: -6px; transform: translateY(-50%) rotate(45deg); }
+  @keyframes hintDrift {
+    0%, 100% { transform: translateX(-2.5px); }
+    50% { transform: translateX(2.5px); }
+  }
+  @media (max-width: 900px) {
+    /* The hint points at wherever the pallet sits, which on mobile is now
+       its own band at the bottom of the hero, not tucked under the top-right
+       corner near the text — a top-right badge no longer points at anything.
+       Touch users also don't need the nudge the same way a mouse-hover
+       affordance does. */
+    [data-hero3d-hint] { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero3d-hint] { display: none; }
+  }
+
+  /* Feature callouts — short labels that pulse in near the pallet while it
+     assembles, staggered so 1-2 are visible at once rather than all eight
+     at once, then fade before the caption takes over the same visual beat.
+     Pure CSS keyframe timing (animation-delay per item) so it runs
+     identically regardless of which render path (three/fallback) is
+     live — no JS coordination needed beyond mounting it once. */
+  [data-hero3d-callouts] { position: absolute; inset: 0; pointer-events: none; }
+  [data-callout] {
+    position: absolute;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px;
+    font-family: var(--font-heading); font-weight: 600;
+    font-size: clamp(10.5px, 1.05vw, 12.5px);
+    letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+    color: var(--color-text);
+    background: color-mix(in srgb, #ffffff 80%, transparent);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+    box-shadow: 0 8px 20px -14px rgba(36,31,27,0.4);
+    opacity: 0; transform: translateY(10px);
+    animation: calloutPulse 900ms cubic-bezier(0.2,0.7,0.2,1) both;
+    animation-delay: var(--cd, 0ms);
+  }
+  [data-callout]::before { content: ''; width: 5px; height: 5px; flex: none; border-radius: 50%; background: var(--color-accent); }
+  @keyframes calloutPulse {
+    0% { opacity: 0; transform: translateY(10px); }
+    12% { opacity: 1; transform: translateY(0); }
+    55% { opacity: 1; transform: translateY(0); }
+    78% { opacity: 0; transform: translateY(-8px); }
+    100% { opacity: 0; transform: translateY(-8px); }
+  }
+  /* Below 900px the headline stacks full-width above the pallet instead
+     of sharing the frame with it (see [data-hero3d-content]'s own
+     breakpoint), so the callouts' right-side positions would land right
+     on top of that text — simplest correct fix is to drop them there
+     rather than fight for the same space. */
+  @media (max-width: 900px) {
+    [data-hero3d-callouts] { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero3d-callouts] { display: none; }
   }
 </style>
 </helmet>
 <div data-hero3d>
-  <div data-hero3d-visual aria-hidden="true">
-    <sc-if value="{{ showThree }}" hint-placeholder-val="{{ false }}">
-      <canvas ref="{{ canvasRef }}"></canvas>
-    </sc-if>
-    <sc-if value="{{ showFallback }}" hint-placeholder-val="{{ false }}">
-      <svg data-hero3d-fallback viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet">
-        <sc-for list="{{ planks }}" as="p" hint-placeholder-count="12">
-          <rect x="{{ p.x }}" y="{{ p.y }}" width="{{ p.w }}" height="{{ p.h }}" fill="{{ p.fill }}" style="{{ p.style }}"></rect>
-        </sc-for>
-      </svg>
-    </sc-if>
+  <div data-hero3d-warehouse aria-hidden="true"></div>
+  <div data-hero3d-scrim aria-hidden="true"></div>
+  <div data-hero3d-rays aria-hidden="true"><i></i><i></i><i></i></div>
+  <div data-hero3d-dust aria-hidden="true">
+    <i style="left: 6%; --dx: 14px; animation-duration: 13s; animation-delay: -2s;"></i>
+    <i style="left: 14%; --dx: -10px; animation-duration: 16s; animation-delay: -8s;"></i>
+    <i style="left: 22%; --dx: 18px; animation-duration: 11s; animation-delay: -5s;"></i>
+    <i style="left: 31%; --dx: -8px; animation-duration: 18s; animation-delay: -11s;"></i>
+    <i style="left: 9%; --dx: 6px; animation-duration: 14.5s; animation-delay: -1s;"></i>
+    <i style="left: 27%; --dx: -14px; animation-duration: 15s; animation-delay: -6.5s;"></i>
+    <i style="left: 38%; --dx: 10px; animation-duration: 12.5s; animation-delay: -9s;"></i>
+    <i style="left: 17%; --dx: 12px; animation-duration: 17s; animation-delay: -3.5s;"></i>
   </div>
-  <div data-hero3d-caption class="{{ captionClass }}">
-    <strong>Al Madhi Carpentry</strong>
-    <span>Built for shipping, warehousing and export across the UAE.</span>
+  <div data-hero3d-content class="{{ contentClass }}">
+    <h1>
+      <span><em>Pallets built</em></span>
+      <span><em>to your size.</em></span>
+      <span><em class="accent">Shavings by the sack.</em></span>
+    </h1>
+    <p>Two lines out of one yard in Al Sajaa &mdash; pallets in every grade, size and quality, plus chip shaped wood shavings by the sack. Delivered across all seven emirates.</p>
+    <div data-hero3d-ctas>
+      <button type="button" class="btn btn-primary" onClick="{{ quoteAny }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 15px 26px; font-size: 14.5px; min-height: 50px; display: inline-flex; align-items: center; gap: 10px;">Get a quote today<svg class="arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
+      <a class="btn btn-secondary" href="Pallets.dc.html" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 15px 24px; font-size: 14.5px; min-height: 50px;">Browse the range</a>
+    </div>
+  </div>
+  <div data-hero3d-visual aria-hidden="true">
+    <div data-hero3d-placeholder class="{{ placeholderClass }}">
+      <div data-hero3d-placeholder-shape></div>
+    </div>
+    <div data-hero3d-real class="{{ realClass }}">
+      <sc-if value="{{ showThree }}" hint-placeholder-val="{{ false }}">
+        <canvas ref="{{ canvasRef }}"></canvas>
+      </sc-if>
+      <sc-if value="{{ showFallback }}" hint-placeholder-val="{{ false }}">
+        <svg data-hero3d-fallback viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet">
+          <sc-for list="{{ planks }}" as="p" hint-placeholder-count="12">
+            <rect x="{{ p.x }}" y="{{ p.y }}" width="{{ p.w }}" height="{{ p.h }}" fill="{{ p.fill }}" style="{{ p.style }}"></rect>
+          </sc-for>
+        </svg>
+      </sc-if>
+    </div>
+  </div>
+  <div data-hero3d-callouts aria-hidden="true">
+    <span data-callout style="top: 9%; right: 26%; --cd: 0ms;">Premium hardwood</span>
+    <span data-callout style="top: 11%; right: 4%; --cd: 280ms;">Heat treated &middot; ISPM-15</span>
+    <span data-callout style="top: 30%; right: 3%; --cd: 560ms;">Heavy duty</span>
+    <span data-callout style="top: 8%; right: 44%; --cd: 840ms;">Export quality</span>
+    <span data-callout style="top: 34%; right: 30%; --cd: 1120ms;">High load capacity</span>
+    <span data-callout style="top: 55%; right: 32%; --cd: 1400ms;">Reusable</span>
+    <span data-callout style="top: 58%; right: 5%; --cd: 1680ms;">Eco-friendly</span>
+    <span data-callout style="top: 76%; right: 10%; --cd: 1960ms;">Precision built</span>
+  </div>
+  <div data-hero3d-hint class="{{ hintClass }}" aria-hidden="true">
+    <i></i>Move to explore
   </div>
 </div>
 </x-dc>
@@ -86,28 +432,51 @@
    if it can't hold ~24fps on THIS device, it tears itself down and hands
    off to fallback rather than limping through a janky animation. */
 class Component extends DCLogic {
-  state = { mode: 'pending', captionIn: false };
+  // sceneReady tracks whether there's actually something to look at yet —
+  // distinct from `mode`, which flips to 'three' the instant WebGL support
+  // is confirmed (near-instantly), well before three.js has downloaded and
+  // the scene has rendered a real frame. The placeholder crossfades on
+  // sceneReady, not on mode, so it stays up for the whole load+init gap
+  // instead of handing off to a still-blank canvas.
+  state = { mode: 'pending', contentIn: false, hintIn: false, hintOut: false, sceneReady: false };
 
   componentDidMount() {
     this._reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // The headline/subtitle/CTAs are real above-the-fold content, not a
+    // decorative flourish — they fire almost immediately on mount (one
+    // frame, so the entrance transition still has something to animate
+    // from) rather than waiting on the 3D assembly, which can take a
+    // couple of seconds and would otherwise leave the primary marketing
+    // message and conversion buttons invisible for that entire window.
+    requestAnimationFrame(() => {
+      if (!this._unmounted) this.setState({ contentIn: true });
+    });
     if (this._reduced || !this._hasWebGL()) {
-      this.setState({ mode: 'fallback', captionIn: true });
+      // The fallback SVG renders real, meaningful content the instant it
+      // mounts (no further async wait), so it's "ready" immediately.
+      this.setState({ mode: 'fallback', sceneReady: true });
       return;
     }
     this.setState({ mode: 'three' }, () => this._initThree());
-    // One timer covers both render paths: the three.js assembly (plank
-    // tumble-in + camera dolly) settles at ~3s, the CSS fallback settles
-    // faster (~1.9s) — either way this reads as a deliberate cinematic
-    // beat after the pallet finishes assembling, not a mistimed cue.
-    this._captionTimer = setTimeout(() => {
-      this._captionTimer = null;
-      if (!this._unmounted) this.setState({ captionIn: true });
-    }, 3500);
+    // The move-to-explore hint only makes sense once there's something to
+    // tilt — three.js mode only (the CSS fallback has no orbit) — and is
+    // timed to land after the assembly has settled so it doesn't compete
+    // with the plank animation. Auto-dismisses on its own after a few
+    // seconds even if the visitor never moves the pointer over it.
+    this._hintTimer = setTimeout(() => {
+      this._hintTimer = null;
+      if (!this._unmounted && this.state.mode === 'three') this.setState({ hintIn: true });
+    }, 4700);
+    this._hintAutoHide = setTimeout(() => {
+      this._hintAutoHide = null;
+      if (!this._unmounted) this.setState({ hintOut: true });
+    }, 10000);
   }
 
   componentWillUnmount() {
     this._unmounted = true;
-    if (this._captionTimer) { clearTimeout(this._captionTimer); this._captionTimer = null; }
+    if (this._hintTimer) { clearTimeout(this._hintTimer); this._hintTimer = null; }
+    if (this._hintAutoHide) { clearTimeout(this._hintAutoHide); this._hintAutoHide = null; }
     this._teardownThree();
   }
 
@@ -134,22 +503,26 @@ class Component extends DCLogic {
         this._startThree();
       } else if (Date.now() - startedAt > 8000) {
         clearInterval(this._waitTimer);
-        this._fallBack();
+        this._fallBack('three-cdn-timeout-8s');
       }
     }, 80);
   }
 
-  _fallBack() {
+  _fallBack(reason) {
     this._teardownThree();
-    if (this.state.mode !== 'fallback') this.setState({ mode: 'fallback' });
+    if (this.state.mode !== 'fallback') this.setState({ mode: 'fallback', sceneReady: true });
   }
 
   _teardownThree() {
     if (this._raf) cancelAnimationFrame(this._raf);
     this._raf = null;
+    this._tick = null;
+    this._assemblyDone = false;
+    this._orbitScratch = null;
     if (this._waitTimer) clearInterval(this._waitTimer);
     this._waitTimer = null;
     if (this._ro) { this._ro.disconnect(); this._ro = null; }
+    if (this._dragCleanup) { this._dragCleanup(); this._dragCleanup = null; }
     if (this._disposables) {
       this._disposables.forEach((d) => { try { d.dispose(); } catch (e) {} });
       this._disposables = null;
@@ -169,7 +542,7 @@ class Component extends DCLogic {
     try {
       renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
     } catch (e) {
-      this._fallBack();
+      this._fallBack('renderer-construct-threw: ' + (e && e.message));
       return;
     }
     this._renderer = renderer;
@@ -193,11 +566,15 @@ class Component extends DCLogic {
     this._camera = camera;
 
     // Soft, even studio lighting — warm-white (not cool/blue-white, which
-    // is what was washing the wood color out), kept well under 1.0 total
-    // on any face so the material's own hue carries through undimmed.
-    const hemi = new THREE.HemisphereLight(0xfff8ec, 0xe8ddc8, 0.5);
+    // is what was washing the wood color out). Three r160 uses physically
+    // correct light units (post-r155): a directional light needs intensity
+    // in roughly the 2-4 range to fully illuminate a diffuse surface, not
+    // the ~0.5-1.0 scale carried over from pre-r155 "legacy" lighting —
+    // that mismatch (not tone-mapping clipping) is what was reading the
+    // cream texture as a dark khaki-grey.
+    const hemi = new THREE.HemisphereLight(0xfff2df, 0xd8c39c, 0.55);
     scene.add(hemi);
-    const key = new THREE.DirectionalLight(0xfff2df, 0.55);
+    const key = new THREE.DirectionalLight(0xfff0da, 1.75);
     key.position.set(5, 9, 7);
     key.castShadow = true;
     key.shadow.mapSize.set(1024, 1024);
@@ -207,7 +584,7 @@ class Component extends DCLogic {
     key.shadow.radius = 4;
     key.shadow.bias = -0.0015;
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xfffaf2, 0.25);
+    const fill = new THREE.DirectionalLight(0xffe9c8, 0.35);
     fill.position.set(-6, 5, -4);
     scene.add(fill);
 
@@ -237,19 +614,40 @@ class Component extends DCLogic {
     deckTex.repeat.set(4, 1);
     this._disposables.push(runnerTex, deckTex);
 
-    // Layout: 3 long runners (skids) on the ground, 9 deck boards laid
-    // across them — a simplified, stylised pallet, not an engineering
-    // drawing, sized to read clearly in a shallow hero band.
+    // Layout: a real block-pallet cross-section — 3 bottom boards, a 3x3
+    // grid of 9 support blocks, then 9 top deck boards — instead of the
+    // previous solid-runner stand-in. This is what gives a pallet its
+    // recognizable silhouette (the checkerboard gaps you can see straight
+    // through at the corners); a stringer-style solid runner reads as a
+    // generic crate from most angles.
     const planks = [];
-    const runnerGeo = new THREE.BoxGeometry(0.55, 0.5, 7.6);
-    this._disposables.push(runnerGeo);
-    [-3.1, 0, 3.1].forEach((x) => {
+    const blockTex = this._makeWoodTexture(THREE, '#E2C393', '#C9A876');
+    this._disposables.push(blockTex);
+
+    const bottomGeo = new THREE.BoxGeometry(7.4, 0.16, 0.9);
+    this._disposables.push(bottomGeo);
+    let bottomIdx = 0;
+    [-3.0, 0, 3.0].forEach((z) => {
       const mat = new THREE.MeshStandardMaterial({ map: runnerTex, color: 0xffffff, roughness: 0.72, transparent: true, opacity: 0 });
       this._disposables.push(mat);
-      const m = new THREE.Mesh(runnerGeo, mat);
+      const m = new THREE.Mesh(bottomGeo, mat);
       m.castShadow = true; m.receiveShadow = true;
-      planks.push({ mesh: m, finalPos: new THREE.Vector3(x, -0.47, 0), finalRot: new THREE.Euler(0, 0, 0) });
+      planks.push({ mesh: m, finalPos: new THREE.Vector3(0, -0.76, z), finalRot: new THREE.Euler(0, 0, 0), layer: 0, layerIndex: bottomIdx++ });
     });
+
+    const blockGeo = new THREE.BoxGeometry(0.52, 0.5, 0.52);
+    this._disposables.push(blockGeo);
+    let blockIdx = 0;
+    [-3.1, 0, 3.1].forEach((x) => {
+      [-3.0, 0, 3.0].forEach((z) => {
+        const mat = new THREE.MeshStandardMaterial({ map: blockTex, color: 0xffffff, roughness: 0.75, transparent: true, opacity: 0 });
+        this._disposables.push(mat);
+        const m = new THREE.Mesh(blockGeo, mat);
+        m.castShadow = true; m.receiveShadow = true;
+        planks.push({ mesh: m, finalPos: new THREE.Vector3(x, -0.43, z), finalRot: new THREE.Euler(0, 0, 0), layer: 1, layerIndex: blockIdx++ });
+      });
+    });
+
     const deckGeo = new THREE.BoxGeometry(7.4, 0.34, 0.62);
     this._disposables.push(deckGeo);
     for (let i = 0; i < 9; i++) {
@@ -258,26 +656,36 @@ class Component extends DCLogic {
       this._disposables.push(mat);
       const m = new THREE.Mesh(deckGeo, mat);
       m.castShadow = true; m.receiveShadow = true;
-      planks.push({ mesh: m, finalPos: new THREE.Vector3(0, -0.05, z), finalRot: new THREE.Euler(0, 0, 0) });
+      planks.push({ mesh: m, finalPos: new THREE.Vector3(0, 0.01, z), finalRot: new THREE.Euler(0, 0, 0), layer: 2, layerIndex: i });
     }
 
     // Scattered starting pose per plank: offset outward from its final slot
-    // and tumbled, so each piece visibly flies in and rights itself.
+    // and tumbled, so each piece visibly flies in and rights itself. Spread
+    // and tumble are deliberately modest (not the wide, wild scatter of the
+    // first pass) — a tighter entrance reads as choreographed rather than
+    // chaotic, closer to a product-ad assembly than pieces flying in from
+    // off-screen at random.
     planks.forEach((p, i) => {
       const angle = (i / planks.length) * Math.PI * 2;
-      const spread = 5.5 + (i % 3) * 1.4;
+      const spread = 3.0 + (i % 3) * 0.85;
       p.startPos = new THREE.Vector3(
         p.finalPos.x + Math.cos(angle) * spread,
-        p.finalPos.y + 3.2 + (i % 4) * 0.9,
+        p.finalPos.y + 2.0 + (i % 4) * 0.55,
         p.finalPos.z + Math.sin(angle) * spread
       );
-      p.startRot = new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+      p.startRot = new THREE.Euler(
+        (Math.random() - 0.5) * Math.PI * 0.7,
+        (Math.random() - 0.5) * Math.PI * 0.7,
+        (Math.random() - 0.5) * Math.PI * 0.7
+      );
       p.mesh.position.copy(p.startPos);
       p.mesh.rotation.copy(p.startRot);
-      // A base per-index cascade (so runners still broadly lead deck
-      // boards) plus real jitter on top — identical spacing read as a
-      // metronome, not a choreographed assembly.
-      p.delay = i * 55 + Math.random() * 130;
+      // Delay by construction layer, not by flat index — bottom boards
+      // land first, then the support blocks, then the top deck, matching
+      // how a real pallet actually goes together. A tight wave within each
+      // layer (plus light jitter) keeps it from reading as a metronome
+      // without the pieces feeling like they're arriving in random order.
+      p.delay = p.layer * 360 + p.layerIndex * 55 + Math.random() * 90;
       scene.add(p.mesh);
     });
     this._planks = planks;
@@ -291,6 +699,7 @@ class Component extends DCLogic {
     // camStart sits further back AND rotated ~18° around the same target,
     // so lerping to camEnd traces a combined push-in + slow orbit instead
     // of a straight-line dolly that reads as static.
+    this._camLookAt = new THREE.Vector3(0, -0.15, 0);
     this._camEnd = new THREE.Vector3(6.0, 2.5, 5.6);
     const endRadius = Math.hypot(this._camEnd.x, this._camEnd.z);
     const endAngle = Math.atan2(this._camEnd.z, this._camEnd.x);
@@ -301,13 +710,61 @@ class Component extends DCLogic {
       this._camEnd.y * 1.9,
       Math.sin(startAngle) * startRadius
     );
-    this._camLookAt = new THREE.Vector3(0, -0.15, 0);
+
+    // Exact resting-pose bounding box of the assembled pallet (all planks
+    // land at finalRot = identity, so this is a plain axis-aligned box from
+    // the known geometry/positions above — no need to measure it at
+    // runtime). _resize() uses this to keep every corner of the pallet
+    // inside the frame at whatever aspect ratio the hero band ends up
+    // with (a fixed camera offset only ever looked right at the one
+    // aspect it was tuned against — the hero going full-viewport-height
+    // is exactly the case that broke it).
+    this._palletBox = { min: new THREE.Vector3(-3.7, -0.84, -3.91), max: new THREE.Vector3(3.7, 0.18, 3.91) };
+    this._camEndDir = this._camLookAt.clone().sub(this._camEnd).normalize();
+    this._camEndBaseDist = this._camLookAt.distanceTo(this._camEnd);
+    this._camStartDir = this._camLookAt.clone().sub(this._camStart).normalize();
+    this._camStartBaseDist = this._camLookAt.distanceTo(this._camStart);
+
     camera.position.copy(this._camStart);
     camera.lookAt(this._camLookAt);
 
-    this._ro = new ResizeObserver(() => this._resize());
+    this._ro = new ResizeObserver(() => { this._resize(); this._wake(); });
     this._ro.observe(canvas.parentElement);
     this._resize();
+
+    // Force shader/program compilation (and the first shadow-map pass) to
+    // happen HERE, synchronously, before the watchdog's timing window opens.
+    // Without this, that one-time cost lands inside the first frame of the
+    // timed loop below — a 100-300ms compile stall on a cold shader cache is
+    // enough by itself to drag a 900ms average under the 24fps bar, tripping
+    // a false fallback on an otherwise perfectly capable device. Compiling
+    // against the actual starting pose means the same materials/geometry
+    // that are about to render are what gets warmed.
+    try {
+      renderer.compile(scene, camera);
+      renderer.render(scene, camera);
+    } catch (e) {}
+    // The canvas now has a real first frame painted — safe to crossfade the
+    // placeholder out.
+    if (!this._unmounted) this.setState({ sceneReady: true });
+
+    // Post-assembly orbit: once the camera finishes its dolly-in, control
+    // hands off from the scripted lerp to a cursor-follow orbit around the
+    // same lookAt point. This is direct position-follow, not a drag gesture:
+    // the pointer's position over the canvas IS the target angle (no click
+    // needed on desktop — touch works the same way while a finger is on the
+    // canvas, since touch has no hover state to read otherwise). The target
+    // is approached with a spring-style lerp each frame rather than snapped
+    // to instantly, which is what actually reads as "smooth" — snapping
+    // straight to the pointer looks robotic, and the earlier autonomous
+    // idle sway was the opposite mistake (motion the pointer wasn't causing
+    // at all). No idle drift here on purpose: it should only ever move
+    // because of where the pointer is, and ease back to the resting shot
+    // when the pointer leaves.
+    this._userYaw = 0; this._userPitch = 0;
+    this._targetYaw = 0; this._targetPitch = 0;
+    this._MAX_YAW = 0.42; this._MAX_PITCH = 0.15;
+    this._bindPointerFollow(canvas);
 
     const DURATION = 2400;
     const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
@@ -320,56 +777,134 @@ class Component extends DCLogic {
       return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
     };
     const start = performance.now();
-    let frames = 0;
-    let sumDelta = 0;
     let lastT = start;
     let watchdogDone = false;
+    // Deliberately NOT sampled from t=0. The first second or so after start
+    // is exactly when a cold three.js CDN fetch, other dc-import components
+    // still mounting (nav reveal wiring, image decode), and one-time GPU
+    // pipeline setup all overlap — measuring fps in that window means
+    // measuring page-load noise, not this device's real steady-state
+    // capability. That mismatch is what kept tripping a false fallback on
+    // perfectly capable devices no matter how the threshold/window here was
+    // tuned. Waiting until the assembly has actually finished (this._assemblyDone,
+    // set at the bottom of this loop) and only THEN opening the sampling
+    // window sidesteps the noise instead of trying to filter it out.
+    let watchdogStart = null;
+    let watchdogLastT = null;
+    let frames = 0;
+    let sumDelta = 0;
     const WATCH_WINDOW = 900;
+    const MIN_SAMPLES = 10;
+    // This scene is cheap (12 boxes, no post-processing) — any device that
+    // actually has WebGL (already checked before this point) can render it at
+    // a perfectly watchable rate. The bar here is deliberately low: it exists
+    // to catch a genuinely broken/thrashing render (a slideshow), not to
+    // enforce a 60fps ideal.
+    const MIN_ACCEPTABLE_FPS = 12;
 
     const tick = (now) => {
       const delta = now - lastT;
       lastT = now;
-      frames++;
-      if (!watchdogDone) {
-        sumDelta += delta;
-        if (now - start >= WATCH_WINDOW) {
-          watchdogDone = true;
-          const avgFps = 1000 / (sumDelta / frames);
-          if (avgFps < 24) { this._fallBack(); return; }
+
+      // Camera keeps easing (and orbiting) for slightly longer than the
+      // planks' own worst-case settle time — layer 2 (top deck, 9 pieces)
+      // at 360ms/layer + 55ms/piece + ~90ms jitter tops out around 1250ms
+      // of delay before its own DURATION even starts — so it's still
+      // visibly moving as the last piece lands instead of stopping early
+      // and reading as static for the tail end.
+      const camT = Math.min(1, (now - start) / (DURATION + 1400));
+      let orbitSettled = false;
+      if (camT >= 1) {
+        orbitSettled = this._tickOrbit(camera, now, delta);
+      } else {
+        camera.position.lerpVectors(this._camStart, this._camEnd, easeOutCubic(camT));
+        camera.lookAt(this._camLookAt);
+      }
+
+      // Once every plank has reached its final pose, stop recomputing an
+      // identical lerp for all 12 of them every single frame — with the loop
+      // running for as long as the tab stays open (see the settle/wake logic
+      // below), that would otherwise be permanent, pointless per-frame work.
+      if (!this._assemblyDone) {
+        let allDone = true;
+        planks.forEach((p) => {
+          const local = now - start - p.delay;
+          const t = Math.max(0, Math.min(1, local / DURATION));
+          if (t < 1) allDone = false;
+          const e = easeOutBack(t);
+          p.mesh.position.lerpVectors(p.startPos, p.finalPos, e);
+          p.mesh.rotation.x = p.startRot.x + (p.finalRot.x - p.startRot.x) * e;
+          p.mesh.rotation.y = p.startRot.y + (p.finalRot.y - p.startRot.y) * e;
+          p.mesh.rotation.z = p.startRot.z + (p.finalRot.z - p.startRot.z) * e;
+          // Cheap stand-in for motion blur/DOF: each plank materializes in
+          // (opacity 0->1) well before it lands, rather than being a fully
+          // solid object tumbling through the air — full post-processing
+          // blur would cost an extra render pass per frame, which risks the
+          // fps budget this component's own watchdog exists to protect.
+          p.mesh.material.opacity = Math.min(1, t / 0.35);
+        });
+        if (allDone) this._assemblyDone = true;
+      }
+
+      renderer.render(scene, camera);
+
+      // Watchdog sampling opens only once the assembly has actually
+      // finished — see the comment where these variables are declared above
+      // for why. this._assemblyDone flips true at most one frame before this
+      // check runs (set in the block just above), so the window opens
+      // essentially immediately once the noisy startup period is over.
+      if (!watchdogDone && this._assemblyDone) {
+        if (watchdogStart === null) {
+          watchdogStart = now;
+          watchdogLastT = now;
+        } else {
+          frames++;
+          sumDelta += now - watchdogLastT;
+          watchdogLastT = now;
+          const elapsed = now - watchdogStart;
+          if (elapsed >= WATCH_WINDOW && frames >= MIN_SAMPLES) {
+            watchdogDone = true;
+            const avgFps = 1000 / (sumDelta / frames);
+            if (avgFps < MIN_ACCEPTABLE_FPS) { this._fallBack('fps-watchdog: ' + avgFps.toFixed(1) + 'fps over ' + frames + ' post-assembly frames'); return; }
+          } else if (elapsed >= WATCH_WINDOW * 2) {
+            watchdogDone = true;
+            const avgFps = frames > 0 ? 1000 / (sumDelta / frames) : 0;
+            if (avgFps < MIN_ACCEPTABLE_FPS) { this._fallBack('fps-watchdog-starved: ' + avgFps.toFixed(1) + 'fps over ' + frames + ' post-assembly frames'); return; }
+          }
         }
       }
 
-      // Camera keeps easing (and orbiting) for slightly longer than the
-      // planks' own worst-case settle time (DURATION + up to ~185ms of
-      // jitter), so it's still visibly moving as the last piece lands
-      // instead of stopping early and reading as static for the tail end.
-      const camT = Math.min(1, (now - start) / (DURATION + 900));
-      camera.position.lerpVectors(this._camStart, this._camEnd, easeOutCubic(camT));
-      camera.lookAt(this._camLookAt);
-
-      planks.forEach((p) => {
-        const local = now - start - p.delay;
-        const t = Math.max(0, Math.min(1, local / DURATION));
-        const e = easeOutBack(t);
-        p.mesh.position.lerpVectors(p.startPos, p.finalPos, e);
-        p.mesh.rotation.x = p.startRot.x + (p.finalRot.x - p.startRot.x) * e;
-        p.mesh.rotation.y = p.startRot.y + (p.finalRot.y - p.startRot.y) * e;
-        p.mesh.rotation.z = p.startRot.z + (p.finalRot.z - p.startRot.z) * e;
-        // Cheap stand-in for motion blur/DOF: each plank materializes in
-        // (opacity 0->1) well before it lands, rather than being a fully
-        // solid object tumbling through the air — full post-processing
-        // blur would cost an extra render pass per frame, which risks the
-        // fps budget this component's own watchdog exists to protect.
-        p.mesh.material.opacity = Math.min(1, t / 0.35);
-      });
-
-      // Once every plank has eased to e=1, this naturally holds on an
-      // almost-still frame — a constantly-spinning hero reads as a loading
-      // spinner, not a premium product shot.
-      renderer.render(scene, camera);
-      this._raf = requestAnimationFrame(tick);
+      // Render-on-demand once everything has visibly settled: assembly
+      // finished, the scripted camera dolly finished, the orbit spring has
+      // converged to wherever the pointer currently targets (dead-center if
+      // it's not over the canvas), AND the watchdog has rendered its verdict
+      // (that last one matters even though nothing is visually changing by
+      // this point — the watchdog needs a handful of real frames after
+      // assemblyDone to sample, and stopping the loop before it gets them
+      // would mean it never runs at all on a page where the pointer never
+      // touches the canvas). Nothing on screen would change on the next
+      // frame once all three are true, so there's no reason to keep
+      // scheduling one — this is what stops the hero from burning a render
+      // call, forever, for as long as the tab happens to stay open. A
+      // pointer move/leave or a resize wakes it back up (_wake(), called
+      // from _bindPointerFollow and the ResizeObserver below).
+      if (this._assemblyDone && orbitSettled && watchdogDone) {
+        this._raf = null;
+      } else {
+        this._raf = requestAnimationFrame(tick);
+      }
     };
+    this._tick = tick;
     this._raf = requestAnimationFrame(tick);
+  }
+
+  /* Resumes the render loop after it has gone idle (see the settle check
+     above) — called on pointer move/leave and on resize, the only things
+     that can change what the next frame should look like once settled. */
+  _wake() {
+    if (this._raf == null && this._tick) {
+      this._raf = requestAnimationFrame(this._tick);
+    }
   }
 
   /* Procedural light-pine grain, painted directly in the requested hex
@@ -427,8 +962,180 @@ class Component extends DCLogic {
     const w = el.clientWidth || 1;
     const h = el.clientHeight || 1;
     this._renderer.setSize(w, h, false);
-    this._camera.aspect = w / h;
+    const aspect = w / h;
+    this._camera.aspect = aspect;
     this._camera.updateProjectionMatrix();
+
+    if (!this._camEndDir || !this._palletBox) return;
+    // Re-derive how far back the camera needs to sit, along its existing
+    // viewing direction, so all 8 corners of the pallet's bounding box
+    // stay inside the frustum with margin at THIS aspect ratio — then
+    // scale both camEnd and camStart by the same factor so the dolly/orbit
+    // shape is preserved, just at a distance that no longer clips.
+    const vFovRad = (this._camera.fov * Math.PI) / 180;
+    const neededEnd = this._fitDistance(this._camEndDir, vFovRad, aspect, 0.68);
+    const scale = Math.max(1, neededEnd / this._camEndBaseDist);
+    this._fitScale = scale;
+    // camEndDir points from camera toward the target, so the camera position
+    // itself is lookAt MINUS dir*distance (adding would place it past the
+    // target on the far side — exactly backwards).
+    this._camEnd.copy(this._camLookAt).addScaledVector(this._camEndDir, -this._camEndBaseDist * scale);
+    this._camStart.copy(this._camLookAt).addScaledVector(this._camStartDir, -this._camStartBaseDist * scale);
+  }
+
+  /* Smallest camera distance (measured back from camLookAt along dirUnit)
+     at which every corner of this._palletBox projects inside the given
+     vertical-FOV/aspect frustum, times a margin factor (<1 reserves extra
+     breathing room around the pallet; e.g. 0.8 means only 80% of the
+     available half-angle is "claimed" by the pallet). Exact for an
+     axis-aligned box under a simple look-at camera — not a bounding-sphere
+     approximation, so it doesn't over- or under-shoot depending on the
+     pallet's orientation relative to the frame. */
+  _fitDistance(dirUnit, vFovRad, aspect, margin) {
+    const THREE = window.THREE;
+    const worldUp = new THREE.Vector3(0, 1, 0);
+    let right = new THREE.Vector3().crossVectors(dirUnit, worldUp);
+    if (right.lengthSq() < 1e-6) right.set(1, 0, 0); else right.normalize();
+    const up = new THREE.Vector3().crossVectors(right, dirUnit).normalize();
+    const tanV = Math.tan(vFovRad / 2) * margin;
+    const tanH = tanV * aspect;
+    const { min, max } = this._palletBox;
+    let need = 0;
+    for (let xi = 0; xi < 2; xi++) {
+      for (let yi = 0; yi < 2; yi++) {
+        for (let zi = 0; zi < 2; zi++) {
+          const corner = new THREE.Vector3(xi ? max.x : min.x, yi ? max.y : min.y, zi ? max.z : min.z);
+          const rel = corner.sub(this._camLookAt);
+          const cf = rel.dot(dirUnit);
+          const cx = rel.dot(right);
+          const cy = rel.dot(up);
+          need = Math.max(need, Math.abs(cx) / tanH - cf, Math.abs(cy) / tanV - cf);
+        }
+      }
+    }
+    return Math.max(need, 0.5);
+  }
+
+  /* Per-frame camera update once the scripted dolly-in has finished.
+     Reads the CURRENT this._camEnd (which _resize keeps correct for the
+     live aspect ratio) and derives the orbit basis from it fresh every
+     frame — cheap, and means a mid-interaction window resize just keeps
+     working without any extra bookkeeping. this._targetYaw/Pitch are set
+     directly from wherever the pointer currently is (see
+     _bindPointerFollow) — this function's only job is to spring userYaw/
+     userPitch toward that target each frame, which is what makes it read
+     as smooth "tilts toward the cursor" rather than either an instant snap
+     or, worse, motion that isn't actually tied to the pointer at all. */
+  _tickOrbit(camera, now, delta) {
+    const THREE = window.THREE;
+    // A constant lerp factor is a fine stand-in for a critically-damped
+    // spring here — the target itself is continuous (it's just "wherever
+    // the pointer is right now"), so there's no separate release/settle
+    // phase to choreograph the way a flick-and-let-go gesture would need.
+    // It's tuned as "0.09 of the remaining distance per frame at 60Hz" —
+    // applied as a flat per-frame constant, that would converge visibly
+    // faster on a 120Hz display (twice as many 0.09 steps per second) and
+    // slower on a 30Hz one. Scaling by the actual elapsed time since the
+    // last frame keeps the real-world convergence speed identical across
+    // refresh rates, and keeps it correct across the idle-then-resume gap
+    // that render-on-demand (see the tick loop above) introduces.
+    // No upper clamp on dt: a long gap (a slow real frame, or waking back up
+    // after render-on-demand went idle for a while) should make alpha race
+    // toward 1 and catch up in that one frame — the formula already
+    // saturates there on its own (it's a fraction raised to a growing power,
+    // monotonically toward 0, never negative or unbounded), and that catch-
+    // up IS the correct behavior: nothing visible changed during the gap, so
+    // there's nothing for the eye to perceive as a "jump" when it resumes
+    // already at (or very near) the target.
+    const SPRING_PER_FRAME_AT_60HZ = 0.09;
+    const dt = Math.max(0, delta);
+    const alpha = 1 - Math.pow(1 - SPRING_PER_FRAME_AT_60HZ, dt / 16.6667);
+    this._userYaw += (this._targetYaw - this._userYaw) * alpha;
+    this._userPitch += (this._targetPitch - this._userPitch) * alpha;
+
+    const dir = this._camEndDir;
+    const dist = this._camEndBaseDist * Math.max(1, this._fitScale || 1);
+    // Scratch vectors reused across frames instead of allocated fresh each
+    // time — this runs every frame while the orbit is active, and at a high
+    // refresh rate (90/120Hz) four new Vector3s per frame is enough garbage
+    // to invite a GC pause that reads as a visible stutter. "up" isn't kept
+    // — only right and rotated are read again — but the object itself is
+    // still reused to skip the allocation.
+    const s = this._orbitScratch || (this._orbitScratch = {
+      worldUp: new THREE.Vector3(0, 1, 0),
+      right: new THREE.Vector3(),
+      up: new THREE.Vector3(),
+      rotated: new THREE.Vector3(),
+    });
+    // Build an orthonormal basis around the tuned viewing direction so
+    // yaw orbits around world-up and pitch tilts within that plane —
+    // exactly the same basis _fitDistance uses, so the orbit never drifts
+    // outside the margin that basis was fit against.
+    s.right.crossVectors(dir, s.worldUp);
+    if (s.right.lengthSq() < 1e-6) s.right.set(1, 0, 0); else s.right.normalize();
+    s.up.crossVectors(s.right, dir).normalize();
+
+    // Rotate the base "camera-to-target" direction by yaw around world-up
+    // and by pitch around the local right axis, then place the camera
+    // that many units back along the rotated direction.
+    s.rotated.copy(dir)
+      .applyAxisAngle(s.worldUp, this._userYaw)
+      .applyAxisAngle(s.right, this._userPitch)
+      .normalize();
+    camera.position.copy(this._camLookAt).addScaledVector(s.rotated, -dist);
+    camera.lookAt(this._camLookAt);
+
+    // Settled once the spring has all but reached its target (dead-center
+    // when the pointer isn't over the canvas) — the tick loop uses this to
+    // decide whether it's safe to stop scheduling further frames.
+    return Math.abs(this._targetYaw - this._userYaw) < 0.0006 && Math.abs(this._targetPitch - this._userPitch) < 0.0006;
+  }
+
+  /* Cursor/touch follow — unifies mouse hover and touch drag via the
+     Pointer Events API, but unlike a drag gesture there's no down/up
+     lifecycle to it: the target angle is just "where is the pointer,
+     right now, as a fraction of the canvas". For a mouse that updates on
+     every hover move with no click required (this is the behavior that
+     was missing — the pallet needs to visibly track the cursor the moment
+     it moves over the hero, not wait for a press). For touch, pointermove
+     only ever fires while a finger is actually in contact, so the same
+     handler naturally behaves like a drag there without extra branching.
+     Leaving the canvas (mouse) or lifting the finger (touch) eases the
+     target back to dead-center — the tuned resting shot — rather than
+     leaving the camera wherever it last was. */
+  _bindPointerFollow(canvas) {
+    const setFromEvent = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const nx = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1));
+      const ny = Math.max(-1, Math.min(1, ((e.clientY - rect.top) / rect.height) * 2 - 1));
+      this._targetYaw = nx * this._MAX_YAW;
+      this._targetPitch = -ny * this._MAX_PITCH;
+    };
+    const onMove = (e) => {
+      setFromEvent(e);
+      this._hideHint();
+      this._wake();
+    };
+    const onLeave = () => {
+      this._targetYaw = 0;
+      this._targetPitch = 0;
+      this._wake();
+    };
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerleave', onLeave);
+    canvas.addEventListener('pointercancel', onLeave);
+    canvas.addEventListener('pointerup', onLeave);
+    this._dragCleanup = () => {
+      canvas.removeEventListener('pointermove', onMove);
+      canvas.removeEventListener('pointerleave', onLeave);
+      canvas.removeEventListener('pointercancel', onLeave);
+      canvas.removeEventListener('pointerup', onLeave);
+    };
+  }
+
+  _hideHint() {
+    if (!this.state.hintOut) this.setState({ hintOut: true });
   }
 
   /* Static plank layout for the CSS/SVG fallback — same 3-runner /
@@ -469,12 +1176,17 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    const ready = this.state.sceneReady;
     return {
       showThree: this.state.mode === 'three',
       showFallback: this.state.mode === 'fallback',
       canvasRef: (el) => { this.canvas = el; },
       planks: this.state.mode === 'fallback' ? this._assembledOrScattered() : [],
-      captionClass: this.state.captionIn ? 'is-in' : '',
+      contentClass: this.state.contentIn ? 'is-in' : '',
+      hintClass: this.state.hintIn && !this.state.hintOut ? 'is-in' : (this.state.hintOut ? 'is-out' : ''),
+      placeholderClass: ready ? 'is-out' : '',
+      realClass: ready ? 'is-in' : '',
+      quoteAny: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
     };
   }
 

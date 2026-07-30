@@ -24,8 +24,8 @@
 <dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="about" hint-size="100%,79px"></dc-import>
 
 <main>
-  <section style="padding: clamp(44px, 6vw, 84px) 0 clamp(28px, 3vw, 44px); ">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
+  <section style="padding: clamp(44px, 6vw, 84px) 0 clamp(28px, 3vw, 44px); min-height: min(58vh, 480px); display: flex; flex-direction: column; justify-content: center;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>The company</span>
       <h1 data-lines data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(40px, 5.6vw, 76px); line-height: 0.9; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;"><span style="display: block;">Two decades of</span><span style="display: block;">wood and deadlines</span></h1>
       <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 80%, transparent);">Pallets in every grade, size and quality since 2003 — and wood shavings since October 2025. All of it out of one yard in Al Sajaa, Sharjah.</p>
@@ -33,7 +33,7 @@
   </section>
 
   <section style="padding: clamp(40px, 5vw, 72px) 0;">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 72px); align-items: center;">
+    <div data-split style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 72px); align-items: center;">
       <figure data-reveal data-wipe data-parallax="30" style="margin: 0; background: var(--color-neutral-100); overflow: hidden;">
         <img src="assets/yard-stacks-golden.jpg" alt="Pallet stacks in the Al Sajaa yard" style="width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;" />
       </figure>
@@ -56,9 +56,38 @@
     </div>
   </section>
 
+  <section style="padding: clamp(56px, 7vw, 96px) 0; background: var(--color-neutral-900); color: #f7f4ee;">
+    <div data-split style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 88px); align-items: center;">
+      <div style="position: relative;">
+        <!-- Smaller, offset portrait over a solid accent block, rather than
+             a full-column photo — echoes the layered photo-card treatment
+             site visitors will recognize from other manufacturer "message
+             from the founder" pages, adapted to this site's own accent
+             color instead of borrowing anyone else's palette. -->
+        <div aria-hidden="true" style="position: absolute; top: clamp(20px, 4vw, 40px); right: clamp(-20px, -3vw, -12px); bottom: clamp(-20px, -4vw, -40px); left: clamp(20px, 4vw, 40px); background: var(--color-accent-600);"></div>
+        <figure data-reveal data-wipe style="position: relative; margin: 0 clamp(28px, 6vw, 56px) clamp(28px, 6vw, 56px) 0; max-width: 300px; background: var(--color-neutral-100); overflow: hidden; box-shadow: 0 24px 48px -20px rgba(0,0,0,0.5);">
+          <img loading="lazy" src="assets/founder-portrait.jpg" alt="Bilal Ahmed, Founder of Al Madhi Carpentry" style="width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;" />
+        </figure>
+      </div>
+      <div>
+        <span class="eyebrow" style="margin: 0 0 20px; color: var(--color-accent);"><i class="eyebrow-dash" style="background: var(--color-accent);"></i>02 &middot; Message from the founder</span>
+        <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(34px, 4vw, 52px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0; color: #ffffff;">Message From<br />the Founder</h2>
+        <p style="font-size: 18px; line-height: 30px; margin: 28px 0 0; max-width: 58ch; color: color-mix(in srgb, #f7f4ee 86%, transparent);">When I started Al Madhi Carpentry in 2003, it was a small yard built on one simple principle: every pallet we produced had to be one our customers could rely on. More than two decades later, that principle remains at the heart of everything we do, even as we&rsquo;ve grown to serve businesses across all seven Emirates.</p>
+        <p style="font-size: 18px; line-height: 30px; margin: 22px 0 0; max-width: 58ch; color: color-mix(in srgb, #f7f4ee 86%, transparent);">Every pallet leaving our yard represents our name and our reputation, whether it&rsquo;s a single custom order or a large-scale shipment. We don&rsquo;t believe quality should ever be negotiable, and the lasting relationships we&rsquo;ve built with our customers reflect that commitment.</p>
+        <p style="font-size: 18px; line-height: 30px; margin: 22px 0 0; max-width: 58ch; color: color-mix(in srgb, #f7f4ee 86%, transparent);">I&rsquo;m sincerely grateful to every customer, supplier, and member of our team who has been part of this journey. As we look ahead, our promise remains unchanged: to deliver quality workmanship, dependable service, and the reliability our customers have trusted since 2003.</p>
+        <div style="margin-top: 34px; padding-top: 26px; border-top: 1px solid color-mix(in srgb, #f7f4ee 20%, transparent); display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div>
+            <strong style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.02em; text-transform: uppercase; color: #ffffff;">Bilal Ahmed</strong>
+            <span style="display: block; margin-top: 3px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent);">Founder, Al Madhi Carpentry</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section style="padding: clamp(40px, 5vw, 72px) 0; background: var(--color-neutral-200); color: var(--color-text);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
-      <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>02 &middot; By the numbers</span>
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>03 &middot; By the numbers</span>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: clamp(22px, 3vw, 44px);">
         <div>
           <strong data-count="20" data-suffix="+" style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: clamp(44px, 5vw, 66px); line-height: 1; letter-spacing: 0.02em; font-feature-settings: 'tnum' 1;">0</strong>
@@ -84,9 +113,34 @@
     </div>
   </section>
 
+  <section style="padding: clamp(40px, 5vw, 72px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>04 &middot; What we do</span>
+      <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.4vw, 44px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 32px); max-width: 20ch;">More than just new wooden pallets</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+        <a href="Plastic-Pallets-New.dc.html" data-card data-reveal style="display: block; padding: clamp(22px, 2.4vw, 28px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; margin: 0;">Plastic pallets</h3>
+          <p style="font-size: 14.5px; line-height: 22px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">New and used, for food, pharma and export loads that suit plastic over wood.</p>
+        </a>
+        <a href="Boxes-Crates.dc.html" data-card data-reveal style="display: block; padding: clamp(22px, 2.4vw, 28px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; margin: 0;">Boxes &amp; crates</h3>
+          <p style="font-size: 14.5px; line-height: 22px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Export crating built around machinery and fragile goods, ISPM-15 compliant.</p>
+        </a>
+        <a href="Home-Furniture-Pallets.dc.html" data-card data-reveal style="display: block; padding: clamp(22px, 2.4vw, 28px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; margin: 0;">Pallets for home &amp; furniture</h3>
+          <p style="font-size: 14.5px; line-height: 22px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Sanded, splinter-free stock for DIY furniture and garden projects.</p>
+        </a>
+        <a href="We-Buy.dc.html" data-card data-reveal style="display: block; padding: clamp(22px, 2.4vw, 28px); background: #ffffff; color: var(--color-text);">
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; margin: 0;">We buy wood &amp; pallets</h3>
+          <p style="font-size: 14.5px; line-height: 22px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Cash in hand for used pallets, new or used timber and offcuts &mdash; we are not only a seller.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section style="padding: clamp(32px, 4vw, 56px) 0 clamp(48px, 6vw, 80px);">
-    <div style="max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 3vw, 40px);">
-      <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>04 &middot; Quality standards</span>
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>05 &middot; Quality standards</span>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: clamp(24px, 3vw, 44px);">
         <div data-card data-reveal style="padding: clamp(26px, 3vw, 36px); background: #ffffff;">
           <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.03em; text-transform: uppercase; margin: 0;">Wood intake</h3>
