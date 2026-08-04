@@ -1,15 +1,605 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Al Madhi Carpentry — Wooden Pallets &amp; Wood Shavings, Sharjah</title>
-<meta http-equiv="refresh" content="0; url=index.dc.html" />
-<link rel="canonical" href="index.dc.html" />
-<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
-<body style="font-family: system-ui, sans-serif; padding: 40px;">
-<p>Opening <a href="index.dc.html">Al Madhi Carpentry</a>&hellip;</p>
-<script>location.replace('index.dc.html');</script>
+<body>
+<x-dc>
+<helmet>
+<title>Al Madhi Carpentry — Wooden Pallets &amp; Wood Shavings, Sharjah UAE</title>
+<meta name="description" content="Wooden pallet and wood shaving manufacturer in Al Sajaa Industrial Area, Sharjah. Pallets in every grade, size and quality — new, old, used and recycled — plus chip shaped wood shavings by the sack. Delivery across the UAE since 2003." />
+<meta property="og:title" content="Al Madhi Carpentry — Wooden Pallets &amp; Wood Shavings" />
+<meta property="og:description" content="Factory-direct pallets and shavings from Al Sajaa, Sharjah. Built to your size, delivered across the UAE since 2003." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://almadhicarpentry.com/" />
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
+<link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
+<script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
+<style>
+  body { background: var(--color-neutral-100); }
+  a { color: var(--color-info-700); text-decoration: none; }
+  a:hover { color: var(--color-info-800); }
+  summary::after { content: '+'; float: right; color: var(--color-accent-700); font-weight: 400; transition: transform 0.3s ease; }
+  details[open] summary::after { content: '\2212'; }
+  details summary { transition: color 0.2s ease; }
+  details summary:hover { color: var(--color-accent-800); }
+  [data-step] { transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease; }
+  [data-step]:hover { background: #ffffff !important; transform: translateX(3px); }
+  [data-step][aria-current='step'] { background: #ffffff !important; border-left-color: var(--color-accent) !important; box-shadow: 0 10px 26px -20px rgba(36,31,27,0.5); }
+  [data-chip] { transition: background 0.28s ease, color 0.28s ease, transform 0.28s cubic-bezier(0.2,0.7,0.2,1); }
+  [data-chip]:hover { background: var(--color-accent-600) !important; color: #fff; transform: translateY(-3px); }
+  [data-stats] { grid-template-columns: repeat(5, 1fr); }
+  @media (max-width: 1120px) { [data-stats] { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { [data-stats] { grid-template-columns: repeat(2, 1fr); } }
+  /* Ten cards, always split evenly — 5+5 rather than however many happen to
+     fit per row at a given width (which was landing as an awkward 7-then-3
+     at typical desktop widths). Every tier below divides 10 evenly (5, 2,
+     then 1 per row) so there's never a half-empty last row. */
+  /* !important because the element also carries its own inline
+     grid-template-columns (needed so it still looks right with CSS
+     disabled/mid-load) — a plain override here can never win against an
+     inline style regardless of media query, so these have to outrank it
+     the same way [data-quarter] below already does. */
+  @media (max-width: 1100px) { [data-tenup] { grid-template-columns: repeat(2, 1fr) !important; } }
+  @media (max-width: 560px) { [data-tenup] { grid-template-columns: 1fr !important; } }
+  .arrow { transition: transform 0.32s cubic-bezier(0.2,0.7,0.2,1); }
+  .btn:hover .arrow { transform: translateX(4px); }
+  @media (max-width: 900px) {
+    [data-quarter] { grid-column: span 6 !important; }
+  }
+  @media (max-width: 700px) { [data-hero-side] { grid-template-columns: 1fr !important; } }
+  @media (max-width: 560px) { [data-quarter] { grid-column: span 12 !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    [data-tile], [data-zoom] img { transition: none; }
+  }
+  [data-size-chip] {
+    display: flex; flex-direction: column; justify-content: center; gap: 3px;
+    padding: 14px 6px; text-align: center;
+    background: var(--color-neutral-100); border-radius: var(--radius-md);
+    font-family: var(--font-heading); font-weight: 600; font-size: 15px; font-feature-settings: 'tnum' 1;
+    color: var(--color-text);
+  }
+  [data-size-chip] em { font-style: normal; font-family: var(--font-body); font-weight: 400; font-size: 11.5px; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 58%, transparent); }
+  [data-size-chip-featured] {
+    background: var(--color-accent-100); box-shadow: inset 0 0 0 1.5px var(--color-accent-600);
+  }
+</style>
+</helmet>
+<dc-import style="position: fixed; top: 0; left: 0; right: 0; z-index: 60;" name="SiteNav" active="home" overlay="true" hint-size="100%,76px"></dc-import>
+
+<main>
+  <dc-import name="Hero3D" hint-size="100%,420px"></dc-import>
+  <section style="padding: clamp(16px, 2.4vw, 32px) 0 clamp(36px, 4.5vw, 60px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(10px, 1.2vw, 16px);">
+
+      <div data-hero-side data-reveal style="grid-column: span 12; min-width: 0; display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(10px, 1.2vw, 16px);">
+        <div data-zoom data-wipe data-reveal data-parallax="30" style="background: var(--color-neutral-100);">
+          <img src="assets/pallet-studio-new-a.png" alt="A new wooden pallet built at the Al Sajaa works" width="562" height="520" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+        </div>
+        <div style="background: #ffffff; border-top: 3px solid var(--color-accent); color: var(--color-text); padding: clamp(22px, 2.6vw, 32px); display: flex; flex-direction: column;">
+          <span style="display: block; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700);">Most requested size</span>
+          <strong style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: clamp(38px, 4.4vw, 58px); line-height: 0.9; margin-top: 12px; font-feature-settings: 'tnum' 1; color: var(--color-accent-700);">100 &times; 120 cm</strong>
+          <span style="display: block; margin-top: 12px; font-size: 15px; line-height: 23px; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Kept in the yard as standard &mdash; any other size is built to your measurement.</span>
+          <div style="margin-top: 22px;">
+            <span style="display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); margin-bottom: 10px;">Also kept in stock</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">80 &times; 100 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">90 &times; 90 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">100 &times; 100 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">100 &times; 140 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">105 &times; 105 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">110 &times; 110 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">110 &times; 130 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">115 &times; 115 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">120 &times; 120 cm</span>
+              <span class="tag tag-neutral" style="font-size: 13px; padding: 8px 14px; font-feature-settings: 'tnum' 1;">60 &times; 80 cm</span>
+              <span class="tag tag-outline" style="font-size: 13px; padding: 8px 14px;">+7 more</span>
+            </div>
+          </div>
+          <div style="margin-top: auto; padding-top: clamp(22px, 3vw, 34px); border-top: 1px solid var(--color-divider); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+            <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent); max-width: 26ch;">Need something else? Every size is built to your drawing or sample.</span>
+            <a href="Custom-Sized-Pallets.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent-700); white-space: nowrap;">Browse sizes<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <a href="Pallets.dc.html" data-card data-reveal data-quarter style="grid-column: span 3; min-width: 0; background: #ffffff; display: block; color: var(--color-text);">
+        <span data-zoom data-wipe data-reveal style="display: block; background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/pallet-studio-new-b.jpg" alt="New light duty wooden pallet" width="387" height="224" style="width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover;" />
+        </span>
+        <span style="display: block; padding: 18px 20px 20px;">
+          <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; text-transform: uppercase;">New pallets</span>
+          <span style="display: block; margin-top: 5px; font-size: 14px; color: color-mix(in srgb, var(--color-text) 62%, transparent);">Light &amp; heavy duty, any size</span>
+        </span>
+      </a>
+      <a href="Pallets.dc.html" data-card data-reveal data-quarter style="grid-column: span 3; min-width: 0; background: #ffffff; display: block; color: var(--color-text);">
+        <span data-zoom data-wipe data-reveal style="display: block; background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/pallet-studio-old.jpg" alt="Used wooden pallet, checked and sound" width="387" height="224" style="width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover;" />
+        </span>
+        <span style="display: block; padding: 18px 20px 20px;">
+          <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; text-transform: uppercase;">Used pallets</span>
+          <span style="display: block; margin-top: 5px; font-size: 14px; color: color-mix(in srgb, var(--color-text) 62%, transparent);">Graded, repaired, ready to go</span>
+        </span>
+      </a>
+      <a href="Pallets.dc.html" data-card data-reveal data-quarter style="grid-column: span 3; min-width: 0; background: #ffffff; display: block; color: var(--color-text);">
+        <span data-zoom data-wipe data-reveal style="display: block; background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/yard-stack-street.jpg" alt="Bulk lot of pallets stacked in the Al Sajaa yard" width="387" height="224" style="width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover;" />
+        </span>
+        <span style="display: block; padding: 18px 20px 20px;">
+          <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; text-transform: uppercase;">Bulk lots</span>
+          <span style="display: block; margin-top: 5px; font-size: 14px; color: color-mix(in srgb, var(--color-text) 62%, transparent);">Mixed sizes, collect same day</span>
+        </span>
+      </a>
+      <a href="Wood-Shavings.dc.html" data-card data-reveal data-quarter style="grid-column: span 3; min-width: 0; background: #ffffff; display: block; color: var(--color-text);">
+        <span data-zoom data-wipe data-reveal style="display: block; background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/shavings-hand-chips.jpg" alt="Chip shaped wood shavings" style="width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover;" />
+        </span>
+        <span style="display: block; padding: 18px 20px 20px;">
+          <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.04em; text-transform: uppercase;">Wood shavings</span>
+          <span style="display: block; margin-top: 5px; font-size: 14px; color: color-mix(in srgb, var(--color-text) 62%, transparent);">Bedding, absorbent, packing</span>
+        </span>
+      </a>
+
+      <div data-stats style="grid-column: span 12; background: #ffffff; padding: clamp(22px, 2.6vw, 32px) clamp(24px, 3vw, 44px); display: grid; gap: clamp(20px, 3vw, 44px);">
+        <span style="display: flex; flex-direction: column; gap: 6px;"><strong data-count="20" data-suffix="+" style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1;">0</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Years in the yard</span></span>
+        <span style="display: flex; flex-direction: column; gap: 6px;"><strong data-count="100000" data-suffix="+" style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1;">0</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Pallets built</span></span>
+        <span style="display: flex; flex-direction: column; gap: 6px;"><strong data-count="7"  style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1;">0</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Emirates covered</span></span>
+        <span style="display: flex; flex-direction: column; gap: 6px;"><strong style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1;">Same day</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Quote turnaround</span></span>
+        <span style="display: flex; flex-direction: column; gap: 6px;"><strong style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1;">Factory</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Direct, no middleman</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 clamp(20px, 2.6vw, 36px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: #ffffff; padding: clamp(28px, 3.6vw, 52px) clamp(24px, 3.4vw, 48px);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: clamp(20px, 2.6vw, 30px);">
+          <div>
+            <span class="eyebrow-block" style="margin-bottom: 14px;">Every size we build</span>
+            <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px, 2.8vw, 38px); line-height: 1.05; letter-spacing: -0.005em; text-transform: uppercase; margin: 0; max-width: 20ch;">The full size range</h2>
+          </div>
+          <p style="font-size: 15px; line-height: 23px; max-width: 34ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Not on the list? Any dimension is built to your drawing or sample &mdash; no extra charge for a one-off size.</p>
+        </div>
+        <details data-sizes-details>
+          <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-accent-700); list-style: none; cursor: pointer;">View all 18 sizes</summary>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 10px; margin-top: clamp(20px, 2.6vw, 28px);">
+            <div data-size-chip><strong>80 &times; 100 cm</strong></div>
+            <div data-size-chip><strong>80 &times; 120 cm</strong></div>
+            <div data-size-chip><strong>90 &times; 90 cm</strong></div>
+            <div data-size-chip><strong>90 &times; 110 cm</strong></div>
+            <div data-size-chip><strong>100 &times; 100 cm</strong></div>
+            <div data-size-chip><strong>100 &times; 110 cm</strong></div>
+            <div data-size-chip data-size-chip-featured><span class="tag tag-accent" style="margin-bottom: 6px;">Most requested</span><strong>100 &times; 120 cm</strong></div>
+            <div data-size-chip><strong>100 &times; 130 cm</strong></div>
+            <div data-size-chip><strong>100 &times; 140 cm</strong></div>
+            <div data-size-chip><strong>105 &times; 105 cm</strong></div>
+            <div data-size-chip><strong>110 &times; 110 cm</strong></div>
+            <div data-size-chip><strong>110 &times; 130 cm</strong></div>
+            <div data-size-chip><strong>115 &times; 115 cm</strong></div>
+            <div data-size-chip><strong>120 &times; 100 cm</strong></div>
+            <div data-size-chip><strong>120 &times; 120 cm</strong></div>
+            <div data-size-chip><strong>120 &times; 140 cm</strong></div>
+            <div data-size-chip><strong>60 &times; 80 cm</strong><em>Half pallet</em></div>
+            <div data-size-chip><strong>40 &times; 60 cm</strong><em>Quarter pallet</em></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 clamp(20px, 2.6vw, 36px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: #ffffff; padding: clamp(28px, 3.6vw, 52px) clamp(24px, 3.4vw, 48px);">
+        <span class="eyebrow-block" style="margin-bottom: 14px;">New to pallets?</span>
+        <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px, 2.8vw, 38px); line-height: 1.05; letter-spacing: -0.005em; text-transform: uppercase; margin: 0 0 clamp(22px, 2.8vw, 36px); max-width: 26ch;">Wooden pallets, quickly</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(20px, 2.6vw, 34px) clamp(26px, 3vw, 44px);">
+          <div>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 17.5px; letter-spacing: 0.01em; text-transform: uppercase; margin: 0; color: var(--color-text);">Why wooden pallets?</h3>
+            <p style="font-size: 15px; line-height: 24px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Cheaper than steel or plastic, strong enough for heavy freight, and fully recyclable once retired.</p>
+          </div>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 17.5px; letter-spacing: 0.01em; text-transform: uppercase; margin: 0; color: var(--color-text);">How are they made?</h3>
+            <p style="font-size: 15px; line-height: 24px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Timber is sourced and checked, cut to spec, nailed together on the bench, then heat-treated to ISPM-15.</p>
+          </div>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 17.5px; letter-spacing: 0.01em; text-transform: uppercase; margin: 0; color: var(--color-text);">What are they used for?</h3>
+            <p style="font-size: 15px; line-height: 24px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Shipping, warehousing and export logistics &mdash; anywhere goods move in bulk on a truck or in a container.</p>
+          </div>
+          <div>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 17.5px; letter-spacing: 0.01em; text-transform: uppercase; margin: 0; color: var(--color-text);">Are they reusable?</h3>
+            <p style="font-size: 15px; line-height: 24px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Yes &mdash; inspected, repaired and put back into service across many load cycles before retirement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(22px, 2.6vw, 36px);">
+        <div>
+          <span class="eyebrow-block" style="margin-bottom: 14px;">What we make</span>
+          <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Two lines, one yard</h2>
+        </div>
+        <p style="font-size: 16.5px; line-height: 27px; max-width: 38ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Everything on this site is made where you can come and stand in it &mdash; Al Sajaa Industrial Area, Sharjah.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+        <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+          <div data-zoom data-parallax="34" style="background: var(--color-neutral-100);">
+            <img loading="lazy" src="assets/truck-pallets-loaded.jpg" alt="A truck loaded with finished pallets leaving the yard" width="562" height="520" style="width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover;" />
+          </div>
+          <div style="padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; gap: 16px; flex: 1;">
+            <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700);">Line 01</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(32px, 3.2vw, 44px); line-height: 0.95; text-transform: uppercase; margin: 0;">Wooden pallets</h3>
+            <p style="font-size: 16px; line-height: 26px; margin: 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Every grade, size and quality &mdash; new pallets built from wood, old and used pallets, recycled pallets and used wood. Standard 100 &times; 120 cm kept in the yard; anything else built to your measurements.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 12.5px; letter-spacing: 0.04em; padding: 7px 13px; background: var(--color-info-100); color: var(--color-info-800);">New &amp; used</span>
+              <span style="font-size: 12.5px; letter-spacing: 0.04em; padding: 7px 13px; background: var(--color-info-100); color: var(--color-info-800);">Recycling</span>
+              <span style="font-size: 12.5px; letter-spacing: 0.04em; padding: 7px 13px; background: var(--color-info-100); color: var(--color-info-800);">9 types</span>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 24px;">
+              <a class="btn btn-primary" href="Pallets.dc.html" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 46px;">View the range</a>
+              <button type="button" class="btn btn-secondary" onClick="{{ quoteHeavy }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 46px;">Quick quote</button>
+            </div>
+          </div>
+        </article>
+        <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+          <div data-zoom data-parallax="34" style="background: var(--color-neutral-100);">
+            <img loading="lazy" src="assets/truck-shaving-sacks-b.jpg" alt="Sacks of wood shavings loaded for delivery" width="387" height="224" style="width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover;" />
+          </div>
+          <div style="padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; gap: 16px; flex: 1;">
+            <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700);">Line 02</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(32px, 3.2vw, 44px); line-height: 0.95; text-transform: uppercase; margin: 0;">Wood shavings</h3>
+            <p style="font-size: 16px; line-height: 26px; margin: 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Chip shaped shavings off our own saws, loose in sacks &mdash; never pressed or blocked. Sacks run roughly 11 to 14 kg. Added in October 2025.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 12.5px; letter-spacing: 0.04em; padding: 7px 13px; background: var(--color-info-100); color: var(--color-info-800);">11&ndash;14 kg sacks</span>
+              <span style="font-size: 12.5px; letter-spacing: 0.04em; padding: 7px 13px; background: var(--color-info-100); color: var(--color-info-800);">Chip shaped</span>
+              <span style="font-size: 12.5px; letter-spacing: 0.04em; padding: 7px 13px; background: var(--color-info-100); color: var(--color-info-800);">Packing fill</span>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 24px;">
+              <a class="btn btn-primary" href="Wood-Shavings.dc.html" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 46px;">Sizes &amp; sacks</a>
+              <button type="button" class="btn btn-secondary" onClick="{{ quoteShavings }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 46px;">Quick quote</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" style="padding: clamp(36px, 4.5vw, 64px) 0; scroll-margin-top: 90px;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(22px, 2.6vw, 36px);">
+        <div>
+          <span class="eyebrow-block" style="margin-bottom: 14px;">The full range</span>
+          <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Ten ways to move your load</h2>
+        </div>
+        <p style="font-size: 16.5px; line-height: 27px; max-width: 38ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Wood, plastic, crated or custom &mdash; if it carries a load, we either build it, stock it or can get it.</p>
+      </div>
+      <div data-tenup style="display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(10px, 1.2vw, 16px);">
+        <a href="New-Pallets.dc.html" data-card data-reveal style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-info-100); color: var(--color-info-800);">New</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">New pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Built fresh to your size, light or heavy duty.</span>
+        </a>
+        <a href="Used-Pallets.dc.html" data-card data-reveal="down" style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-success-100); color: var(--color-success-700);">Used</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Used pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Graded and repaired, ready to ship same day.</span>
+        </a>
+        <a href="Heavy-Duty-Pallets.dc.html" data-card data-reveal style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-accent-100); color: var(--color-accent-700);">Heavy duty</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Heavy duty pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Reinforced decks and blocks for serious loads.</span>
+        </a>
+        <a href="Custom-Sized-Pallets.dc.html" data-card data-reveal="down" style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-accent-100); color: var(--color-accent-700);">Custom</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Custom sized pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Any dimension &mdash; send a drawing or sample.</span>
+        </a>
+        <a href="Custom-Quality-Pallets.dc.html" data-card data-reveal style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-accent-100); color: var(--color-accent-700);">Custom</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Custom quality pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Tell us the grade and load, we spec the build.</span>
+        </a>
+        <a href="Plastic-Pallets-New.dc.html" data-card data-reveal="down" style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-info-100); color: var(--color-info-800);">New</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Plastic pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Washable, rot-proof &mdash; food &amp; pharma ready.</span>
+        </a>
+        <a href="Plastic-Pallets-Used.dc.html" data-card data-reveal style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-success-100); color: var(--color-success-700);">Used</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Used plastic pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Inspected and reconditioned, priced to move.</span>
+        </a>
+        <a href="Boxes-Crates.dc.html" data-card data-reveal="down" style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-info-100); color: var(--color-info-800);">Export</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Boxes &amp; crates</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Export crating built to protect what&rsquo;s inside.</span>
+        </a>
+        <a href="Home-Furniture-Pallets.dc.html" data-card data-reveal style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-danger-100); color: var(--color-danger-700);">Home</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Home &amp; furniture pallets</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Sanded smooth, ready for your next project.</span>
+        </a>
+        <a href="Wood-Shavings.dc.html" data-card data-reveal="down" style="display: flex; flex-direction: column; gap: 10px; background: #ffffff; padding: clamp(22px, 2.4vw, 28px); color: var(--color-text);">
+          <span style="font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 5px 10px; width: max-content; background: var(--color-accent-100); color: var(--color-accent-700);">Bulk</span>
+          <strong style="font-family: var(--font-heading); font-weight: 600; font-size: 19px; text-transform: uppercase; letter-spacing: 0.01em;">Wood shavings</strong>
+          <span style="font-size: 14px; line-height: 21px; color: color-mix(in srgb, var(--color-text) 68%, transparent);">Chip shaped, loose in sacks, never pressed.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="we-buy" style="padding: clamp(36px, 4.5vw, 64px) 0; scroll-margin-top: 90px;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal data-split style="background: var(--color-neutral-900); color: #f7f4ee; padding: clamp(32px, 4.6vw, 68px); display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center;">
+        <div>
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent-400); margin-bottom: 16px;"><i class="eyebrow-dash" style="background: var(--color-accent-400);"></i>We also buy</span>
+          <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 48px); line-height: 1; letter-spacing: -0.005em; text-transform: uppercase; margin: 0; max-width: 16ch;">Selling wood or pallets? We&rsquo;ll take it off your hands.</h2>
+          <p style="font-size: 16px; line-height: 27px; margin: 18px 0 0; max-width: 50ch; color: color-mix(in srgb, #f7f4ee 76%, transparent);">Cash in hand, paid on the spot &mdash; for used wooden pallets, new or used timber, offcuts and used sticks. Call or email with what you have and roughly how much; we&rsquo;ll quote a price and can collect the same day for larger lots.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px;">
+            <span style="font-size: 12.5px; letter-spacing: 0.03em; padding: 7px 13px; background: color-mix(in srgb, #f7f4ee 12%, transparent); color: #f7f4ee;">Used wooden pallets</span>
+            <span style="font-size: 12.5px; letter-spacing: 0.03em; padding: 7px 13px; background: color-mix(in srgb, #f7f4ee 12%, transparent); color: #f7f4ee;">New &amp; used timber</span>
+            <span style="font-size: 12.5px; letter-spacing: 0.03em; padding: 7px 13px; background: color-mix(in srgb, #f7f4ee 12%, transparent); color: #f7f4ee;">Used wood &amp; sticks</span>
+            <span style="font-size: 12.5px; letter-spacing: 0.03em; padding: 7px 13px; background: color-mix(in srgb, #f7f4ee 12%, transparent); color: #f7f4ee;">Offcuts &amp; dunnage</span>
+          </div>
+          <a href="We-Buy.dc.html" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-size: 14.5px; font-weight: 500; color: #f7f4ee;">Full details &amp; how it works<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+        </div>
+        <div style="background: color-mix(in srgb, #f7f4ee 6%, transparent); border: 1px solid color-mix(in srgb, #f7f4ee 16%, transparent); padding: clamp(26px, 3vw, 38px); text-align: center;">
+          <span style="display: block; font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: color-mix(in srgb, #f7f4ee 68%, transparent);">Call or email to sell</span>
+          <a href="tel:+971505974922" style="display: block; margin-top: 14px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(24px, 2.6vw, 30px); color: #f7f4ee;">050 597 4922</a>
+          <a href="mailto:almadhicarpentry@yahoo.com" style="display: block; margin-top: 6px; font-size: 14px; color: color-mix(in srgb, #f7f4ee 72%, transparent); word-break: break-all;">almadhicarpentry@yahoo.com</a>
+          <button type="button" class="btn btn-primary" onClick="{{ quoteSell }}" style="width: 100%; margin-top: 20px; text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px; justify-content: center;">Request a pickup quote</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(22px, 2.6vw, 36px);">
+        <div>
+          <span class="eyebrow-block" style="margin-bottom: 14px;">From timber to pallet</span>
+          <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">How it&rsquo;s made</h2>
+        </div>
+        <p style="font-size: 16.5px; line-height: 27px; max-width: 38ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Four steps, one yard &mdash; nothing here is subcontracted out.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+        <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+          <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
+            <img loading="lazy" src="assets/pallet-wall-grid.jpg" alt="Timber stock waiting to be cut in the Al Sajaa yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+          </div>
+          <div style="padding: clamp(20px, 2.4vw, 26px); display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">Step 01</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; margin: 0;">Raw timber</h3>
+            <p style="font-size: 14.5px; line-height: 23px; margin: 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Every consignment is checked for moisture and rot before it is stacked &mdash; wet or warped stock never reaches the saw.</p>
+          </div>
+        </article>
+        <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+          <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
+            <img loading="lazy" src="assets/pallet-stack-closeup.jpg" alt="Close detail on a cut board and block joint" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+          </div>
+          <div style="padding: clamp(20px, 2.4vw, 26px); display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">Step 02</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; margin: 0;">Cut &amp; jointed</h3>
+            <p style="font-size: 14.5px; line-height: 23px; margin: 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Boards are cut to spec and nailed to a fixed pattern per grade &mdash; heavy duty decks get the reinforced pattern without being asked.</p>
+          </div>
+        </article>
+        <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+          <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
+            <img loading="lazy" src="assets/pallet-light.webp" alt="A finished pallet assembled on the bench" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+          </div>
+          <div style="padding: clamp(20px, 2.4vw, 26px); display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">Step 03</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; margin: 0;">Assembled</h3>
+            <p style="font-size: 14.5px; line-height: 23px; margin: 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Runners, blocks and deck boards come together on the bench, checked against the sample before the batch is released.</p>
+          </div>
+        </article>
+        <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
+          <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
+            <img loading="lazy" src="assets/yard-stacks-golden.jpg" alt="Finished pallet stacks ready in the yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+          </div>
+          <div style="padding: clamp(20px, 2.4vw, 26px); display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">Step 04</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; margin: 0;">Stacked &amp; ready</h3>
+            <p style="font-size: 14.5px; line-height: 23px; margin: 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Stock sizes wait in the yard for same or next-day collection; custom runs get a completion date with the quote.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
+        <div data-zoom data-wipe data-reveal style="background: var(--color-neutral-100);">
+          <img loading="lazy" src="assets/truck-pallets-loaded.jpg" alt="A truck loaded with finished pallets leaving the Al Sajaa yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
+        </div>
+        <div>
+          <span class="eyebrow-block" style="margin-bottom: 14px;">Yard to your gate</span>
+          <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 46px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">How it moves</h2>
+          <p style="font-size: 16px; line-height: 27px; margin: 18px 0 0; max-width: 46ch; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Finished pallets go out on our own transport &mdash; Sharjah, Dubai and the rest of the UAE, all seven emirates covered. Running your own truck? Collection from the Al Sajaa yard costs less.</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px;">
+            <button type="button" class="btn btn-primary" onClick="{{ quoteAny }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 24px; min-height: 48px;">Get a quote</button>
+            <a class="btn btn-secondary" href="Gallery.dc.html" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">See the yard</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: var(--color-neutral-200); color: var(--color-text); padding: clamp(32px, 5vw, 76px);">
+        <span class="eyebrow-block" style="margin-bottom: 14px;">Why buy from the factory</span>
+        <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(32px, 4vw, 54px); max-width: 18ch;">The Al Sajaa standard</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: clamp(26px, 3.4vw, 46px) clamp(26px, 4vw, 60px);">
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">01</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">Built to your size</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Any size you need. Send a drawing, a photo, a sample pallet, or just the size of your carton.</p>
+          </div>
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">02</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">Honest grading</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">If a used pallet will do the job we say so, instead of selling you a new one. Wet or rotten wood never reaches the saw.</p>
+          </div>
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">03</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">Stock in the yard</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Stock sizes are ready for same-day or next-day collection. Custom runs get a real completion date with the quote.</p>
+          </div>
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">04</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">No middleman</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Every pallet is cut, nailed and stacked here. If something is wrong you speak to the people who built it.</p>
+          </div>
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">05</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">Fast production</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Quotes go out the same working day. Once you confirm, the order is on the floor that week &mdash; large runs included.</p>
+          </div>
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">06</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">UAE wide delivery</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">All seven emirates on our own transport. Collection from the yard is cheaper if you are running your own truck.</p>
+          </div>
+          <div>
+            <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15px; letter-spacing: 0.16em; color: var(--color-accent-700); padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, transparent);">07</span>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 25px; letter-spacing: 0.02em; text-transform: uppercase; margin: 18px 0 0;">We buy it back too</h3>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Most suppliers only sell. We also buy your used pallets, timber and offcuts back, cash in hand &mdash; a full loop most traders can&rsquo;t offer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <span class="eyebrow-block" style="margin-bottom: 14px;">How an order runs</span>
+      <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(24px, 3vw, 40px); max-width: 22ch;">You know the date before production starts</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(10px, 1.2vw, 16px); align-items: start;">
+        <ol style="list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(8px, 1vw, 12px);">
+          <li><button type="button" data-step onClick="{{ setStep0 }}" aria-current="{{ isStep0 }}" style="width: 100%; text-align: left; background: color-mix(in srgb, #ffffff 55%, transparent); border: 0; border-left: 3px solid transparent; padding: 18px 20px; display: flex; gap: 16px; align-items: baseline; color: inherit; min-height: 48px;"><span style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; color: var(--color-accent-700); font-feature-settings: 'tnum' 1;">01</span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; letter-spacing: 0.02em; text-transform: uppercase;">Send your specs</span></button></li>
+          <li><button type="button" data-step onClick="{{ setStep1 }}" aria-current="{{ isStep1 }}" style="width: 100%; text-align: left; background: color-mix(in srgb, #ffffff 55%, transparent); border: 0; border-left: 3px solid transparent; padding: 18px 20px; display: flex; gap: 16px; align-items: baseline; color: inherit; min-height: 48px;"><span style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; color: var(--color-accent-700); font-feature-settings: 'tnum' 1;">02</span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; letter-spacing: 0.02em; text-transform: uppercase;">We quote the same day</span></button></li>
+          <li><button type="button" data-step onClick="{{ setStep2 }}" aria-current="{{ isStep2 }}" style="width: 100%; text-align: left; background: color-mix(in srgb, #ffffff 55%, transparent); border: 0; border-left: 3px solid transparent; padding: 18px 20px; display: flex; gap: 16px; align-items: baseline; color: inherit; min-height: 48px;"><span style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; color: var(--color-accent-700); font-feature-settings: 'tnum' 1;">03</span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; letter-spacing: 0.02em; text-transform: uppercase;">Production starts</span></button></li>
+          <li><button type="button" data-step onClick="{{ setStep3 }}" aria-current="{{ isStep3 }}" style="width: 100%; text-align: left; background: color-mix(in srgb, #ffffff 55%, transparent); border: 0; border-left: 3px solid transparent; padding: 18px 20px; display: flex; gap: 16px; align-items: baseline; color: inherit; min-height: 48px;"><span style="font-family: var(--font-heading); font-weight: 600; font-size: 13px; letter-spacing: 0.14em; color: var(--color-accent-700); font-feature-settings: 'tnum' 1;">04</span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; letter-spacing: 0.02em; text-transform: uppercase;">Delivered to you</span></button></li>
+        </ol>
+        <div data-reveal style="background: #ffffff; padding: clamp(28px, 3.5vw, 46px);">
+          <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700);">{{ stepMeta }}</span>
+          <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 3vw, 38px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; margin: 16px 0 0;">{{ stepTitle }}</h3>
+          <p style="font-size: 16.5px; line-height: 28px; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">{{ stepBody }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <span class="eyebrow-block" style="margin-bottom: 22px;">Who buys from us</span>
+      <div data-marquee aria-label="Industries we supply" style="padding: 22px 0; border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);">
+        <div aria-hidden="false"><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Logistics &amp; freight<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Food &amp; beverage<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Steel &amp; fabrication<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Chemicals<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Retail &amp; FMCG<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Pharma<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Stables &amp; poultry<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Furniture &amp; joinery<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Construction<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Marine &amp; export<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span></div><div aria-hidden="true"><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Logistics &amp; freight<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Food &amp; beverage<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Steel &amp; fabrication<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Chemicals<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Retail &amp; FMCG<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Pharma<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Stables &amp; poultry<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Furniture &amp; joinery<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Construction<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span><span style="flex: none; display: inline-flex; align-items: center; gap: 26px; font-family: var(--font-heading); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: 0.04em; text-transform: uppercase; padding: 0 26px; white-space: nowrap; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Marine &amp; export<i style="width: 7px; height: 7px; flex: none; background: var(--color-accent); display: block;"></i></span></div>
+      </div>
+</div>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+      <figure data-card data-reveal style="margin: 0; background: #ffffff; padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; gap: 18px;">
+        <span aria-label="Five out of five" style="letter-spacing: 0.24em; color: var(--color-accent); font-size: 15px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <blockquote style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; line-height: 32px; margin: 0;">&ldquo;We changed carton size and needed a new deck in a week. Al Madhi built a sample, we approved it on the Sunday and four hundred arrived on the Wednesday.&rdquo;</blockquote>
+        <figcaption style="font-size: 14.5px; line-height: 22px; margin-top: auto; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Warehouse manager &mdash; food distribution, Dubai Investment Park</figcaption>
+      </figure>
+      <figure data-card data-reveal style="margin: 0; background: #ffffff; padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; gap: 18px;">
+        <span aria-label="Five out of five" style="letter-spacing: 0.24em; color: var(--color-accent); font-size: 15px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <blockquote style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; line-height: 32px; margin: 0;">&ldquo;They told us the light duty pallet would do the job and saved us money on two thousand units. That is not what a trader would have said.&rdquo;</blockquote>
+        <figcaption style="font-size: 14.5px; line-height: 22px; margin-top: auto; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Procurement lead &mdash; packaging manufacturer, Sharjah</figcaption>
+      </figure>
+      <figure data-card data-reveal style="margin: 0; background: #ffffff; padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; gap: 18px;">
+        <span aria-label="Five out of five" style="letter-spacing: 0.24em; color: var(--color-accent); font-size: 15px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <blockquote style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; line-height: 32px; margin: 0;">&ldquo;We take shavings every fortnight for twenty-two boxes. Dry, no dust, no smell &mdash; and the truck turns up when they say it will.&rdquo;</blockquote>
+        <figcaption style="font-size: 14.5px; line-height: 22px; margin-top: auto; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Yard manager &mdash; equestrian centre, Al Awir</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section style="padding: clamp(36px, 4.5vw, 64px) 0 clamp(20px, 3vw, 36px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: #ffffff; padding: clamp(28px, 4vw, 60px);">
+        <span class="eyebrow-block" style="margin-bottom: 14px;">Before you order</span>
+        <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(32px, 3.8vw, 50px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 34px);">Common questions</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
+          <details open="{{ true }}" style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
+            <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">What pallet sizes can you make?</summary>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Whatever size you need. The most common size shipped is 100 &times; 120 cm, and odd sizes are built to your measurements &mdash; send a drawing, a photo or the pallet you use now.</p>
+          </details>
+          <details style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
+            <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">How much weight will a pallet hold?</summary>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">It depends entirely on the build. Tell us the weight and what it is carrying and we will spec the boards and base to suit &mdash; that is why we quote rather than publish a table.</p>
+          </details>
+          <details style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
+            <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">Do you sell used pallets?</summary>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Yes. Used pallets are checked for broken boards and loose blocks before leaving the yard, and are sold by the piece or as a mixed bulk lot.</p>
+          </details>
+          <details style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
+            <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">What are the wood shavings made from?</summary>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">The wood we cut for pallets. Nothing painted or chemically finished goes into the shavings line, and they come chip shaped rather than pressed.</p>
+          </details>
+          <details style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
+            <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">How soon can you deliver?</summary>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Standard sizes held in stock are usually ready the same or next day. Custom orders depend on quantity, and a completion date is given with the quote.</p>
+          </details>
+          <details style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
+            <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">Is there a minimum order?</summary>
+            <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">There is no fixed minimum. Small orders are accepted, and the price per pallet or per sack improves with larger quantities.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dc-import name="QuoteForm" hint-size="100%,720px"></dc-import>
+<dc-import name="SiteFooter" hint-size="100%,480px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { step: 0 };
+  quote(product) { window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product } })); }
+  renderVals() {
+    const steps = [
+      { meta: 'Step 01 · You', title: 'Send your specs', body: 'Size, quantity and what the pallet has to carry. A photo of your current pallet works just as well as a drawing. For shavings, tell us the volume and whether you need bedding grade or bulk.' },
+      { meta: 'Step 02 · Same working day', title: 'We quote the same day', body: 'We price it against what the wood actually costs, not a list. If the drawing needs checking on the floor first, we tell you exactly when to expect the number.' },
+      { meta: 'Step 03 · On the floor', title: 'Production starts', body: 'Once you confirm, your order is scheduled on the saw floor and you get a completion date. Large runs are staged so part of the order can ship early if you need it.' },
+      { meta: 'Step 04 · To your gate', title: 'Delivered to you', body: 'We deliver to Sharjah, Dubai and the rest of the UAE on our own transport. Collection from the Al Sajaa yard is cheaper if you are running your own truck.' },
+    ];
+    const i = this.state.step;
+    const cur = (n) => (i === n ? 'step' : undefined);
+    return {
+      stepMeta: steps[i].meta, stepTitle: steps[i].title, stepBody: steps[i].body,
+      setStep0: () => this.setState({ step: 0 }),
+      setStep1: () => this.setState({ step: 1 }),
+      setStep2: () => this.setState({ step: 2 }),
+      setStep3: () => this.setState({ step: 3 }),
+      isStep0: cur(0), isStep1: cur(1), isStep2: cur(2), isStep3: cur(3),
+      quoteAny: () => this.quote(''),
+      quoteHeavy: () => this.quote('New pallet — heavy duty'),
+      quoteShavings: () => this.quote('Wood shavings — animal bedding'),
+      quoteCustomSize: () => this.quote('Custom sized pallet'),
+      quoteCustomQuality: () => this.quote('Custom quality pallet'),
+      quotePlasticNew: () => this.quote('New plastic pallet'),
+      quotePlasticUsed: () => this.quote('Used plastic pallet'),
+      quoteBoxes: () => this.quote('Wooden boxes & crates'),
+      quoteHome: () => this.quote('Home & furniture pallet'),
+      quoteSell: () => this.quote('Selling wood / pallets to Al Madhi'),
+    };
+  }
+}
+</script>
 </body>
 </html>
