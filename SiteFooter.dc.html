@@ -22,6 +22,20 @@
   }
   [data-float-cta] a:hover, [data-float-cta] button:hover { transform: translateY(-3px); }
   [data-wa-cta]:hover { background: var(--color-accent-700) !important; }
+  /* Footer sits on navy — every page's own <style> sets `a:hover` to a navy
+     shade (right for links on a white page, invisible here), so this footer
+     needs its own hover color regardless of load order; scoping to
+     [data-foot-link] and matching specificity to a plain `a:hover` selector
+     isn't enough since both are single-class specificity and CSS cascade
+     order between separately-loaded stylesheets isn't guaranteed, hence
+     the transition + explicit color here rather than relying on the cascade. */
+  footer a[data-foot-link] { transition: color 0.2s ease; }
+  footer a[data-foot-link]:hover { color: var(--color-accent-400) !important; }
+  /* Transparent hit-area expansion: padding grows the tap target to the
+     44px touch-target minimum without pushing surrounding links apart —
+     the matching negative margin cancels the layout impact. */
+  footer a[data-foot-link] { display: inline-block; padding: 13px 0; margin: -13px 0; }
+  footer a[data-instagram] { padding: 10px 0; }
   [data-float-cta] a:active, [data-float-cta] button:active { transform: translateY(-1px) scale(0.95); transition-duration: 0.09s; }
   @media (prefers-reduced-motion: reduce) {
     [data-float-cta] a, [data-float-cta] button { transition: none; }
@@ -34,67 +48,77 @@
     <div style="height: 100%; background: var(--color-accent); transform-origin: 0 50%; transform: scaleX({{ progress }});"></div>
   </div>
 
-  <footer style="background: var(--color-neutral-100); color: var(--color-text); border-top: 1px solid var(--color-divider);">
+  <footer style="background: var(--color-info-700); color: #ffffff;">
     <div data-foot-grid style="padding: 64px clamp(16px, 3vw, 40px) 34px; display: grid; gap: clamp(28px, 4vw, 56px);">
       <div>
-        <span style="display: block; font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.05em; text-transform: uppercase;">Al Madhi Carpentry</span>
-        <p style="font-size: 15px; line-height: 24px; margin: 14px 0 0; max-width: 34ch; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Pallets in every grade, size and quality since 2003, and chip shaped wood shavings since 2025. Made in Al Sajaa, Sharjah and delivered across the UAE.</p>
+        <span style="display: flex; align-items: center; gap: 12px;">
+          <svg width="26" height="33" viewBox="0 0 478 600" aria-hidden="true" style="flex: none;">
+            <path d="M239 28 L452 79 V300 C452 418 342 508 239 568 C136 508 26 418 26 300 V79 Z" fill="#F7F6F1" stroke="#C69320" stroke-width="24" stroke-linejoin="miter"/>
+            <g fill="#111318">
+              <path d="M83 156 H393 V217 H270 V205 H206 V217 H83 Z"/>
+              <path d="M83 246 H206 V256 H270 V246 H393 V306 H270 V294 H206 V306 H83 Z"/>
+              <path d="M83 334 H206 V344 H270 V334 H393 V395 H270 V383 H206 V395 H83 Z"/>
+            </g>
+          </svg>
+          <span style="font-family: var(--font-heading); font-weight: 700; font-size: 21px; letter-spacing: 0.04em; text-transform: uppercase;">Al Madhi Carpentry</span>
+        </span>
+        <p style="font-size: 15px; line-height: 24px; margin: 16px 0 0; max-width: 34ch; color: color-mix(in srgb, #ffffff 68%, transparent);">Pallets in every grade, size and quality since 2003, and chip shaped wood shavings since 2025. Made in Al Sajaa, Sharjah and delivered across the UAE.</p>
         <div style="display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap;">
-          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);">Est. 2003</span>
-          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);">Factory direct</span>
-          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);">UAE wide</span>
+          <span style="font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, #ffffff 24%, transparent); color: var(--color-accent-300);">Est. 2003</span>
+          <span style="font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, #ffffff 24%, transparent); color: var(--color-accent-300);">Factory direct</span>
+          <span style="font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border: 1px solid color-mix(in srgb, #ffffff 24%, transparent); color: var(--color-accent-300);">UAE wide</span>
         </div>
-        <a href="https://www.instagram.com/almadhicarpentry/" target="_blank" rel="noopener" aria-label="Al Madhi Carpentry on Instagram" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 14px; font-weight: 500; color: var(--color-text);">
+        <a data-instagram href="https://www.instagram.com/almadhicarpentry/" target="_blank" rel="noopener" aria-label="Al Madhi Carpentry on Instagram" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 14px; font-weight: 500; color: #ffffff;">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" /></svg>
           @almadhicarpentry
         </a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 10px;">
-        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">Pages</span>
-        <a href="index.dc.html" style="font-size: 15px; color: var(--color-text);">Home</a>
-        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Pallets</a>
-        <a href="Wood-Shavings.dc.html" style="font-size: 15px; color: var(--color-text);">Wood shavings</a>
-        <a href="About.dc.html" style="font-size: 15px; color: var(--color-text);">About us</a>
-        <a href="Gallery.dc.html" style="font-size: 15px; color: var(--color-text);">Factory gallery</a>
-        <a href="Contact.dc.html" style="font-size: 15px; color: var(--color-text);">Contact</a>
+        <span style="font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-400); margin-bottom: 4px;">Pages</span>
+        <a data-foot-link href="index.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Home</a>
+        <a data-foot-link href="Pallets.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Pallets</a>
+        <a data-foot-link href="Wood-Shavings.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Wood shavings</a>
+        <a data-foot-link href="About.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">About us</a>
+        <a data-foot-link href="Gallery.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Factory gallery</a>
+        <a data-foot-link href="Contact.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Contact</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 10px;">
-        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">Products</span>
-        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">New pallets</a>
-        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Used &amp; old pallets</a>
-        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Pallet recycling</a>
-        <a href="Pallets.dc.html" style="font-size: 15px; color: var(--color-text);">Made-to-size pallets</a>
-        <a href="Wood-Shavings.dc.html" style="font-size: 15px; color: var(--color-text);">Wood shavings, by the sack</a>
-        <a href="Wood-Shavings.dc.html" style="font-size: 15px; color: var(--color-text);">Used wood &amp; boards</a>
+        <span style="font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-400); margin-bottom: 4px;">Products</span>
+        <a data-foot-link href="Pallets.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">New pallets</a>
+        <a data-foot-link href="Pallets.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Used &amp; old pallets</a>
+        <a data-foot-link href="Pallets.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Pallet recycling</a>
+        <a data-foot-link href="Pallets.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Made-to-size pallets</a>
+        <a data-foot-link href="Wood-Shavings.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Wood shavings, by the sack</a>
+        <a data-foot-link href="Wood-Shavings.dc.html" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent);">Used wood &amp; boards</a>
       </div>
       <div style="display: flex; flex-direction: column; gap: 10px;">
-        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 4px;">Contact</span>
-        <a href="tel:+971505974922" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.02em; color: var(--color-text);">050 597 4922</a>
-        <a href="mailto:almadhicarpentry@yahoo.com" style="font-size: 15px; color: var(--color-text); word-break: break-all;">almadhicarpentry@yahoo.com</a>
-        <p style="font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Al Sajaa Industrial Area<br />Sharjah, United Arab Emirates</p>
-        <a href="https://share.google/nUdjRRnCCnobqxVcb" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--color-accent-700);">
+        <span style="font-family: var(--font-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent-400); margin-bottom: 4px;">Contact</span>
+        <a data-foot-link href="tel:+971505974922" style="font-family: var(--font-heading); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; color: #ffffff;">050 597 4922</a>
+        <a data-foot-link href="mailto:almadhicarpentry@yahoo.com" style="font-size: 15px; color: color-mix(in srgb, #ffffff 85%, transparent); word-break: break-all;">almadhicarpentry@yahoo.com</a>
+        <p style="font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, #ffffff 68%, transparent);">Al Sajaa Industrial Area<br />Sharjah, United Arab Emirates</p>
+        <a data-foot-link href="https://share.google/nUdjRRnCCnobqxVcb" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: var(--color-accent-400);">
           Get directions
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
         </a>
-        <p style="font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Monday to Saturday<br />06:00 &ndash; 18:00</p>
+        <p style="font-size: 15px; line-height: 24px; margin: 6px 0 0; color: color-mix(in srgb, #ffffff 68%, transparent);">Monday to Saturday<br />06:00 &ndash; 18:00</p>
       </div>
     </div>
-    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 16%, transparent);">
-      <div style="padding: 18px clamp(16px, 3vw, 40px) 92px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: color-mix(in srgb, var(--color-text) 70%, transparent);">
+    <div style="border-top: 1px solid color-mix(in srgb, #ffffff 14%, transparent);">
+      <div style="padding: 18px clamp(16px, 3vw, 40px) 92px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: color-mix(in srgb, #ffffff 58%, transparent);">
         <span>&copy; 2026 Al Madhi Carpentry. All rights reserved.</span>
         <span>Wooden pallet &amp; wood shaving manufacturer &middot; Sharjah, UAE</span>
       </div>
     </div>
   </footer>
 
-  <div data-float-cta style="position: fixed; right: 20px; bottom: 20px; z-index: 80; display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+  <div data-float-cta style="position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 80; display: flex; flex-direction: column; gap: 14px; align-items: flex-end;">
     <sc-if value="{{ scrolled }}" hint-placeholder-val="{{ false }}">
-      <button type="button" onClick="{{ toTop }}" aria-label="Back to top" style="width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; background: color-mix(in srgb, var(--color-bg) 88%, transparent); backdrop-filter: blur(10px); border: 1px solid var(--color-divider); color: var(--color-text);">
+      <button type="button" onClick="{{ toTop }}" aria-label="Back to top" title="Back to top" style="width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer; background: #ffffff; backdrop-filter: blur(10px); border: 1.5px solid var(--color-accent); color: var(--color-text); border-radius: 50%;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
       </button>
     </sc-if>
     <sc-if value="{{ showCta }}" hint-placeholder-val="{{ false }}">
-      <a data-wa-cta href="https://wa.me/971505974922?text=Hello%20Al%20Madhi%20Carpentry%2C%20I%20would%20like%20a%20quotation." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" style="display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; background: var(--color-accent-600); color: #ffffff; border: 0; min-height: 48px; font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.07em; text-transform: uppercase; box-shadow: var(--shadow-lg);">
+      <a data-wa-cta href="https://wa.me/971505974922?text=Hello%20Al%20Madhi%20Carpentry%2C%20I%20would%20like%20to%20request%20a%20quotation." target="_blank" rel="noopener noreferrer" aria-label="Chat with Al Madhi Carpentry on WhatsApp" title="Request a quote on WhatsApp" style="display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; background: var(--color-accent-600); color: #ffffff; border: 0; min-height: 48px; font-family: var(--font-heading); font-weight: 600; font-size: 14px; letter-spacing: 0.07em; text-transform: uppercase; box-shadow: var(--shadow-lg);">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
         WhatsApp us
       </a>
@@ -108,11 +132,19 @@ class Component extends DCLogic {
   componentDidMount() {
     this._p = -1;
     this._s = null;
+    this._past = null;
+    this._ticking = false;
+    // One passive scroll listener, rAF-throttled — not a scroll listener
+    // plus a permanent per-frame poll loop plus a setInterval on top of
+    // that (three overlapping mechanisms doing the same job is wasted
+    // main-thread work for a bar that only needs to move once per frame
+    // at most anyway).
     const sync = () => {
+      this._ticking = false;
       const h = document.documentElement;
       const max = h.scrollHeight - h.clientHeight;
       const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
-      const s = h.scrollTop > 700;
+      const s = h.scrollTop > 600;
       // The CTA is pinned to the viewport bottom and knows nothing about what sits
       // there, so on short viewports it landed on the hero's headline figure at rest.
       // Hold it back until the hero is scrolled past.
@@ -123,14 +155,19 @@ class Component extends DCLogic {
       this._past = past;
       this.setState({ progress: p, scrolled: s, pastHero: past });
     };
-    this.onScroll = sync;
-    window.addEventListener('scroll', sync, { passive: true });
-    const poll = () => { sync(); this.raf = requestAnimationFrame(poll); };
-    poll();
-    this.slowSync = setInterval(sync, 200);
+    this.onScroll = () => {
+      if (this._ticking) return;
+      this._ticking = true;
+      requestAnimationFrame(sync);
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll, { passive: true });
     sync();
   }
-  componentWillUnmount() { cancelAnimationFrame(this.raf); clearInterval(this.slowSync); window.removeEventListener('scroll', this.onScroll); }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+  }
   renderVals() {
     return {
       progress: this.state.progress,

@@ -1,0 +1,14 @@
+{
+  "name": "almadhi-carpentry-website",
+  "private": true,
+  "scripts": {
+    "generate:favicons": "node scripts/generate-favicons.js",
+    "generate:nails": "node scripts/extract-nails.mjs"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.4.2",
+    "meshoptimizer": "^1.2.0",
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.33.5"
+  }
+}

@@ -10,7 +10,12 @@
 <helmet>
 <title>Contact Al Madhi Carpentry — Al Sajaa, Sharjah | Pallets &amp; Wood Shavings</title>
 <meta name="description" content="Call 050 597 4922, WhatsApp or email almadhicarpentry@yahoo.com. Al Sajaa Industrial Area, Sharjah. Open Monday to Saturday, 06:00–18:00. Delivery across all seven emirates." />
-<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-src.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
 <link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
 <script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
 <style>
@@ -27,6 +32,12 @@
 <dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="contact" hint-size="100%,76px"></dc-import>
 
 <main>
+  <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px); display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-neutral-600);">
+      <a href="index.dc.html" style="color: var(--color-neutral-600);">Home</a><span aria-hidden="true">/</span>
+      <span style="color: var(--color-text);">Contact</span>
+    </div>
+  </section>
   <section style="padding: clamp(44px, 6vw, 84px) 0 clamp(24px, 3vw, 40px); min-height: min(52vh, 420px); display: flex; flex-direction: column; justify-content: center;">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>The order desk</span>
@@ -133,7 +144,7 @@ class Component extends DCLogic {
     }
     return {
       statusLabel: s ? (s.open ? 'The yard is open now' : 'The yard is closed') : 'Yard hours',
-      statusColor: s && s.open ? 'var(--color-success-500)' : 'color-mix(in srgb, #241f1b 35%, transparent)',
+      statusColor: s && s.open ? 'var(--color-success-500)' : 'var(--color-neutral-500)',
       statusNote: note,
     };
   }

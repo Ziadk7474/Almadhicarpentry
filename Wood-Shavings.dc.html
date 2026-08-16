@@ -10,7 +10,12 @@
 <helmet>
 <title>Wood Shavings — Chip Shaped, Loose in Sacks | Al Madhi Carpentry Sharjah</title>
 <meta name="description" content="Chip shaped wood shavings from Al Sajaa Industrial Area, Sharjah. Clean, dry and loose in sacks of roughly 11 to 14 kg. For animal bedding, workshop absorbent and packing. Delivered across the UAE." />
-<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-src.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
 <link rel="stylesheet" href="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/styles.css" />
 <script src="_ds/industry-09e1eeeb-c878-493a-be4b-afaaa27e1639/_ds_bundle.js"></script>
 <style>
@@ -23,7 +28,7 @@
     /* The 7/5 hero split has no room to breathe below ~900px — stack the
        text and image full-width instead of squeezing both into narrow
        columns (this file had no responsive breakpoints at all before). */
-    [data-hero-main], [data-hero-side] { grid-column: span 12 !important; }
+    [data-hero-grid] { grid-template-columns: 1fr !important; }
   }
   @media (max-width: 640px) {
     [data-hero-main] h1 { font-size: clamp(34px, 9vw, 48px) !important; }
@@ -33,9 +38,16 @@
 <dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="shavings" hint-size="100%,79px"></dc-import>
 
 <main>
+  <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
+    <div style="padding: 0 clamp(16px, 3vw, 40px); display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-neutral-600);">
+      <a href="index.dc.html" style="color: var(--color-neutral-600);">Home</a><span aria-hidden="true">/</span>
+      <a href="Pallets.dc.html" style="color: var(--color-neutral-600);">Products</a><span aria-hidden="true">/</span>
+      <span style="color: var(--color-text);">Wood shavings</span>
+    </div>
+  </section>
   <section style="padding: clamp(20px, 3vw, 40px) 0 clamp(30px, 4vw, 56px); min-height: min(84vh, 720px); display: flex; flex-direction: column; justify-content: center;">
-    <div style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(10px, 1.2vw, 16px);">
-      <div data-hero-main data-reveal style="grid-column: span 7; min-width: 0; background: #ffffff; padding: clamp(28px, 4vw, 58px); display: flex; flex-direction: column; justify-content: center;">
+    <div data-hero-grid style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: minmax(0, 0.68fr) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 48px); align-items: center;">
+      <div data-hero-main data-reveal style="min-width: 0;">
         <span class="eyebrow" style="margin-bottom: 22px;">
           <i class="eyebrow-dash"></i>Since October 2025
         </span>
@@ -50,7 +62,7 @@
           <a class="btn btn-secondary" href="#uses" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 16px 26px; font-size: 15px; min-height: 52px;">What it is used for</a>
         </div>
       </div>
-      <div data-hero-side data-reveal style="grid-column: span 5; min-width: 0; display: grid; grid-template-rows: 1fr auto; gap: clamp(10px, 1.2vw, 16px);">
+      <div data-hero-side data-reveal="right" style="min-width: 0; display: grid; grid-template-rows: 1fr auto; gap: clamp(10px, 1.2vw, 16px);">
         <div data-zoom data-wipe data-reveal="right" data-parallax="46" style="background: var(--color-neutral-100); display: grid; min-height: 260px;">
           <img src="assets/shavings-hand-chips.jpg" alt="A handful of chip shaped wood shavings" style="width: 100%; height: 100%; min-height: 260px; object-fit: cover;" />
         </div>

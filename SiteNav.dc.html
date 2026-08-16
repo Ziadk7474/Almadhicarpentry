@@ -171,7 +171,8 @@
   }
   [data-mega].is-open { opacity: 1; pointer-events: auto; visibility: visible; transform: translate(-50%, 0) scale(1); }
   [data-mega-col] { display: flex; flex-direction: column; gap: 2px; }
-  [data-mega-col] > span { font-family: var(--font-heading); font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 8px; }
+  [data-mega-thumb] { display: block; width: 100%; height: 78px; margin-bottom: 12px; background-color: var(--color-neutral-200); background-size: cover; background-position: center; }
+  [data-mega-col] > span:not([data-mega-thumb]) { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 8px; }
   [data-mega-item] { display: flex; flex-direction: column; gap: 1px; padding: 8px 9px; margin: 0 -9px; color: var(--color-text); border-radius: 3px; transition: background-color 0.16s ease, transform 0.12s cubic-bezier(0.2,0.7,0.2,1); }
   [data-mega-item]:hover { background: var(--color-neutral-100); }
   [data-mega-item]:active { background: var(--color-neutral-200); transform: scale(0.98); }
@@ -206,7 +207,7 @@
     <a data-nav-in href="index.dc.html" style="--d: 0ms; display: flex; align-items: center; gap: 12px; flex: none; color: {{ logoColor }}; transition: color 0.3s ease;">
       <svg width="30" height="38" viewBox="0 0 478 600" aria-hidden="true" style="flex: none;">
         <path d="M239 28 L452 79 V300 C452 418 342 508 239 568 C136 508 26 418 26 300 V79 Z" fill="#F7F6F1" stroke="#C69320" stroke-width="24" stroke-linejoin="miter"/>
-        <g fill="#082043">
+        <g fill="#111318">
           <path d="M83 156 H393 V217 H270 V205 H206 V217 H83 Z"/>
           <path d="M83 246 H206 V256 H270 V246 H393 V306 H270 V294 H206 V306 H83 Z"/>
           <path d="M83 334 H206 V344 H270 V334 H393 V395 H270 V383 H206 V395 H83 Z"/>
@@ -223,6 +224,7 @@
         </button>
         <div data-mega class="{{ megaClass }}" role="menu">
           <div data-mega-col role="group">
+            <span data-mega-thumb style="background-image: url('assets/pallet-studio-new-b.jpg');"></span>
             <span>Wooden pallets</span>
             <a data-mega-item href="New-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>New pallets</strong><em>Light &amp; heavy duty, any size</em></a>
             <a data-mega-item href="Used-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Used pallets</strong><em>Graded, repaired, ready to go</em></a>
@@ -231,6 +233,7 @@
             <a data-mega-item href="Custom-Quality-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Custom quality pallets</strong><em>Spec the grade, we build it</em></a>
           </div>
           <div data-mega-col role="group">
+            <span data-mega-thumb style="background-image: url('assets/plastic-pallet-blue.png'); background-color: #ffffff; background-size: contain; background-repeat: no-repeat;"></span>
             <span>Plastic, boxes &amp; home</span>
             <a data-mega-item href="Plastic-Pallets-New.dc.html" onClick="{{ closeProducts }}"><strong>New plastic pallets</strong><em>Washable, export-ready</em></a>
             <a data-mega-item href="Plastic-Pallets-Used.dc.html" onClick="{{ closeProducts }}"><strong>Used plastic pallets</strong><em>Inspected and reusable</em></a>
@@ -238,13 +241,14 @@
             <a data-mega-item href="Home-Furniture-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Home &amp; furniture pallets</strong><em>Sanded, ready to finish</em></a>
           </div>
           <div data-mega-col role="group">
+            <span data-mega-thumb style="background-image: url('assets/shavings-hand-chips.jpg');"></span>
             <span>Materials &amp; trade-in</span>
             <a data-mega-item href="Wood-Shavings.dc.html" onClick="{{ closeProducts }}"><strong>Wood shavings</strong><em>Bedding, absorbent, packing</em></a>
             <a data-mega-item data-highlight href="We-Buy.dc.html" onClick="{{ closeProducts }}"><strong>We buy wood &amp; pallets</strong><em>Cash in hand, same-day pickup</em></a>
           </div>
         </div>
       </span>
-      <a data-nav data-nav-in href="About.dc.html" aria-current="{{ isAbout }}" style="--d: 160ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">About</a>
+      <a data-nav data-nav-in href="About.dc.html" aria-current="{{ isAbout }}" style="--d: 135ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">About</a>
       <a data-nav data-nav-in href="Gallery.dc.html" aria-current="{{ isGallery }}" style="--d: 210ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">Factory</a>
       <a data-nav data-nav-in href="Contact.dc.html" aria-current="{{ isContact }}" style="--d: 260ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">Contact</a>
     </nav>
@@ -582,10 +586,10 @@ class Component extends DCLogic {
       // light zone. A consistent tint of its own, independent of whatever
       // hero content happens to sit underneath at that x-position, is what
       // keeps every nav item readable regardless of where it lands.
-      headerBg: overlayActive ? 'linear-gradient(180deg, rgba(12,9,6,0.5) 0%, rgba(12,9,6,0.3) 100%)' : 'color-mix(in srgb, #ffffff 80%, transparent)',
-      headerBackdrop: overlayActive ? 'blur(6px)' : 'blur(20px) saturate(1.6)',
+      headerBg: overlayActive ? 'linear-gradient(180deg, rgba(12,9,6,0.5) 0%, rgba(12,9,6,0.3) 100%)' : '#ffffff',
+      headerBackdrop: overlayActive ? 'blur(6px)' : 'none',
       shadow: overlayActive ? 'none' : (sc ? '0 1px 0 rgba(36,31,27,0.04), 0 14px 30px -22px rgba(36,31,27,0.45)' : 'none'),
-      borderColor: overlayActive ? 'transparent' : (sc ? 'transparent' : 'color-mix(in srgb, #241f1b 9%, transparent)'),
+      borderColor: overlayActive ? 'transparent' : (sc ? 'transparent' : 'var(--color-divider)'),
       navVars,
       logoColor: overlayActive ? '#ffffff' : 'var(--color-text)',
       phoneColor: overlayActive ? 'rgba(255,255,255,0.94)' : 'var(--color-text)',
@@ -602,7 +606,7 @@ class Component extends DCLogic {
       megaClass: this.state.productsOpen ? 'is-open' : '',
       toggleProducts: () => this.setState((st) => ({ productsOpen: !st.productsOpen })),
       closeProducts: () => this.setState({ productsOpen: false }),
-      statusColor: open ? 'var(--color-success-500)' : 'color-mix(in srgb, #241f1b 28%, transparent)',
+      statusColor: open ? 'var(--color-success-500)' : 'var(--color-neutral-500)',
       statusHalo: open ? 'rgba(63,145,83,0.18)' : 'transparent',
       statusHint: open ? 'The yard is open now — Monday to Saturday, 06:00–18:00' : 'Closed now — Monday to Saturday, 06:00–18:00',
       isHome: cur('home'), isPallets: cur('pallets'), isShavings: cur('shavings'),

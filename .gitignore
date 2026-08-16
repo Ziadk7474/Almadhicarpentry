@@ -1,5 +1,7 @@
 .playwright-mcp/
+node_modules/
 uploads/
 assets/new-images/
 assets/founder/
+assets/inspiration/
 desktop.ini

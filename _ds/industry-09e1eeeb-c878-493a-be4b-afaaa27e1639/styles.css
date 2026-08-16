@@ -1,65 +1,70 @@
-/* Industry — design-system tokens and component classes. This file is the source of truth for the system's look; retune it here and see readme.md. */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;600&display=swap');
+/* Industry — design-system tokens and component classes. This file is the source of truth for the system's look; retune it here and see readme.md.
+   Approved palette: orange/white/black-charcoal/neutral-grey only — no navy
+   anywhere in the interface. Token NAMES are unchanged from earlier
+   palette passes on purpose — every page in the site reads colors through
+   these variables, so recalibrating the values here re-skins the entire
+   site in one place rather than requiring per-page edits. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root {
   /* Brand palette — one job per color:
-     white = primary backgrounds; orange (--color-accent-*) = primary
-     actions and brand accents; blue (--color-info-*) = secondary/
-     informational (links, info tags, secondary buttons); green
-     (--color-success-*) = positive/availability; red (--color-danger-*) =
-     urgent/limited, used sparingly; charcoal (--color-text) = body copy and
-     structure. --color-neutral-* is near-white/grey for section backgrounds
-     that need subtle separation without reading as tan or cream — brown
-     (--color-accent-2-*) is reserved for real wood photography and the 3D
-     pallet, not for UI backgrounds. */
+     white/cool-grey = primary backgrounds (~75% of any page); orange
+     (--color-accent-*) = primary actions, selected words, active states,
+     specification values — never a full section; charcoal (--color-info-*)
+     = secondary/informational (links, secondary buttons, tags) and the one
+     allowed dark section (footer); green (--color-success-*) =
+     positive/availability; red (--color-danger-*) = urgent, used
+     sparingly; --color-text is near-black for body copy and structure. */
   --color-bg: #ffffff;
-  --color-surface: #f7f7f6;
-  --color-text: #241f1b;
-  /* True vibrant orange, no brown undertone — this exact hex is the brand
-     accent, used directly for large text/numbers/decorative flourishes.
-     Small-text contexts (button labels) use --color-accent-600/700 instead:
-     both are the same saturated hue, just calibrated dark enough to hold
-     4.5:1 with white type — using #e8630a there would fail that check. */
-  --color-accent: #e8630a;
-  --color-accent-2: #8b6f52;
-  --color-divider: color-mix(in srgb, #241f1b 14%, transparent);
+  --color-surface: #f6f8fa;
+  --color-text: #10151c;
+  --color-accent: #ff4f0a;
+  --color-accent-2: #667080;
+  --color-divider: #dfe4ea;
 
-  --color-neutral-100: #f8f8f7;
-  --color-neutral-200: #efeeec;
-  --color-neutral-300: #dcdad6;
-  --color-neutral-400: #c2beb7;
-  --color-neutral-500: #a19c93;
-  --color-neutral-600: #827d73;
-  --color-neutral-700: #635f56;
-  --color-neutral-800: #47443d;
-  --color-neutral-900: #2d2b26;
+  --color-neutral-100: #fafbfc;
+  --color-neutral-200: #f1f3f6;
+  --color-neutral-300: #e3e7ec;
+  --color-neutral-400: #c7cdd6;
+  --color-neutral-500: #9aa3af;
+  --color-neutral-600: #667080;
+  --color-neutral-700: #4b5563;
+  --color-neutral-800: #2a313c;
+  --color-neutral-900: #10151c;
 
-  --color-accent-100: #fef0e7;
-  --color-accent-200: #fcdeca;
-  --color-accent-300: #f7c3a1;
-  --color-accent-400: #f59656;
-  --color-accent-500: #e8630a;
-  --color-accent-600: #c45308;
-  --color-accent-700: #a04508;
-  --color-accent-800: #7d3708;
-  --color-accent-900: #552607;
+  --color-accent-100: #ffede5;
+  --color-accent-200: #ffd4c2;
+  --color-accent-300: #ffae85;
+  --color-accent-400: #ff7a47;
+  --color-accent-500: #ff4f0a;
+  --color-accent-600: #e84500;
+  --color-accent-700: #c23a00;
+  --color-accent-800: #962d00;
+  --color-accent-900: #6b2000;
 
-  --color-accent-2-100: #f4eee5;
-  --color-accent-2-200: #e6d9c8;
-  --color-accent-2-300: #d2bba0;
-  --color-accent-2-400: #b99872;
-  --color-accent-2-500: #9c7850;
-  --color-accent-2-600: #7e5f3d;
-  --color-accent-2-700: #644b2f;
-  --color-accent-2-800: #493622;
-  --color-accent-2-900: #2c2013;
+  /* No longer used for UI surfaces (the brief explicitly rules out
+     wood-tone backgrounds) — kept defined only so .panel-wood and any
+     duotone photo treatment that references it don't break; nothing new
+     in this redesign uses it. */
+  --color-accent-2-100: #f2f3f5;
+  --color-accent-2-200: #e3e6ea;
+  --color-accent-2-300: #cdd3da;
+  --color-accent-2-400: #a9b2bd;
+  --color-accent-2-500: #838d99;
+  --color-accent-2-600: #667080;
+  --color-accent-2-700: #4f5866;
+  --color-accent-2-800: #383e48;
+  --color-accent-2-900: #21252b;
 
-  /* Blue — secondary/informational: links, info tags, secondary buttons. */
-  --color-info-100: #e9f1fb;
-  --color-info-200: #cfe2f6;
-  --color-info-500: #3f7cb3;
-  --color-info-700: #2b5d8c;
-  --color-info-800: #1f4568;
+  /* Charcoal — the site's one limited dark accent: links, secondary/outline
+     buttons, info tags, and the footer (the only section allowed a dark
+     background). Was navy; the approved palette is orange/white/black/grey
+     only, so this scale is neutral charcoal now, not blue-tinted. */
+  --color-info-100: #eceef0;
+  --color-info-200: #d7dade;
+  --color-info-500: #4b5563;
+  --color-info-700: #111318;
+  --color-info-800: #05060a;
 
   /* Green — positive/availability, shown sparingly. */
   --color-success-100: #e7f5ea;
@@ -71,9 +76,19 @@
   --color-danger-500: #9a3b3b;
   --color-danger-700: #7a2e2e;
 
+  /* Technical line color for dimension lines, spec-grid dividers and the
+     background grid — distinct from --color-divider (which is for card/
+     section borders) so measurement lines read as their own layer. */
+  --color-line: #b8c1cc;
+
+  --color-ink-600: #4b5563;
+  --color-ink-700: #111318;
+  --color-ink-800: #05060a;
+
   --font-heading: "Barlow Condensed", system-ui, sans-serif;
-  --font-heading-weight: 600;
-  --font-body: "Barlow", system-ui, sans-serif;
+  --font-heading-weight: 700;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace;
 
   --space-1: 3.4px;
   --space-2: 6.8px;
@@ -238,12 +253,12 @@ textarea.input { min-height: 90px; resize: vertical; }
 /* — eyebrow label (used above nearly every section heading site-wide) — */
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
-  font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--color-accent-700);
 }
 .eyebrow-dash { width: 24px; height: 1px; background: var(--color-accent); display: block; flex: none; }
 .eyebrow-block {
-  display: block; font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em;
+  display: block; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--color-accent-700);
 }
 
@@ -340,4 +355,63 @@ textarea.input { min-height: 90px; resize: vertical; }
 /* Buttons get a small, consistent radius everywhere — not the blueprint's
    square corners, not a full pill. */
 .btn { border-radius: 9px; }
+
+/* — product-page template: technical specification grid — a row of
+   thin-divided cells (icon, mono label, large orange value, grey
+   explanation) rather than N floating cards, per the "precision
+   engineering" brief. Used on every product page's spec section. */
+.spec-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  background: #ffffff; border: 1px solid var(--color-divider);
+}
+.spec-item {
+  padding: 26px 24px; border-right: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.spec-item svg { color: var(--color-accent); }
+.spec-label {
+  font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--color-neutral-600); margin-top: 4px;
+}
+.spec-value {
+  font-family: var(--font-heading); font-weight: 700; font-size: 26px; line-height: 1.05;
+  letter-spacing: -0.005em; color: var(--color-accent);
+}
+.spec-note { font-size: 13.5px; line-height: 20px; color: var(--color-neutral-600); margin: 0; }
+
+/* — editorial gallery collage: one large feature image, one tall support
+   image, two small stacked images, separated by narrow white gutters —
+   instead of four equal cards. */
+.gallery-collage {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr; grid-template-rows: 1fr 1fr;
+  gap: 6px; min-height: 420px;
+}
+.gallery-collage > a, .gallery-collage > figure { margin: 0; overflow: hidden; background: var(--color-neutral-200); display: block; position: relative; }
+.gallery-collage > a img, .gallery-collage > figure img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.9s cubic-bezier(0.2,0.7,0.2,1); }
+.gallery-collage > a:hover img, .gallery-collage > figure:hover img { transform: scale(1.05); }
+.gallery-feature { grid-column: 1; grid-row: 1 / 3; }
+.gallery-tall { grid-column: 2; grid-row: 1 / 3; }
+.gallery-small { grid-column: 3; }
+@media (max-width: 860px) {
+  .gallery-collage { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, minmax(160px, auto)); min-height: 0; }
+  .gallery-feature { grid-column: 1 / 3; grid-row: 1; }
+  .gallery-tall { grid-column: 1; grid-row: 2; }
+  .gallery-small { grid-column: auto; grid-row: auto; }
+}
+@media (max-width: 560px) {
+  .gallery-collage { grid-template-columns: 1fr; }
+  .gallery-feature, .gallery-tall, .gallery-small { grid-column: 1; grid-row: auto; }
+}
+
+/* — dimension line overlay for product-hero images: thin technical lines
+   with a small orange endpoint dot and a mono value label. Purely
+   decorative/illustrative (no invented measurements — only used where a
+   real, correct dimension is being shown). */
+/* viewBox is 0-100 (percent-like units), so stroke-width/font-size must be
+   given in THAT scale, not CSS px, or they render wildly oversized once
+   the browser maps 100 units onto the image's real rendered pixel width. */
+.dim-overlay { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.dim-overlay line { stroke: var(--color-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.dim-overlay circle { fill: var(--color-accent); }
+.dim-overlay text { font-family: var(--font-mono); font-size: 1.4px; fill: var(--color-text); font-feature-settings: 'tnum' 1; }
 
