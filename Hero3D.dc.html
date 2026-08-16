@@ -8,7 +8,17 @@
 <body>
 <x-dc>
 <helmet>
-<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<!-- Self-hosted (see the THREE_URL/ORBIT_URL comment below for why): also
+     removes a third cold cross-origin connection (unpkg.com) from the
+     critical path for the intro assembly animation, which depends on GSAP
+     to run at all. -->
+<script src="assets/vendor/gsap.min.js" defer></script>
+<!-- Kicks these two off at page-parse time, in parallel with everything
+     else, instead of waiting for componentDidMount's JS to run and only
+     then discover it needs them — shaves the fetch off the front of the
+     critical path entirely for a first-time visit. -->
+<link rel="modulepreload" href="/assets/vendor/three/three.module.js" />
+<link rel="modulepreload" href="/assets/vendor/three/OrbitControls.js" />
 <style>
   /* ============ Hero shell ============ */
   [data-pallet-hero] {
@@ -421,8 +431,21 @@
    rigid object, never individual boards.
    --------------------------------------------------------------------- */
 
-const THREE_URL = 'https://esm.sh/three@0.160.0';
-const ORBIT_URL = 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+// Self-hosted (was esm.sh) — a third-party CDN dependency meant every first
+// visit paid for a cold DNS+TLS handshake to a new origin PLUS a two-hop
+// stub-then-real-module fetch chain (esm.sh serves a tiny re-export stub,
+// which itself triggers the real ~650KB module) before the viewer could
+// even start building geometry. Same-origin static files load on the
+// connection the browser already has open and can be modulepreloaded (see
+// the <link> tags below) so the fetch starts at page-parse time instead of
+// after componentDidMount runs.
+// Root-relative, not page-relative: dynamic import() resolves a bare
+// relative specifier against the executing script's own base URL, which
+// isn't reliably the page URL once dc-runtime has run this through eval —
+// confirmed by testing (a plain relative path silently failed and fell back
+// to the static image, root-relative works).
+const THREE_URL = '/assets/vendor/three/three.module.js';
+const ORBIT_URL = '/assets/vendor/three/OrbitControls.js';
 
 // 15 nails = 5 top deck boards x 3 connection points each (one per cross
 // bar). Z matches the five top-board centres exactly; X matches the three
