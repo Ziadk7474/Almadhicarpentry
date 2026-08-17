@@ -134,50 +134,57 @@
      page's own `top: 16px` (`12px` on mobile) sticky offset exactly, so
      there is zero visual jump the moment it starts sticking. */
   [data-capsule-row] { padding: 0 clamp(12px, 3vw, 24px); margin-top: 16px; }
+  /* Elevation comes from shadow alone everywhere in this component — no
+     borders. A hairline border on a white shape sitting on this hero's own
+     faint grid-line background reads as a stray drawn line rather than a
+     deliberate edge (that's what was being flagged as "black borders" /
+     "transparent lines" running through the mobile header); a well-blurred
+     shadow reads as the shape actually lifting off the page instead. */
   [data-capsule] {
-    position: relative; width: min(93vw, 1150px); margin: 0 auto; height: 64px;
+    position: relative; width: min(93vw, 1150px); margin: 0 auto; height: 68px;
     border-radius: 999px; background: #ffffff;
-    border: 1px solid var(--color-accent-200);
-    box-shadow: 0 16px 34px -18px rgba(36,31,27,0.35), 0 3px 10px -4px rgba(98,45,0,0.14);
+    box-shadow: 0 22px 48px -16px rgba(36,31,27,0.28), 0 8px 20px -8px rgba(36,31,27,0.14), 0 1px 0 rgba(36,31,27,0.04);
     display: flex; align-items: center; gap: clamp(6px, 1.4vw, 18px);
-    padding: 0 8px 0 8px;
+    padding: 0 10px 0 10px;
     transition: height 0.22s cubic-bezier(0.4,0,0.2,1), box-shadow 0.22s ease;
   }
-  [data-capsule].is-scrolled { height: 56px; box-shadow: 0 10px 26px -16px rgba(36,31,27,0.32), 0 2px 8px -3px rgba(98,45,0,0.12); }
+  [data-capsule].is-scrolled { height: 58px; box-shadow: 0 14px 32px -14px rgba(36,31,27,0.26), 0 4px 14px -6px rgba(36,31,27,0.12); }
 
-  [data-capsule-logo] { display: flex; align-items: center; gap: 10px; flex: none; padding-left: 3px; color: var(--color-text); text-decoration: none; min-width: 0; }
+  [data-capsule-logo] { display: flex; align-items: center; gap: 11px; flex: none; padding-left: 4px; color: var(--color-text); text-decoration: none; min-width: 0; }
   [data-capsule-logo-circle] {
-    width: 46px; height: 46px; border-radius: 50%; background: var(--color-accent-600); flex: none;
+    width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent-600); flex: none;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px -3px rgba(98,45,0,0.45);
     transition: width 0.22s cubic-bezier(0.4,0,0.2,1), height 0.22s cubic-bezier(0.4,0,0.2,1);
   }
-  [data-capsule].is-scrolled [data-capsule-logo-circle] { width: 40px; height: 40px; }
-  [data-capsule-logo-circle] svg { width: 22px; height: 28px; flex: none; }
-  [data-capsule-word] { font-family: var(--font-heading); font-weight: 700; font-size: 14px; letter-spacing: 0.035em; text-transform: uppercase; line-height: 1.15; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  [data-capsule].is-scrolled [data-capsule-logo-circle] { width: 42px; height: 42px; }
+  [data-capsule-logo-circle] svg { width: 23px; height: 29px; flex: none; }
+  [data-capsule-word] { font-family: var(--font-heading); font-weight: 800; font-size: 14.5px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.15; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  [data-capsule-nav] { display: flex; align-items: center; gap: 2px; margin: 0 auto; }
+  [data-capsule-nav] { display: flex; align-items: center; gap: 3px; margin: 0 auto; }
   [data-capsule-link] {
     position: relative; display: inline-flex; align-items: center; gap: 5px;
-    padding: 9px 15px; border-radius: 999px; background: transparent; border: 0;
-    font-family: var(--font-body); font-weight: 500; font-size: 14px; color: color-mix(in srgb, var(--color-text) 78%, transparent);
+    padding: 10px 17px; border-radius: 999px; background: transparent; border: 0;
+    font-family: var(--font-body); font-weight: 500; font-size: 14.5px; color: color-mix(in srgb, var(--color-text) 80%, transparent);
     white-space: nowrap; cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease;
   }
-  [data-capsule-link]:hover { background: var(--color-accent-100); color: var(--color-accent-700); }
-  [data-capsule-link][aria-current="page"] { background: var(--color-accent-600); color: #ffffff; font-weight: 600; }
+  [data-capsule-link]:hover { background: var(--color-neutral-100); color: var(--color-accent-700); }
+  [data-capsule-link][aria-current="page"] { background: var(--color-accent-600); color: #ffffff; font-weight: 600; box-shadow: 0 6px 14px -6px rgba(98,45,0,0.45); }
   [data-capsule-link] > svg { flex: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1); }
   [data-capsule-link][aria-expanded="true"] > svg { transform: rotate(180deg); }
 
-  [data-capsule-actions] { display: flex; align-items: center; gap: 10px; flex: none; margin-left: auto; padding-right: 3px; }
-  [data-capsule-phone] { display: inline-flex; align-items: center; gap: 7px; color: var(--color-text); font-size: 13.5px; font-weight: 500; white-space: nowrap; padding: 8px 6px; }
+  [data-capsule-actions] { display: flex; align-items: center; gap: 14px; flex: none; margin-left: auto; padding-right: 4px; }
+  [data-capsule-phone] { display: inline-flex; align-items: center; gap: 8px; color: var(--color-text); font-size: 14px; font-weight: 600; white-space: nowrap; padding: 8px 6px; transition: color 0.16s ease; }
+  [data-capsule-phone]:hover { color: var(--color-accent-700); }
   [data-capsule-phone] i { width: 6px; height: 6px; border-radius: 50%; display: block; flex: none; }
   [data-capsule-cta] {
-    display: inline-flex; align-items: center; gap: 7px; background: var(--color-accent-600); color: #ffffff;
-    border: 0; border-radius: 999px; padding: 10px 18px; font-family: var(--font-heading); font-weight: 700;
-    font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; background: var(--color-accent-600); color: #ffffff;
+    border: 0; border-radius: 999px; padding: 12px 21px; font-family: var(--font-heading); font-weight: 700;
+    font-size: 12.5px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; cursor: pointer;
+    box-shadow: 0 8px 18px -8px rgba(98,45,0,0.4);
     transition: transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.16s ease, background-color 0.16s ease;
   }
-  [data-capsule-cta]:hover { background: var(--color-accent-700); transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(98,45,0,0.4); }
+  [data-capsule-cta]:hover { background: var(--color-accent-700); transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(98,45,0,0.48); }
   [data-capsule-cta]:active { transform: translateY(0) scale(0.96); }
   [data-capsule-cta] svg { transition: transform 0.18s cubic-bezier(0.2,0.7,0.2,1); }
   [data-capsule-cta]:hover svg { transform: translateX(3px); }
@@ -187,7 +194,6 @@
     position: absolute; top: calc(100% + 12px); left: 50%; transform: translate(-50%, -8px) scale(0.97);
     width: min(760px, calc(100vw - 32px));
     background: #ffffff; border-radius: 20px; overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
     box-shadow: 0 30px 64px -22px rgba(36,31,27,0.38), 0 6px 18px -8px rgba(36,31,27,0.14);
     opacity: 0; pointer-events: none; visibility: hidden;
     transform-origin: 50% 0%;
@@ -223,32 +229,36 @@
     [data-capsule].is-scrolled { height: auto; }
     [data-capsule-nav], [data-capsule-actions] { display: none !important; }
     [data-capsule-logo] {
-      background: #ffffff; border-radius: 999px; padding: 7px 16px 7px 7px;
-      border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
-      box-shadow: 0 10px 26px -12px rgba(36,31,27,0.35), 0 2px 8px -3px rgba(36,31,27,0.16);
+      background: #ffffff; border-radius: 999px; padding: 8px 18px 8px 8px;
+      box-shadow: 0 14px 30px -14px rgba(36,31,27,0.32), 0 4px 12px -5px rgba(36,31,27,0.14);
       color: var(--color-text); transition: padding 0.22s ease;
     }
-    [data-capsule-logo-circle] { width: 40px; height: 40px; }
-    [data-capsule].is-scrolled [data-capsule-logo-circle] { width: 36px; height: 36px; }
-    [data-capsule-word] { color: var(--color-text); font-size: 12.5px; }
+    [data-capsule-logo-circle] { width: 42px; height: 42px; }
+    [data-capsule].is-scrolled [data-capsule-logo-circle] { width: 38px; height: 38px; }
+    [data-capsule-word] { color: var(--color-text); font-size: 13px; }
   }
+  /* Hamburger: a plain circle (echoes the logo circle's shape language
+     instead of a mismatched rounded-square) with three short, evenly
+     centred bars — narrower than the button itself so they read as a
+     deliberately-drawn glyph, not a stretched default icon. */
   [data-capsule-burger] {
-    display: none; width: 48px; height: 48px; border-radius: 16px; flex: none;
-    background: var(--color-accent-600); border: 1px solid var(--color-accent-800);
+    display: none; width: 50px; height: 50px; border-radius: 50%; flex: none;
+    background: var(--color-accent-600);
     align-items: center; justify-content: center; color: #fff;
-    box-shadow: 0 12px 26px -12px rgba(98,45,0,0.5), 0 2px 8px -3px rgba(98,45,0,0.3);
-    transition: transform 0.16s cubic-bezier(0.2,0.7,0.2,1);
+    box-shadow: 0 14px 28px -12px rgba(98,45,0,0.55), 0 3px 10px -3px rgba(98,45,0,0.35);
+    transition: transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.16s ease;
   }
-  [data-capsule-burger]:active { transform: scale(0.94); }
-  [data-capsule-burger] svg { width: 20px; height: 20px; }
-  [data-capsule-burger] .bg-line { transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; transform-origin: center; }
+  [data-capsule-burger]:hover { box-shadow: 0 18px 34px -12px rgba(98,45,0,0.6), 0 4px 12px -3px rgba(98,45,0,0.4); }
+  [data-capsule-burger]:active { transform: scale(0.92); }
+  [data-capsule-burger] svg { width: 20px; height: 20px; overflow: visible; }
+  [data-capsule-burger] .bg-line { transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; transform-origin: 12px center; }
   @media (max-width: 1100px) { [data-capsule-burger] { display: flex; } }
 
   /* Mobile menu floating panel */
   [data-mobile-panel] {
     position: relative; z-index: 2;
     width: min(93vw, 460px); margin: 10px auto 0; background: #ffffff;
-    border-radius: 24px; border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    border-radius: 24px;
     box-shadow: 0 30px 60px -18px rgba(36,31,27,0.4), 0 6px 20px -8px rgba(36,31,27,0.16);
     overflow: hidden; opacity: 0; transform: translateY(-10px) scale(0.98);
     transition: opacity 0.22s cubic-bezier(0.4,0,0.2,1), transform 0.22s cubic-bezier(0.4,0,0.2,1);
@@ -362,10 +372,10 @@
       </div>
 
       <button type="button" data-capsule-burger ref="{{ burgerRef }}" onClick="{{ toggleMenu }}" aria-label="{{ burgerLabel }}" aria-expanded="{{ menuOpen }}" aria-controls="amc-mobile-panel">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line class="bg-line" x1="4" y1="7" x2="20" y2="7" style="transform: {{ line1Transform }};" />
-          <line class="bg-line" x1="4" y1="12" x2="20" y2="12" style="opacity: {{ line2Opacity }};" />
-          <line class="bg-line" x1="4" y1="17" x2="20" y2="17" style="transform: {{ line3Transform }};" />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true">
+          <line class="bg-line" x1="5" y1="8" x2="19" y2="8" style="transform: {{ line1Transform }};" />
+          <line class="bg-line" x1="5" y1="12" x2="19" y2="12" style="opacity: {{ line2Opacity }};" />
+          <line class="bg-line" x1="5" y1="16" x2="19" y2="16" style="transform: {{ line3Transform }};" />
         </svg>
       </button>
     </div>
@@ -666,9 +676,9 @@ class Component extends DCLogic {
       backdropClass: menuOpen ? 'is-open' : '',
       panelClass: menuOpen ? 'is-open' : '',
       panelRef: (el) => { this.panelEl = el; },
-      line1Transform: menuOpen ? 'translateY(5px) rotate(45deg)' : 'none',
+      line1Transform: menuOpen ? 'translateY(4px) rotate(45deg)' : 'none',
       line2Opacity: menuOpen ? '0' : '1',
-      line3Transform: menuOpen ? 'translateY(-5px) rotate(-45deg)' : 'none',
+      line3Transform: menuOpen ? 'translateY(-4px) rotate(-45deg)' : 'none',
     };
   }
 }
