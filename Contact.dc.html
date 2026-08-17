@@ -57,7 +57,7 @@
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="contact" hint-size="100%,76px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100; pointer-events: none;" name="SiteNav" active="contact" hint-size="100%,76px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -113,17 +113,17 @@
             <tr><td style="padding: 11px 0; border-bottom: 0; font-size: 15px;">Sunday</td><td style="padding: 11px 0; border-bottom: 0; text-align: right; font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: 0.03em; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Closed</td></tr>
           </tbody>
         </table>
-        <div style="margin-top: 26px; padding: 22px; display: flex; gap: 12px; align-items: center; background: #ffffff;">
+        <div style="margin-top: 26px; padding: 22px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; background: #ffffff;">
           <i style="width: 9px; height: 9px; flex: none; display: block; background: {{ statusColor }};"></i>
           <span style="font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: 0.04em; text-transform: uppercase;">{{ statusLabel }}</span>
           <span style="margin-left: auto; font-size: 13.5px; color: color-mix(in srgb, var(--color-text) 62%, transparent); text-align: right;">{{ statusNote }}</span>
         </div>
         <span style="display: block; margin-top: 34px; font-family: var(--font-heading); font-weight: 600; font-size: 13px; line-height: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--color-accent-700);">Delivery coverage</span>
         <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;">
-          <li style="display: grid; grid-template-columns: 1fr max-content; gap: 14px; font-size: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--color-divider);"><span>Sharjah &amp; Ajman</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">Same or next day</span></li>
-          <li style="display: grid; grid-template-columns: 1fr max-content; gap: 14px; font-size: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--color-divider);"><span>Dubai &amp; Umm Al Quwain</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">Next day</span></li>
-          <li style="display: grid; grid-template-columns: 1fr max-content; gap: 14px; font-size: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--color-divider);"><span>Ras Al Khaimah &amp; Fujairah</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">1 &ndash; 2 days</span></li>
-          <li style="display: grid; grid-template-columns: 1fr max-content; gap: 14px; font-size: 15px;"><span>Abu Dhabi &amp; Al Ain</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">2 days, by load size</span></li>
+          <li style="display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 10px; font-size: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--color-divider);"><span>Sharjah &amp; Ajman</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">Same or next day</span></li>
+          <li style="display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 10px; font-size: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--color-divider);"><span>Dubai &amp; Umm Al Quwain</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">Next day</span></li>
+          <li style="display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 10px; font-size: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--color-divider);"><span>Ras Al Khaimah &amp; Fujairah</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">1 &ndash; 2 days</span></li>
+          <li style="display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 10px; font-size: 15px;"><span>Abu Dhabi &amp; Al Ain</span><span style="font-family: var(--font-heading); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; color: var(--color-accent-700);">2 days, by load size</span></li>
         </ul>
         <p style="font-size: 14px; line-height: 22px; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 62%, transparent);">Delivery is charged on distance and load size. Collection from the Al Sajaa yard is cheaper if you have your own transport.</p>
       </div>

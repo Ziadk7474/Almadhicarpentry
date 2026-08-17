@@ -69,7 +69,7 @@
   }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100; pointer-events: none;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -117,7 +117,7 @@
         </div>
         <p style="font-size: 16.5px; line-height: 27px; max-width: 36ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">If a used pallet will do the job we say so, instead of selling you a new one.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: clamp(10px, 1.2vw, 16px);">
         <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
           <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
             <img loading="lazy" src="assets/pallet-studio-old.jpg" alt="Used pallet, good grade" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
@@ -163,7 +163,7 @@
 
   <section style="padding: clamp(30px, 4vw, 56px) 0;">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
-      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
+      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
         <div data-zoom data-wipe data-reveal="left" data-parallax="34" style="background: var(--color-neutral-100);">
           <img loading="lazy" src="assets/pallet-blocks-closeup.jpg" alt="Close inspection of a used pallet's blocks and boards" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
         </div>
@@ -186,7 +186,7 @@
       <div data-reveal style="background: #ffffff; padding: clamp(28px, 4vw, 58px);">
         <span class="eyebrow-block" style="margin-bottom: 14px;">Used pallet questions</span>
         <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 48px); line-height: 0.96; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 34px);">Worth knowing</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
           <details open="{{ true }}" style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
             <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">Are used pallets structurally safe?</summary>
             <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Everything sold as Good grade or Economy has been checked for broken boards and loose blocks. If a pallet does not pass, it does not go out at that grade.</p>

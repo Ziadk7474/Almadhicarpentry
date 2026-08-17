@@ -126,11 +126,19 @@
   .showcase2-panel--standard, .showcase2-panel--heavy, .showcase2-panel--custom {
     clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
   }
-  .showcase2-panel--standard { left: 0%; width: 27.78%; }
-  .showcase2-panel--heavy { left: calc(27.78% - var(--shift)); width: 27.78%; }
-  .showcase2-panel--custom { left: calc(55.56% - (var(--shift) * 2)); width: 31.94%; }
+  /* Four equal 25% panels (was 27.78/27.78/31.94/12.5 — the navy CTA panel
+     used to read as barely a third the width of the photo panels). Each
+     panel after the first still walks left by one more --shift than the
+     last (needed for the diagonal-seam trick — see the file header
+     comment), so the final panel's width is compensated by 3x--shift to
+     keep its own right edge flush with the composition's right edge
+     despite that cumulative walk; on a typical desktop width that's a few
+     percent, not enough to read as unequal any more. */
+  .showcase2-panel--standard { left: 0%; width: 25%; }
+  .showcase2-panel--heavy { left: calc(25% - var(--shift)); width: 25%; }
+  .showcase2-panel--custom { left: calc(50% - (var(--shift) * 2)); width: 25%; }
   .showcase2-panel--navy {
-    left: calc(87.5% - (var(--shift) * 3)); width: calc(12.5% + (var(--shift) * 3));
+    left: calc(75% - (var(--shift) * 3)); width: calc(25% + (var(--shift) * 3));
     clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%);
     background: var(--color-info-700); color: #ffffff;
     display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px;
@@ -192,7 +200,7 @@
   }
 </style>
 </helmet>
-<dc-import style="position: fixed; top: 16px; left: 0; right: 0; z-index: 100;" name="SiteNav" active="home" hint-size="100%,76px"></dc-import>
+<dc-import style="position: fixed; top: 16px; left: 0; right: 0; z-index: 100; pointer-events: none;" name="SiteNav" active="home" hint-size="100%,76px"></dc-import>
 
 <main>
   <dc-import name="Hero3D" hint-size="100%,720px"></dc-import>
@@ -207,21 +215,21 @@
       </div>
       <div class="showcase2-comp" data-reveal="right">
         <a href="Pallets.dc.html" class="showcase2-panel showcase2-panel--standard" aria-label="Standard pallets">
-          <img loading="lazy" src="assets/yard-stacks-golden.jpg" alt="Standard wooden pallets stacked in the Al Sajaa yard" />
+          <img loading="lazy" src="assets/new-images/normal.png" alt="Standard wooden pallets stacked" />
           <span class="showcase2-body">
             <span class="showcase2-name">Standard<br />Pallets</span>
             <span class="showcase2-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.9" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
           </span>
         </a>
         <a href="Heavy-Duty-Pallets.dc.html" class="showcase2-panel showcase2-panel--heavy" aria-label="Heavy-duty pallets">
-          <img loading="lazy" src="assets/truck-pallets-loaded.jpg" alt="Heavy duty wooden pallets loaded for delivery" />
+          <img loading="lazy" src="assets/new-images/heavy.png" alt="Heavy duty wooden pallet stacked tight for reinforced loads" />
           <span class="showcase2-body">
             <span class="showcase2-name">Heavy-Duty<br />Pallets</span>
             <span class="showcase2-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.9" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
           </span>
         </a>
         <a href="Custom-Sized-Pallets.dc.html" class="showcase2-panel showcase2-panel--custom" aria-label="Custom pallets and crates">
-          <img loading="lazy" src="assets/pallet-wall-grid.jpg" alt="Custom pallets and crates built to size in the Al Sajaa yard" />
+          <img loading="lazy" src="assets/new-images/custom pallet crate.png" alt="Custom pallets and export crates built to size" />
           <span class="showcase2-body">
             <span class="showcase2-name">Custom Pallets<br />&amp; Crates</span>
             <span class="showcase2-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.9" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
@@ -235,21 +243,21 @@
       </div>
       <div class="showcase2-mobile">
         <a href="Pallets.dc.html" class="showcase2-mobile-panel">
-          <img loading="lazy" src="assets/yard-stacks-golden.jpg" alt="Standard wooden pallets stacked in the Al Sajaa yard" />
+          <img loading="lazy" src="assets/new-images/normal.png" alt="Standard wooden pallets stacked" />
           <span class="showcase2-mobile-body">
             <span class="showcase2-name">Standard Pallets</span>
             <span class="showcase2-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.9" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
           </span>
         </a>
         <a href="Heavy-Duty-Pallets.dc.html" class="showcase2-mobile-panel">
-          <img loading="lazy" src="assets/truck-pallets-loaded.jpg" alt="Heavy duty wooden pallets loaded for delivery" />
+          <img loading="lazy" src="assets/new-images/heavy.png" alt="Heavy duty wooden pallet stacked tight for reinforced loads" />
           <span class="showcase2-mobile-body">
             <span class="showcase2-name">Heavy-Duty Pallets</span>
             <span class="showcase2-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.9" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
           </span>
         </a>
         <a href="Custom-Sized-Pallets.dc.html" class="showcase2-mobile-panel">
-          <img loading="lazy" src="assets/pallet-wall-grid.jpg" alt="Custom pallets and crates built to size in the Al Sajaa yard" />
+          <img loading="lazy" src="assets/new-images/custom pallet crate.png" alt="Custom pallets and export crates built to size" />
           <span class="showcase2-mobile-body">
             <span class="showcase2-name">Custom Pallets &amp; Crates</span>
             <span class="showcase2-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.9" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
@@ -431,7 +439,7 @@
         </div>
         <p style="font-size: 16.5px; line-height: 27px; max-width: 38ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Everything on this site is made where you can come and stand in it &mdash; Al Sajaa Industrial Area, Sharjah.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); gap: clamp(10px, 1.2vw, 16px);">
         <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
           <div data-zoom data-parallax="34" style="background: var(--color-neutral-100);">
             <img loading="lazy" src="assets/truck-pallets-loaded.jpg" alt="A truck loaded with finished pallets leaving the yard" width="562" height="520" style="width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover;" />
@@ -620,7 +628,7 @@
 
   <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
-      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
+      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
         <div data-zoom data-wipe data-reveal style="background: var(--color-neutral-100);">
           <img loading="lazy" src="assets/truck-pallets-loaded.jpg" alt="A truck loaded with finished pallets leaving the Al Sajaa yard" style="width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;" />
         </div>
@@ -687,7 +695,7 @@
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <span class="eyebrow-block" style="margin-bottom: 14px;">How an order runs</span>
       <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(36px, 4.4vw, 60px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(24px, 3vw, 40px); max-width: 22ch;">You know the date before production starts</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(10px, 1.2vw, 16px); align-items: start;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(10px, 1.2vw, 16px); align-items: start;">
         <div style="position: relative;">
           <i aria-hidden="true" style="position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; border-radius: 2px; background: color-mix(in srgb, var(--color-text) 12%, transparent); overflow: hidden; display: block;">
             <i style="position: absolute; top: 0; left: 0; width: 100%; background: var(--color-accent-600); border-radius: 2px; height: {{ stepRailPct }}; transition: height 0.5s cubic-bezier(0.16,1,0.3,1); display: block;"></i>
@@ -720,7 +728,7 @@
   </section>
 
   <section style="padding: clamp(36px, 4.5vw, 64px) 0;">
-    <div style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+    <div style="padding: 0 clamp(16px, 3vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(10px, 1.2vw, 16px);">
       <figure data-card data-testi data-reveal style="margin: 0; background: #ffffff; padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; gap: 18px;">
         <span aria-label="Five out of five" style="letter-spacing: 0.24em; color: var(--color-accent); font-size: 15px;">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
         <blockquote style="font-family: var(--font-heading); font-weight: 600; font-size: 23px; line-height: 32px; margin: 0;">&ldquo;We changed carton size and needed a new deck in a week. Al Madhi built a sample, we approved it on the Sunday and four hundred arrived on the Wednesday.&rdquo;</blockquote>
@@ -744,7 +752,7 @@
       <div data-reveal style="background: #ffffff; padding: clamp(28px, 4vw, 60px);">
         <span class="eyebrow-block" style="margin-bottom: 14px;">Before you order</span>
         <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(32px, 3.8vw, 50px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 34px);">Common questions</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
           <details open="{{ true }}" style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
             <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">What pallet sizes can you make?</summary>
             <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Whatever size you need. The most common size shipped is 100 &times; 120 cm, and odd sizes are built to your measurements &mdash; send a drawing, a photo or the pallet you use now.</p>

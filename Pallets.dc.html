@@ -53,7 +53,7 @@
   button[aria-current='true'] { background: var(--color-accent-600) !important; color: #fff !important; border-color: var(--color-accent-600) !important; }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100; pointer-events: none;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -64,7 +64,7 @@
   </section>
   <section style="padding: clamp(28px, 4vw, 56px) 0 clamp(20px, 3vw, 32px); min-height: min(48vh, 380px); display: flex; flex-direction: column; justify-content: center;">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(20px, 3vw, 44px); align-items: end;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: clamp(20px, 3vw, 44px); align-items: end;">
         <div>
           <span class="eyebrow" style="margin-bottom: 22px;">
             <i class="eyebrow-dash"></i>The pallet range
@@ -95,7 +95,7 @@
   <section style="padding: clamp(28px, 4vw, 52px) 0 clamp(40px, 5vw, 72px);">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
       <p style="font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); margin: 0 0 24px;">{{ resultLabel }}</p>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: clamp(10px, 1.2vw, 16px);">
         <sc-for list="{{ items }}" as="item" hint-placeholder-count="6">
           <article data-card data-reveal style="display: flex; flex-direction: column; background: #ffffff;">
             <div data-zoom data-wipe data-reveal style="width: 100%; background: var(--color-neutral-100);">
@@ -136,7 +136,7 @@
 
   <section style="padding: 0 0 clamp(44px, 6vw, 76px);">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
-      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
+      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(30px, 4.5vw, 68px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(26px, 4vw, 56px); align-items: center;">
         <div>
           <span class="eyebrow-block" style="margin-bottom: 14px;">Sizes &amp; specification</span>
           <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 46px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">We build to the size you give us</h2>

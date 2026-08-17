@@ -55,7 +55,7 @@
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="gallery" hint-size="100%,79px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100; pointer-events: none;" name="SiteNav" active="gallery" hint-size="100%,79px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -125,7 +125,7 @@
 
   <section style="padding: 0 0 clamp(48px, 6vw, 80px);">
     <div style="padding: 0 clamp(16px, 3vw, 40px);">
-      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(28px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px; align-items: center;">
+      <div data-reveal style="background: var(--color-neutral-200); padding: clamp(28px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 26px; align-items: center;">
         <div>
           <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(26px, 3vw, 38px); line-height: 0.98; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;">Come and see the yard</h2>
           <p style="font-size: 15.5px; line-height: 25px; margin: 14px 0 0; max-width: 48ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">Customers are welcome at Al Sajaa any working day between 06:00 and 18:00. Bring a carton or a sample pallet and we will measure it with you on the bench.</p>

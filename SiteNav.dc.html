@@ -15,6 +15,12 @@
      overflows, which caps the sticky header's containing block to one screen and
      lets it scroll away. Let those boxes grow with their content instead. */
   html, body, #dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
+  /* Sitewide safety net against horizontal scroll — decorative bleed (box
+     shadows, a diagonal-cut panel's clip-path, a stray few px from a fixed-
+     ratio grid track) can occasionally push scrollWidth a handful of
+     pixels past the viewport on some page/width combination; this makes
+     that invisible rather than a visible sliver of horizontal scrollbar. */
+  html, body { overflow-x: hidden; }
   body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased; }
   /* Page-opening transition — every navigation in this site is a full page
      load (there's no SPA router), so a body-level fade+settle is what a
@@ -93,6 +99,18 @@
   .spec-item, [data-spec-row] { transition: background-color 0.18s ease; }
   .spec-item:hover, [data-spec-row]:hover { background: var(--color-neutral-100); }
 
+  /* Global mobile stacking for fixed-ratio two-column layouts (image+text,
+     figure+copy, a stat panel beside a phone number, etc.) — a shared rule
+     here (this stylesheet loads on every page) instead of duplicating the
+     same media query per file. Auto-fit/auto-fill grids already collapse on
+     their own without this; this is specifically for the ones using a fixed
+     ratio (5fr/7fr, 1.3fr/1fr, and similar) that have no mobile breakpoint
+     of their own and would otherwise squeeze both columns into narrow
+     screens instead of stacking. */
+  @media (max-width: 860px) {
+    [data-split] { grid-template-columns: 1fr !important; }
+  }
+
   /* Native <details> open smoothly (grid-rows trick — animatable, no JS,
      no layout jump) instead of the browser's default instant snap. */
   details > summary { transition: color 0.18s ease; }
@@ -133,7 +151,22 @@
      the page is still at rest/scrolled to the very top. Matches the parent
      page's own `top: 16px` (`12px` on mobile) sticky offset exactly, so
      there is zero visual jump the moment it starts sticking. */
-  [data-capsule-row] { padding: 0 clamp(12px, 3vw, 24px); margin-top: 16px; }
+  /* The dc-import wrapper around this whole component (position:fixed on
+     the homepage, sticky elsewhere) is itself an element the framework
+     generates — it silently drops any inline style property on the
+     <dc-import> tag it doesn't already recognise, `pointer-events`
+     included, so setting it there in the page markup has no effect. This
+     attribute selector is the only way to reach that specific wrapper
+     from here. Without it: header's own box spans the full height of
+     everything inside it (the mobile panel included, even fully
+     transparent while "closed"), and on the homepage that wrapper sits
+     permanently on top of the page — so its background was silently
+     swallowing every tap/click on whatever real content happened to
+     render underneath it, all the way down to wherever the panel's
+     natural (uncollapsed) height ended. Every actually-interactive piece
+     re-enables its own pointer-events below. */
+  .sc-host[data-sc-name="SiteNav"] { pointer-events: none; }
+  [data-capsule-row] { padding: 0 clamp(12px, 3vw, 24px); margin-top: 16px; pointer-events: auto; }
   /* Elevation comes from shadow alone everywhere in this component — no
      borders. A hairline border on a white shape sitting on this hero's own
      faint grid-line background reads as a stray drawn line rather than a
@@ -255,16 +288,36 @@
   @media (max-width: 1100px) { [data-capsule-burger] { display: flex; } }
 
   /* Mobile menu floating panel */
+  /* pointer-events:none + visibility:hidden while closed is load-bearing,
+     not decorative: this panel sits inside <header>, which is
+     position:fixed on the homepage — so even fully transparent (opacity:0)
+     it was still an in-flow box sitting over a large chunk of the
+     viewport, silently eating every tap/click on whatever real content
+     happened to be underneath it (the biggest single cause of "buttons
+     and selects don't work on mobile" reports). Both properties are
+     flipped back only once .is-open is applied. */
+  /* position:absolute (not relative) is also load-bearing: this panel can
+     run to 500px+ tall with the product accordion open, and a
+     position:relative panel — even invisible/non-interactive — still
+     reserves that full height in normal flow. On a sticky-positioned page
+     (every page but the homepage) that flow height gets added straight
+     onto the header's own intrinsic size, which is what the sticky
+     wrapper reserves as empty space at the top of the page before it
+     starts sticking — i.e. a large dead gap between the nav and the page
+     title on every subpage, even with the menu closed. Absolute positioning
+     removes it from flow entirely; header (position:relative) is its
+     containing block, so `top:100%` still places it directly under the
+     capsule row exactly as before. */
   [data-mobile-panel] {
-    position: relative; z-index: 2;
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 2;
     width: min(93vw, 460px); margin: 10px auto 0; background: #ffffff;
     border-radius: 24px;
     box-shadow: 0 30px 60px -18px rgba(36,31,27,0.4), 0 6px 20px -8px rgba(36,31,27,0.16);
-    overflow: hidden; opacity: 0; transform: translateY(-10px) scale(0.98);
-    transition: opacity 0.22s cubic-bezier(0.4,0,0.2,1), transform 0.22s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-10px) scale(0.98);
+    transition: opacity 0.22s cubic-bezier(0.4,0,0.2,1), transform 0.22s cubic-bezier(0.4,0,0.2,1), visibility 0.22s;
     max-height: calc(100dvh - 100px); display: flex; flex-direction: column;
   }
-  [data-mobile-panel].is-open { opacity: 1; transform: translateY(0) scale(1); }
+  [data-mobile-panel].is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
   [data-mobile-panel-scroll] { overflow-y: auto; padding: 10px 10px 18px; }
   [data-mobile-link] {
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
@@ -304,7 +357,7 @@
   @media (prefers-reduced-motion: reduce) { [data-mobile-backdrop] { transition: none; } }
 </style>
 </helmet>
-<header ref="{{ headerRef }}" style="position: relative; z-index: 10;">
+<header ref="{{ headerRef }}" style="position: relative; z-index: 10; pointer-events: none;">
   <div data-capsule-row>
     <div data-capsule class="{{ capsuleClass }}">
       <a data-capsule-logo href="index.dc.html" aria-label="Al Madhi Carpentry — home">
@@ -340,7 +393,7 @@
                 <a data-mega-item href="Custom-Quality-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Custom quality pallets</strong><em>Spec the grade, we build it</em></a>
               </div>
               <div data-mega-col role="group">
-                <span data-mega-thumb style="background-image: url('assets/plastic-pallet-blue.png'); background-color: #ffffff; background-size: contain; background-repeat: no-repeat;"></span>
+                <span data-mega-thumb style="background-image: url('assets/plastic-pallet-blue.png'); background-position: center 35%;"></span>
                 <span>Plastic, boxes &amp; home</span>
                 <a data-mega-item href="Plastic-Pallets-New.dc.html" onClick="{{ closeProducts }}"><strong>New plastic pallets</strong><em>Washable, export-ready</em></a>
                 <a data-mega-item href="Plastic-Pallets-Used.dc.html" onClick="{{ closeProducts }}"><strong>Used plastic pallets</strong><em>Inspected and reusable</em></a>

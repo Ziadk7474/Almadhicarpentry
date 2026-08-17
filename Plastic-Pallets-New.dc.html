@@ -69,7 +69,7 @@
   }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100; pointer-events: none;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -163,7 +163,7 @@
         </div>
         <p style="font-size: 16.5px; line-height: 27px; max-width: 36ch; margin: 0; color: color-mix(in srgb, var(--color-text) 66%, transparent);">Same handling, different material properties.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: clamp(10px, 1.2vw, 16px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: clamp(10px, 1.2vw, 16px);">
         <div data-card data-reveal style="padding: clamp(24px, 2.8vw, 32px); background: #ffffff;">
           <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent-700);">01</span>
           <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 24px; text-transform: uppercase; margin: 14px 0 0;">Food &amp; pharma</h3>
@@ -199,7 +199,7 @@
       <div data-reveal style="background: #ffffff; padding: clamp(28px, 4vw, 58px);">
         <span class="eyebrow-block" style="margin-bottom: 14px;">Plastic pallet questions</span>
         <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 48px); line-height: 0.96; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 34px);">Worth knowing</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
           <details open="{{ true }}" style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
             <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">What sizes are available?</summary>
             <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">Standard moulded sizes including 100 &times; 120&nbsp;cm and 110 &times; 110&nbsp;cm. Ask about your exact requirement and we will confirm what is available or where to source it.</p>

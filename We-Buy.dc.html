@@ -54,7 +54,7 @@
   details[open] summary::after { content: '\2212'; }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100; pointer-events: none;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -165,7 +165,7 @@
       <div data-reveal style="background: #ffffff; padding: clamp(28px, 4vw, 58px);">
         <span class="eyebrow-block" style="margin-bottom: 14px;">Selling to us — questions</span>
         <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.6vw, 48px); line-height: 0.96; letter-spacing: -0.01em; text-transform: uppercase; margin: 0 0 clamp(20px, 2.6vw, 34px);">Worth knowing</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 0 clamp(32px, 4vw, 72px);">
           <details open="{{ true }}" style="border-bottom: 1px solid var(--color-divider); padding: 20px 0;">
             <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 21px; letter-spacing: 0.02em; text-transform: uppercase; list-style: none;">Is there a minimum quantity?</summary>
             <p style="font-size: 15.5px; line-height: 25px; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 72%, transparent);">No fixed minimum, though pricing per piece improves with volume. A single pallet or a full truckload are both worth a call.</p>
