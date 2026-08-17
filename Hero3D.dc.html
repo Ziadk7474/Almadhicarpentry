@@ -23,6 +23,10 @@
   /* ============ Hero shell ============ */
   [data-pallet-hero] {
     position: relative; width: 100%; min-height: clamp(600px, 66vh, 700px); height: auto;
+    /* dvh accounts for mobile browser chrome (address bar) showing/hiding —
+       vh above is the fallback for browsers without dvh support; this
+       declaration simply wins the cascade wherever dvh is understood. */
+    min-height: clamp(600px, 66dvh, 700px);
     overflow: hidden; background: linear-gradient(180deg, #ffffff 0%, var(--color-surface) 100%);
   }
   [data-pallet-grid-bg] {
@@ -179,7 +183,7 @@
      unconditionally absolutely positioned so nothing inside can ever
      influence the stage's own size. The info cards now live as a sibling
      block *after* the stage (see markup below), not a child of it. */
-  [data-pallet-visual] { height: min(58vh, 560px); }
+  [data-pallet-visual] { height: min(58vh, 560px); height: min(58dvh, 560px); }
   @media (max-width: 900px) {
     [data-pallet-visual] { height: auto; }
     [data-pallet-stage] { position: relative; height: clamp(400px, 62vw, 520px); }
@@ -231,6 +235,14 @@
   /* Toolbar: Reset view / Explode-Assemble / Dimensions. */
   [data-pallet-toolbar] {
     position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%);
+    /* width:max-content — without it, the browser's shrink-to-fit sizing for
+       an abspos box with `left` set (and no `right`) measures available
+       width from `left` to the containing block's edge, ignoring that the
+       translateX(-50%) will re-centre it — i.e. it sizes against HALF the
+       stage width, not the full width the centred box actually has room
+       for, and was wrapping into an uneven 2-then-1 stack well before it
+       needed to on narrower stages. */
+    width: max-content;
     display: flex; gap: 8px; z-index: 6; flex-wrap: wrap; justify-content: center; max-width: calc(100% - 24px);
   }
   [data-pallet-toolbar] button {
@@ -243,6 +255,15 @@
   [data-pallet-toolbar] button:hover { border-color: var(--color-accent); color: var(--color-accent-700); }
   [data-pallet-toolbar] button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
   [data-pallet-toolbar] button[aria-pressed="true"] { background: var(--color-accent-100); border-color: var(--color-accent-600); color: var(--color-accent-700); }
+  /* Narrow desktop (small laptop / tablet landscape, e.g. 1024x768): the
+     visual column is too narrow for three full-label pill buttons to fit
+     on one row at the wide-desktop size, so — same fix as mobile below —
+     tighter padding/font keeps all three on a single row instead of
+     wrapping into an uneven 2-then-1 stack. */
+  @media (min-width: 901px) and (max-width: 1180px) {
+    [data-pallet-toolbar] button { padding: 7px 10px; font-size: 10px; gap: 5px; }
+    [data-pallet-toolbar] button svg { width: 13px; height: 13px; }
+  }
   /* Mobile: the three controls sit on their own card so they read as a
      toolbar against the 3D scene instead of floating text, and are forced
      into three equal columns so they never wrap into an uneven 2-then-1
@@ -282,13 +303,35 @@
   /* ============ Mobile: the info cards move to a normal-flow sibling block
      below the fixed-height stage (see markup — [data-pallet-cards] is no
      longer nested inside [data-pallet-stage]), acting as a compact
-     component legend. No leader lines, no absolute positioning there. */
+     component legend. No leader lines, no absolute positioning there.
+     Collapsed by default behind a toggle (data-pallet-callouts-toggle) —
+     the full three-card legend used to always render open here, which on a
+     typical phone pushed the CTA buttons ~200px further down than the
+     pallet alone would; collapsing it to an expandable label keeps the
+     headline/copy/pallet/CTA sequence tight while still making the
+     technical detail available on request. */
+  [data-pallet-callouts-toggle] { display: none; }
   @media (max-width: 900px) {
     [data-pallet-leaders] { display: none; }
+    [data-pallet-callouts-toggle] {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: calc(100% - clamp(32px, 6vw, 48px)); margin: 16px clamp(16px, 3vw, 24px) 0; padding: 12px 16px; min-height: 44px;
+      background: #ffffff; border: 1px solid var(--color-divider); border-radius: 10px;
+      font-family: var(--font-heading); font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--color-text); cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    [data-pallet-callouts-toggle]:hover, [data-pallet-callouts-toggle][aria-expanded="true"] { border-color: var(--color-accent); color: var(--color-accent-700); }
+    [data-pallet-callouts-toggle] svg { width: 13px; height: 13px; flex: none; transition: transform 0.25s cubic-bezier(0.2,0.7,0.2,1); }
+    [data-pallet-callouts-toggle][aria-expanded="true"] svg { transform: rotate(180deg); }
     [data-pallet-cards] {
       position: static; pointer-events: auto; z-index: auto;
       display: flex; flex-direction: column; gap: 10px;
-      margin-top: 24px; padding: 0 clamp(16px, 3vw, 24px);
+      margin-top: 0; padding: 0 clamp(16px, 3vw, 24px);
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, margin-top 0.4s ease;
+    }
+    [data-pallet-cards].is-open {
+      max-height: 700px; opacity: 1; margin-top: 16px;
     }
     .pallet-card {
       position: static; width: auto; transform: none; opacity: 1 !important;
@@ -296,6 +339,10 @@
     }
     [data-pallet-toolbar] { bottom: 8px; }
     [data-pallet-hint] { font-size: 9.5px; padding: 6px 11px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-pallet-cards] { transition: none; }
+    [data-pallet-callouts-toggle] svg { transition: none; }
   }
   @media (max-width: 480px) {
     [data-pallet-dims] { display: none; }
@@ -373,7 +420,11 @@
         </div>
       </div>
 
-      <div data-pallet-cards ref="{{ cardsRef }}">
+      <button type="button" data-pallet-callouts-toggle aria-expanded="{{ calloutsOpen }}" onClick="{{ onToggleCallouts }}">
+        <span>What&rsquo;s inside the pallet</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+      </button>
+      <div data-pallet-cards class="{{ cardsOpenClass }}" ref="{{ cardsRef }}">
         <div class="pallet-card" ref="{{ cardRefs.top }}">
           <h4><i aria-hidden="true"></i>Top deck</h4>
           <p>Parallel timber boards forming the load surface.</p>
@@ -468,7 +519,7 @@ const IDLE_RESUME_MS = 5000;
 const AUTO_ROTATE_SECONDS_PER_REV = 26;
 
 class Component extends DCLogic {
-  state = { contentIn: false };
+  state = { contentIn: false, calloutsOpen: false };
 
   componentDidMount() {
     this._reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -795,8 +846,17 @@ class Component extends DCLogic {
   // numbers blindly — a narrower viewer needs a closer camera to still read
   // as "large and centred" (brief target: ~86-92% of the mobile viewer
   // width for the assembled pallet, vs ~72-80% on desktop).
-  _assembledMargin() { return this._mobileLayout() ? 0.68 : 0.86; }
-  _explodedMargin() { return this._mobileLayout() ? 0.8 : 0.98; }
+  // A narrow desktop window (~901-1180px — small laptop, tablet landscape)
+  // still uses the two-column side-by-side layout, but the visual column is
+  // too narrow for the pallet to render at the wide-desktop scale without
+  // its right edge running into the leader-line annotation column (see
+  // _updateCards' colX clamp) — text sitting on top of the wood. Pulling
+  // the camera back a bit here (bigger margin factor = more empty space
+  // around the model) keeps the annotations clear without touching the
+  // DOM/CSS layout at all.
+  _narrowDesktopLayout() { return window.matchMedia('(min-width: 901px) and (max-width: 1180px)').matches; }
+  _assembledMargin() { return this._mobileLayout() ? 0.68 : this._narrowDesktopLayout() ? 1.08 : 0.86; }
+  _explodedMargin() { return this._mobileLayout() ? 0.8 : this._narrowDesktopLayout() ? 1.2 : 0.98; }
 
   _setCameraSpherical(theta, phi, radius) {
     const THREE = this._THREE;
@@ -1139,7 +1199,16 @@ class Component extends DCLogic {
 
     const order = ['top', 'bar', 'block']; // upper: TOP DECK, centre: CROSS BARS, lower: SUPPORT BLOCKS
     const maxX = Math.max(pts.top.x, pts.block.x, pts.bar.x);
-    const colX = Math.min(maxX + 56, w - 190);
+    // The anchor points are semantic (top-deck / cross-bar / support-block
+    // centres), not the mesh's true rendered silhouette edge — at larger
+    // stage sizes the pallet's actual right edge (after perspective) can
+    // sit noticeably further right than any single anchor, so a fixed 56px
+    // clearance was letting the card text overlap the wood at both very
+    // wide (~1920px+) and, combined with the w-190 cap, narrow (~1024px)
+    // stages. Scaling the gap with stage width keeps clearance proportional
+    // at every size instead of a constant that only worked in the middle.
+    const gap = Math.max(56, w * 0.09);
+    const colX = Math.min(maxX + gap, w - 190);
     const spacing = 112;
     // Clamp the column's vertical centre so the top/bottom cards never
     // drift into the hint pill (top) or the toolbar (bottom) — the three
@@ -1243,6 +1312,9 @@ class Component extends DCLogic {
       dimsBtnRef: (el) => { this.dimsBtnEl = el; },
       dimRefs, leaderRefs, cardRefs,
       contentClass: this.state.contentIn ? 'is-in' : '',
+      calloutsOpen: this.state.calloutsOpen,
+      cardsOpenClass: this.state.calloutsOpen ? 'is-open' : '',
+      onToggleCallouts: () => this.setState((s) => ({ calloutsOpen: !s.calloutsOpen })),
       quoteAny: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
       onResetView: () => this._playResetView(),
       onToggleExplode: () => this._playToggleExplode(),

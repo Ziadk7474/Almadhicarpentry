@@ -16,19 +16,19 @@
     <span class="eyebrow" style="margin: 0 0 20px;"><i class="eyebrow-dash"></i>The order desk</span>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(28px, 4vw, 64px); align-items: start;">
       <div>
-        <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(34px, 4.4vw, 54px); line-height: 0.94; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Send the size.<br />We will price it.</h2>
-        <p style="font-size: 16px; line-height: 26px; max-width: 46ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent);">The size and what the pallet has to carry is enough to start a quote. For shavings, tell us how many sacks. Quotes go out the same working day.</p>
+        <h2 data-reveal style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(34px, 4.4vw, 54px); line-height: 0.94; letter-spacing: -0.01em; text-transform: uppercase; margin: 0;">Send the spec.<br />We will price it.</h2>
+        <p style="font-size: 16px; line-height: 26px; max-width: 46ch; margin: 22px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent);">Fill in what you know — size, quantity and what the pallet has to carry is enough to start. Sending opens WhatsApp with everything written out; attach a drawing or photo there if you have one. Quotes go out the same working day.</p>
         <div style="margin-top: 32px; padding: 28px; display: grid; gap: 14px; background: #ffffff;">
           <div style="display: flex; gap: 12px; align-items: baseline;">
-            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 78px; flex: none;">Phone</span>
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 84px; flex: none;">Phone</span>
             <a href="tel:+971505974922" style="font-family: var(--font-heading); font-weight: 600; font-size: 20px; letter-spacing: 0.02em;">050 597 4922</a>
           </div>
           <div style="display: flex; gap: 12px; align-items: baseline;">
-            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 78px; flex: none;">Email</span>
-            <a href="mailto:almadhicarpentry@yahoo.com" style="font-size: 15px; word-break: break-all;">almadhicarpentry@yahoo.com</a>
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 84px; flex: none;">WhatsApp</span>
+            <a href="https://wa.me/971505974922?text=Hello%20Al%20Madhi%20Carpentry%2C%20I%20would%20like%20a%20quotation." target="_blank" rel="noopener" style="font-size: 15px;">Message us directly</a>
           </div>
           <div style="display: flex; gap: 12px; align-items: baseline;">
-            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 78px; flex: none;">Yard</span>
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 84px; flex: none;">Yard</span>
             <span style="font-size: 15px; line-height: 22px;">Al Sajaa Industrial Area, Sharjah<br />Monday to Saturday, 06:00 &ndash; 18:00</span>
           </div>
         </div>
@@ -38,10 +38,10 @@
         <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
           <div style="display: grid; gap: 16px; justify-items: start; padding: 30px 0;">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 26px; letter-spacing: 0.02em; text-transform: uppercase; margin: 0;">Your enquiry is ready to send</h3>
-            <p style="font-size: 15px; line-height: 24px; margin: 0; max-width: 44ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">We opened your mail app with every detail filled in. If nothing appeared, WhatsApp us instead &mdash; the same details are one tap away.</p>
+            <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: 26px; letter-spacing: 0.02em; text-transform: uppercase; margin: 0;">WhatsApp is ready to send</h3>
+            <p style="font-size: 15px; line-height: 24px; margin: 0; max-width: 44ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">We opened WhatsApp with every detail filled in — press send there to finish. Got a drawing or photo? Attach it to the same chat. If nothing opened, tap the button below or call us direct.</p>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <a class="btn btn-primary" href="{{ waHref }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 18px;">Send on WhatsApp</a>
+              <a class="btn btn-primary" href="{{ waHref }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 18px;">Open WhatsApp</a>
               <button type="button" class="btn btn-secondary" onClick="{{ reset }}" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 18px;">Write another</button>
             </div>
           </div>
@@ -53,7 +53,6 @@
               <label class="field"><label>Your name *</label><input class="input" name="name" value="{{ vName }}" onChange="{{ set }}" placeholder="Full name" /></label>
               <label class="field"><label>Company</label><input class="input" name="company" value="{{ vCompany }}" onChange="{{ set }}" placeholder="Company name" /></label>
               <label class="field"><label>Phone *</label><input class="input" name="phone" value="{{ vPhone }}" onChange="{{ set }}" placeholder="05x xxx xxxx" /></label>
-              <label class="field"><label>Email</label><input class="input" name="email" value="{{ vEmail }}" onChange="{{ set }}" placeholder="you@company.ae" /></label>
               <label class="field"><label>Product</label>
                 <select class="input" name="product" value="{{ vProduct }}" onChange="{{ set }}">
                   <option>New pallet — heavy duty</option>
@@ -66,32 +65,74 @@
                   <option>Used wood &amp; boards</option>
                   <option>Mixed pallets — bulk lot</option>
                   <option>Made-to-size pallet</option>
+                  <option>Heavy duty pallet</option>
+                  <option>Custom sized pallet</option>
+                  <option>Custom quality pallet</option>
+                  <option>New plastic pallet</option>
+                  <option>Used plastic pallet</option>
+                  <option>Wooden boxes &amp; crates</option>
+                  <option>Home &amp; furniture pallet</option>
                   <option>Wood shavings — animal bedding</option>
                   <option>Wood shavings — workshop absorbent</option>
                   <option>Wood shavings — packing fill</option>
                   <option>Wood shavings — bulk load</option>
+                  <option>Selling wood / pallets to Al Madhi</option>
                   <option>Other / not sure</option>
                 </select>
               </label>
+              <label class="field"><label>New or used</label>
+                <select class="input" name="condition" value="{{ vCondition }}" onChange="{{ set }}">
+                  <option>Not sure yet</option>
+                  <option>New</option>
+                  <option>Used</option>
+                  <option>Either works</option>
+                </select>
+              </label>
+              <label class="field"><label>Dimensions</label><input class="input" name="size" value="{{ vSize }}" onChange="{{ set }}" placeholder="e.g. 100 × 120 cm" /></label>
               <label class="field"><label>Quantity</label><input class="input" name="qty" value="{{ vQty }}" onChange="{{ set }}" placeholder="e.g. 200 pallets / 40 sacks" /></label>
-              <label class="field"><label>Size or spec</label><input class="input" name="size" value="{{ vSize }}" onChange="{{ set }}" placeholder="e.g. 100 × 120 cm, carries 800 kg" /></label>
-              <label class="field"><label>Delivery location</label><input class="input" name="place" value="{{ vPlace }}" onChange="{{ set }}" placeholder="Emirate / area" /></label>
+              <label class="field"><label>Approx. load</label><input class="input" name="load" value="{{ vLoad }}" onChange="{{ set }}" placeholder="e.g. 500 kg, or what it carries" /></label>
+              <label class="field"><label>Entry type</label>
+                <select class="input" name="entry" value="{{ vEntry }}" onChange="{{ set }}">
+                  <option>Not sure</option>
+                  <option>2-way entry</option>
+                  <option>4-way entry</option>
+                </select>
+              </label>
+              <label class="field"><label>Heat treatment</label>
+                <select class="input" name="heat" value="{{ vHeat }}" onChange="{{ set }}">
+                  <option>Not needed</option>
+                  <option>ISPM-15 required — export shipment</option>
+                  <option>Not sure</option>
+                </select>
+              </label>
+              <label class="field"><label>Delivery emirate</label>
+                <select class="input" name="place" value="{{ vPlace }}" onChange="{{ set }}">
+                  <option>Not sure yet</option>
+                  <option>Sharjah</option>
+                  <option>Dubai</option>
+                  <option>Abu Dhabi</option>
+                  <option>Ajman</option>
+                  <option>Umm Al Quwain</option>
+                  <option>Ras Al Khaimah</option>
+                  <option>Fujairah</option>
+                  <option>Collecting from the yard myself</option>
+                </select>
+              </label>
             </div>
-            <label class="field" style="display: block; margin-top: 14px;"><label>Message *</label>
-              <textarea class="input" ref="{{ areaRef }}" name="message" value="{{ vMessage }}" onChange="{{ set }}" rows="7" style="min-height: 150px; line-height: 22px;" placeholder="Tell us what the pallet has to carry, or what the shavings are for."></textarea>
+            <label class="field" style="display: block; margin-top: 14px;"><label>Anything else</label>
+              <textarea class="input" ref="{{ areaRef }}" name="message" value="{{ vMessage }}" onChange="{{ set }}" rows="4" style="min-height: 90px; line-height: 22px;" placeholder="Optional — any other detail. Attach a drawing or photo once WhatsApp opens."></textarea>
             </label>
             <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
               <p style="margin: 12px 0 0; font-size: 14px; color: var(--color-danger-500);">{{ error }}</p>
             </sc-if>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
-              <button type="submit" class="btn btn-primary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 24px; min-height: 48px;">Send enquiry</button>
-              <a class="btn btn-secondary" href="{{ waHref }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; display: inline-flex; gap: 8px; align-items: center;">
+              <button type="submit" class="btn btn-primary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 24px; min-height: 48px; display: inline-flex; gap: 8px; align-items: center;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
-                WhatsApp
-              </a>
-              <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; min-height: 48px;">Call</a>
+                Send on WhatsApp
+              </button>
+              <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; min-height: 48px;">Call instead</a>
             </div>
-            <p style="margin: 14px 0 0; font-size: 13px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Name, phone and message are required. Sending opens your mail app with the enquiry written out &mdash; nothing is stored on this site.</p>
+            <p style="margin: 14px 0 0; font-size: 13px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Name and phone are required. Sending opens WhatsApp with the enquiry written out &mdash; nothing is stored on this site, and we never ask for an email address.</p>
           </form>
         </sc-if>
       </div>
@@ -102,7 +143,7 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:720}}">
 class Component extends DCLogic {
   state = {
-    f: { name: '', company: '', phone: '', email: '', product: 'New pallet — heavy duty', qty: '', size: '', place: '', message: '' },
+    f: { name: '', company: '', phone: '', product: 'New pallet — heavy duty', condition: 'Not sure yet', qty: '', size: '', load: '', entry: 'Not sure', heat: 'Not needed', place: 'Not sure yet', message: '' },
     error: '', sent: false,
   };
 
@@ -135,30 +176,14 @@ class Component extends DCLogic {
   }
 
   prefill(product) {
-    // Do NOT write a Product line here — submit() already prepends one from the
-    // select field. Two sources produced two contradictory lines in the email.
     const p = product;
-    const msg = [
-      'Hello Al Madhi Carpentry,',
-      '',
-      'I would like to request a quotation. Details below.',
-      '',
-      'Quantity: ',
-      'Size / spec: ',
-      'Delivery location: ',
-      '',
-      'Thank you.',
-    ].join('\n');
     this.setState(
-      (s) => ({ sent: false, error: '', f: Object.assign({}, s.f, { product: this.matchOption(p), message: msg }) }),
+      (s) => ({ sent: false, error: '', f: Object.assign({}, s.f, { product: this.matchOption(p) }) }),
       () => {
         this.scrollHere();
         setTimeout(() => {
-          const a = this.area;
-          if (!a) return;
-          a.focus({ preventScroll: true });
-          const at = a.value.indexOf('Quantity: ');
-          if (at > -1) a.setSelectionRange(at + 10, at + 10);
+          const a = this.nameInput;
+          if (a) a.focus({ preventScroll: true });
         }, 520);
       }
     );
@@ -166,13 +191,28 @@ class Component extends DCLogic {
 
   matchOption(p) {
     if (!p) return 'Other / not sure';
-    const opts = ['New pallet — heavy duty', 'New pallet — light duty', 'Standard pallet — 100 × 120 cm', 'Used pallet — good grade', 'Used pallet — economy', 'Old pallets', 'Pallet recycling & repair', 'Used wood & boards', 'Mixed pallets — bulk lot', 'Made-to-size pallet', 'Wood shavings — animal bedding', 'Wood shavings — workshop absorbent', 'Wood shavings — packing fill', 'Wood shavings — bulk load'];
+    const opts = ['New pallet — heavy duty', 'New pallet — light duty', 'Standard pallet — 100 × 120 cm', 'Used pallet — good grade', 'Used pallet — economy', 'Old pallets', 'Pallet recycling & repair', 'Used wood & boards', 'Mixed pallets — bulk lot', 'Made-to-size pallet', 'Heavy duty pallet', 'Custom sized pallet', 'Custom quality pallet', 'New plastic pallet', 'Used plastic pallet', 'Wooden boxes & crates', 'Home & furniture pallet', 'Wood shavings — animal bedding', 'Wood shavings — workshop absorbent', 'Wood shavings — packing fill', 'Wood shavings — bulk load', 'Selling wood / pallets to Al Madhi'];
     return opts.indexOf(p) > -1 ? p : 'Other / not sure';
   }
 
   waText() {
     const f = this.state.f;
-    return ['Hello Al Madhi Carpentry, I would like a quotation.', 'Product: ' + f.product, f.qty ? 'Quantity: ' + f.qty : '', f.size ? 'Size: ' + f.size : '', f.place ? 'Delivery: ' + f.place : '', f.name ? 'Name: ' + f.name : ''].filter(Boolean).join('\n');
+    const lines = [
+      'Hello Al Madhi Carpentry, I would like a quotation.',
+      'Name: ' + (f.name || '—'),
+      f.company ? 'Company: ' + f.company : '',
+      'Phone: ' + (f.phone || '—'),
+      'Product: ' + f.product,
+      f.condition && f.condition !== 'Not sure yet' ? 'New or used: ' + f.condition : '',
+      f.size ? 'Dimensions: ' + f.size : '',
+      f.qty ? 'Quantity: ' + f.qty : '',
+      f.load ? 'Approx. load: ' + f.load : '',
+      f.entry && f.entry !== 'Not sure' ? 'Entry type: ' + f.entry : '',
+      f.heat && f.heat !== 'Not needed' ? 'Heat treatment: ' + f.heat : '',
+      f.place && f.place !== 'Not sure yet' ? 'Delivery: ' + f.place : '',
+      f.message ? 'Notes: ' + f.message : '',
+    ];
+    return lines.filter(Boolean).join('\n');
   }
 
   renderVals() {
@@ -184,25 +224,23 @@ class Component extends DCLogic {
       notSent: !this.state.sent,
       error: this.state.error,
       waHref: 'https://wa.me/971505974922?text=' + encodeURIComponent(this.waText()),
-      vName: f.name, vCompany: f.company, vPhone: f.phone, vEmail: f.email,
-      vProduct: f.product, vQty: f.qty, vSize: f.size, vPlace: f.place, vMessage: f.message,
+      vName: f.name, vCompany: f.company, vPhone: f.phone,
+      vProduct: f.product, vCondition: f.condition, vQty: f.qty, vSize: f.size,
+      vLoad: f.load, vEntry: f.entry, vHeat: f.heat, vPlace: f.place, vMessage: f.message,
       set: (e) => {
         const { name, value } = e.target;
+        if (name === 'name') this.nameInput = e.target;
         this.setState((s) => ({ error: '', f: Object.assign({}, s.f, { [name]: value }) }));
       },
       reset: () => this.setState({ sent: false, error: '' }),
       submit: (e) => {
         e.preventDefault();
-        if (!f.name.trim() || !f.phone.trim() || !f.message.trim()) {
-          this.setState({ error: 'Please add your name, a phone number and a message so we can price it.' });
+        if (!f.name.trim() || !f.phone.trim()) {
+          this.setState({ error: 'Please add your name and a phone number so we can reach you with the price.' });
           return;
         }
-        const body = [
-          'Name: ' + f.name, 'Company: ' + (f.company || '—'), 'Phone: ' + f.phone, 'Email: ' + (f.email || '—'),
-          'Product: ' + f.product, 'Quantity: ' + (f.qty || '—'), 'Size / spec: ' + (f.size || '—'),
-          'Delivery location: ' + (f.place || '—'), '', f.message,
-        ].join('\n');
-        window.location.href = 'mailto:almadhicarpentry@yahoo.com?subject=' + encodeURIComponent('Quotation request — ' + f.name) + '&body=' + encodeURIComponent(body);
+        const href = 'https://wa.me/971505974922?text=' + encodeURIComponent(this.waText());
+        window.open(href, '_blank', 'noopener');
         this.setState({ sent: true });
       },
     };
