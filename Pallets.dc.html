@@ -53,7 +53,7 @@
   button[aria-current='true'] { background: var(--color-accent-600) !important; color: #fff !important; border-color: var(--color-accent-600) !important; }
 </style>
 </helmet>
-<dc-import style="position: sticky; top: 0; z-index: 60;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
+<dc-import style="position: sticky; top: 16px; z-index: 100;" name="SiteNav" active="pallets" hint-size="100%,79px"></dc-import>
 
 <main>
   <section style="padding: clamp(16px, 2vw, 24px) 0 0;">
@@ -76,7 +76,7 @@
     </div>
   </section>
 
-  <section style="position: sticky; top: 79px; z-index: 40; background: color-mix(in srgb, #ffffff 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);">
+  <section style="position: sticky; top: 96px; z-index: 40; background: color-mix(in srgb, #ffffff 88%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);">
     <div style="padding: 14px clamp(16px, 3vw, 40px); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);">
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
         <button type="button" onClick="{{ catAll }}" aria-current="{{ isAll }}" class="btn btn-secondary" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 11px 18px; min-height: 44px; font-size: 13.5px;">All &middot; 9</button>

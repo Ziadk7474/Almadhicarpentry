@@ -65,7 +65,10 @@
          users came to see), THEN the CTA buttons underneath it — not two
          buttons you have to scroll past to reach the model. */
       grid-template-columns: 1fr; grid-template-areas: "content" "visual" "ctas" "caps";
-      padding: clamp(76px, 16vw, 92px) clamp(16px, 4vw, 24px) 24px; height: auto;
+      /* min bound raised 76->104px: the floating capsule nav sits 16px off
+         the viewport top plus its own ~56-64px height, so anything less
+         let the hero's own badge/eyebrow line run up underneath it. */
+      padding: clamp(104px, 20vw, 122px) clamp(16px, 4vw, 24px) 24px; height: auto;
       row-gap: 0;
     }
     [data-pallet-hero] { height: auto; min-height: 0; }
@@ -201,8 +204,8 @@
 
   /* Leader lines only (no text) — the text now lives in real HTML cards. */
   [data-pallet-leaders] { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 3; }
-  [data-pallet-leaders] line { stroke: var(--color-line); stroke-width: 1.1; opacity: 0; transition: opacity 0.3s ease; }
-  [data-pallet-leaders] circle { fill: var(--color-accent); opacity: 0; transition: opacity 0.3s ease; }
+  [data-pallet-leaders] line { stroke: var(--color-line); stroke-width: 0.6; opacity: 0; transition: opacity 0.35s ease; }
+  [data-pallet-leaders] circle { fill: var(--color-accent); opacity: 0; transition: opacity 0.35s ease; }
   [data-pallet-leaders].is-visible line, [data-pallet-leaders].is-visible circle { opacity: 0.8; }
   [data-pallet-leaders].is-visible circle { opacity: 1; }
 
@@ -249,12 +252,22 @@
     display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 8px 13px;
     background: #ffffff; border: 1px solid var(--color-divider); border-radius: 999px;
     font-family: var(--font-heading); font-weight: 700; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
-    color: var(--color-text); cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    color: var(--color-text); cursor: pointer; transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s cubic-bezier(0.2,0.7,0.2,1);
   }
   [data-pallet-toolbar] button svg { width: 14px; height: 14px; flex: none; }
   [data-pallet-toolbar] button:hover { border-color: var(--color-accent); color: var(--color-accent-700); }
+  [data-pallet-toolbar] button:active { transform: scale(0.93); transition-duration: 0.09s; }
   [data-pallet-toolbar] button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-  [data-pallet-toolbar] button[aria-pressed="true"] { background: var(--color-accent-100); border-color: var(--color-accent-600); color: var(--color-accent-700); }
+  /* Pressed feedback so switching Explode/Dimensions reads as a deliberate
+     action, not a silent state flip — a quick scale pulse on the exact
+     frame the toggle lands (removed again automatically, see the
+     `animation` — not `transition` — so it can't collide with the
+     transform transition above, which still owns the :active press). */
+  [data-pallet-toolbar] button[aria-pressed="true"] { background: var(--color-accent-100); border-color: var(--color-accent-600); color: var(--color-accent-700); animation: palletTogglePulse 0.28s cubic-bezier(0.2,0.7,0.2,1); }
+  @keyframes palletTogglePulse { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    [data-pallet-toolbar] button[aria-pressed="true"] { animation: none; }
+  }
   /* Narrow desktop (small laptop / tablet landscape, e.g. 1024x768): the
      visual column is too narrow for three full-label pill buttons to fit
      on one row at the wide-desktop size, so — same fix as mobile below —
@@ -372,9 +385,9 @@
         <canvas ref="{{ canvasRef }}" tabindex="0" role="img" aria-label="Interactive 3D model of a wooden pallet. Use arrow keys or drag to rotate."></canvas>
         <img data-pallet-fallback ref="{{ fallbackRef }}" src="assets/pallet-studio-new-a.png" alt="A new wooden pallet built at the Al Sajaa works — standard 1200 by 1000 by 150mm block pallet with top deck boards, cross bars, support blocks and bottom boards" />
         <svg data-pallet-leaders ref="{{ leadersRef }}" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <line ref="{{ leaderRefs.top }}" /><circle ref="{{ leaderRefs.topDot }}" r="3" />
-          <line ref="{{ leaderRefs.block }}" /><circle ref="{{ leaderRefs.blockDot }}" r="3" />
-          <line ref="{{ leaderRefs.bar }}" /><circle ref="{{ leaderRefs.barDot }}" r="3" />
+          <line ref="{{ leaderRefs.top }}" /><circle ref="{{ leaderRefs.topDot }}" r="2.2" />
+          <line ref="{{ leaderRefs.block }}" /><circle ref="{{ leaderRefs.blockDot }}" r="2.2" />
+          <line ref="{{ leaderRefs.bar }}" /><circle ref="{{ leaderRefs.barDot }}" r="2.2" />
         </svg>
         <svg data-pallet-dims ref="{{ dimsRef }}" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <line class="dim-line" ref="{{ dimRefs.width }}" />
@@ -855,8 +868,13 @@ class Component extends DCLogic {
   // around the model) keeps the annotations clear without touching the
   // DOM/CSS layout at all.
   _narrowDesktopLayout() { return window.matchMedia('(min-width: 901px) and (max-width: 1180px)').matches; }
-  _assembledMargin() { return this._mobileLayout() ? 0.68 : this._narrowDesktopLayout() ? 1.08 : 0.86; }
-  _explodedMargin() { return this._mobileLayout() ? 0.8 : this._narrowDesktopLayout() ? 1.2 : 0.98; }
+  // Wide-desktop margin lowered ~19% (0.86 -> 0.72) so the pallet reads as
+  // roughly 20% larger and reads as the hero's main visual weight, per the
+  // brief. Narrow-desktop/mobile tiers are untouched — those margins are
+  // load-bearing for the annotation-card clearance fix (see _updateCards'
+  // colX calc), and re-tuning them risks reintroducing that overlap.
+  _assembledMargin() { return this._mobileLayout() ? 0.68 : this._narrowDesktopLayout() ? 1.08 : 0.72; }
+  _explodedMargin() { return this._mobileLayout() ? 0.8 : this._narrowDesktopLayout() ? 1.2 : 0.82; }
 
   _setCameraSpherical(theta, phi, radius) {
     const THREE = this._THREE;

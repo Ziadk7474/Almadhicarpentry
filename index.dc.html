@@ -192,7 +192,7 @@
   }
 </style>
 </helmet>
-<dc-import style="position: fixed; top: 0; left: 0; right: 0; z-index: 60;" name="SiteNav" active="home" hint-size="100%,76px"></dc-import>
+<dc-import style="position: fixed; top: 16px; left: 0; right: 0; z-index: 100;" name="SiteNav" active="home" hint-size="100%,76px"></dc-import>
 
 <main>
   <dc-import name="Hero3D" hint-size="100%,720px"></dc-import>
@@ -272,6 +272,88 @@
         <span style="display: flex; flex-direction: column; gap: 6px;"><strong style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1; color: var(--color-accent);">7</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--color-neutral-700);">Emirates covered</span></span>
         <span style="display: flex; flex-direction: column; gap: 6px;"><strong style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1; color: var(--color-accent);">Same day</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--color-neutral-700);">Quote turnaround</span></span>
         <span style="display: flex; flex-direction: column; gap: 6px;"><strong style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(28px, 2.6vw, 38px); line-height: 1; font-feature-settings: 'tnum' 1; color: var(--color-accent);">Factory</strong><span style="font-size: 12.5px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--color-neutral-700);">Direct, no middleman</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0 0 clamp(20px, 2.6vw, 36px);" id="finder">
+    <div style="padding: 0 clamp(16px, 3vw, 40px);">
+      <div data-reveal style="background: var(--color-neutral-900); color: #ffffff; padding: clamp(28px, 3.6vw, 52px) clamp(24px, 3.4vw, 48px);">
+        <span class="eyebrow" style="margin: 0 0 14px; color: var(--color-accent);"><i class="eyebrow-dash" style="background: var(--color-accent);"></i>Not sure where to start?</span>
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: clamp(22px, 2.8vw, 34px);">
+          <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.4vw, 46px); line-height: 1; letter-spacing: -0.005em; text-transform: uppercase; margin: 0; color: #ffffff;">Find the right pallet</h2>
+          <p style="font-size: 15px; line-height: 23px; max-width: 40ch; margin: 0; color: color-mix(in srgb, #ffffff 72%, transparent);">Answer a few quick questions and we will point you to the right product &mdash; then hand you straight to WhatsApp with everything filled in.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;">
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">What are you moving?</label>
+            <select class="input" value="{{ fMoving }}" onChange="{{ setFMoving }}">
+              <option>General cargo</option>
+              <option>Heavy machinery or steel</option>
+              <option>Food &amp; beverage</option>
+              <option>Chemicals</option>
+              <option>Furniture or joinery</option>
+              <option>Fragile goods or export machinery</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">Approximate load</label>
+            <select class="input" value="{{ fLoad }}" onChange="{{ setFLoad }}">
+              <option>Light &mdash; under 300 kg</option>
+              <option>Medium &mdash; 300&ndash;800 kg</option>
+              <option>Heavy &mdash; 800 kg or more</option>
+              <option>Not sure</option>
+            </select>
+          </label>
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">Size</label>
+            <select class="input" value="{{ fSize }}" onChange="{{ setFSize }}">
+              <option>Standard 100 &times; 120 cm</option>
+              <option>Custom size</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">New or used</label>
+            <select class="input" value="{{ fCondition }}" onChange="{{ setFCondition }}">
+              <option>New</option>
+              <option>Used</option>
+              <option>No preference</option>
+            </select>
+          </label>
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">Local or export</label>
+            <select class="input" value="{{ fUse }}" onChange="{{ setFUse }}">
+              <option>Local UAE delivery</option>
+              <option>Export shipment</option>
+            </select>
+          </label>
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">Quantity</label>
+            <input class="input" value="{{ fQty }}" onChange="{{ setFQty }}" placeholder="e.g. 200 pallets" />
+          </label>
+          <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">Delivery emirate</label>
+            <select class="input" value="{{ fEmirate }}" onChange="{{ setFEmirate }}">
+              <option>Not sure yet</option>
+              <option>Sharjah</option>
+              <option>Dubai</option>
+              <option>Abu Dhabi</option>
+              <option>Ajman</option>
+              <option>Umm Al Quwain</option>
+              <option>Ras Al Khaimah</option>
+              <option>Fujairah</option>
+            </select>
+          </label>
+        </div>
+        <div style="margin-top: clamp(22px, 2.8vw, 32px); padding: clamp(20px, 2.6vw, 28px); background: color-mix(in srgb, #ffffff 7%, transparent); border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <div>
+            <span style="display: block; font-size: 11.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accent-400);">Based on your answers</span>
+            <strong style="display: block; margin-top: 8px; font-family: var(--font-heading); font-weight: 700; font-size: clamp(22px, 2.4vw, 28px); text-transform: uppercase; color: #ffffff;">{{ fRecommendation }}</strong>
+            <p style="font-size: 13.5px; line-height: 21px; margin: 8px 0 0; max-width: 56ch; color: color-mix(in srgb, #ffffff 66%, transparent);">Load capacity depends on timber thickness, deck pattern, support structure and intended use &mdash; share these answers with us and we will recommend the exact build.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a class="btn btn-secondary" href="{{ fRecommendationLink }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 13px 20px; min-height: 46px; border-color: color-mix(in srgb, #ffffff 40%, transparent); color: #ffffff;">See this product</a>
+            <a class="btn btn-primary" href="{{ fWaHref }}" target="_blank" rel="noopener" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 13px 20px; min-height: 46px; display: inline-flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
+              WhatsApp this spec
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -621,6 +703,7 @@
           <span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700);">{{ stepMeta }}</span>
           <h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 3vw, 38px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; margin: 16px 0 0;">{{ stepTitle }}</h3>
           <p style="font-size: 16.5px; line-height: 28px; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">{{ stepBody }}</p>
+          <noscript><span style="font-size: 11.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-accent-700); display: block; margin-top: 16px;">Step 01 &middot; You</span><h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(28px, 3vw, 38px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; margin: 4px 0 0;">Send your specs</h3><p style="font-size: 16.5px; line-height: 28px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Size, quantity and what the pallet has to carry. A photo of your current pallet works just as well as a drawing. For shavings, tell us the volume and whether you need bedding grade or bulk.</p><h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(24px, 2.6vw, 32px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; margin: 28px 0 0;">We quote the same day</h3><p style="font-size: 15.5px; line-height: 26px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">We price it against what the wood actually costs, not a list.</p><h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(24px, 2.6vw, 32px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; margin: 28px 0 0;">Production starts</h3><p style="font-size: 15.5px; line-height: 26px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">Once you confirm, your order is scheduled on the saw floor and you get a completion date.</p><h3 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(24px, 2.6vw, 32px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; margin: 28px 0 0;">Delivered to you</h3><p style="font-size: 15.5px; line-height: 26px; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 70%, transparent);">We deliver to Sharjah, Dubai and the rest of the UAE on our own transport.</p></noscript>
         </div>
       </div>
     </div>
@@ -697,8 +780,31 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { step: 0 };
+  state = {
+    step: 0,
+    finder: {
+      moving: 'General cargo', load: 'Not sure', size: 'Standard 100 × 120 cm',
+      condition: 'No preference', use: 'Local UAE delivery', qty: '', emirate: 'Not sure yet',
+    },
+  };
   quote(product) { window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product } })); }
+
+  // Rule-based category pointer only — never a load-capacity calculator.
+  // Heavy load/machinery wins over everything else since it's the one
+  // answer that actually changes which build is safe to recommend at all;
+  // used/custom/furniture/export-fragile are then checked in the order a
+  // yard foreman would actually prioritise them.
+  recommendFinder() {
+    const f = this.state.finder;
+    const heavy = f.load === 'Heavy — 800 kg or more' || f.moving === 'Heavy machinery or steel';
+    if (heavy) return { name: 'Heavy Duty Pallets', link: 'Heavy-Duty-Pallets.dc.html' };
+    if (f.condition === 'Used') return { name: 'Used Pallets', link: 'Used-Pallets.dc.html' };
+    if (f.size === 'Custom size') return { name: 'Custom Sized Pallets', link: 'Custom-Sized-Pallets.dc.html' };
+    if (f.moving === 'Furniture or joinery') return { name: 'Home & Furniture Pallets', link: 'Home-Furniture-Pallets.dc.html' };
+    if (f.moving === 'Fragile goods or export machinery') return { name: 'Wooden Boxes & Crates', link: 'Boxes-Crates.dc.html' };
+    return { name: 'New Pallets — Standard', link: 'New-Pallets.dc.html' };
+  }
+
   renderVals() {
     const steps = [
       { meta: 'Step 01 · You', title: 'Send your specs', body: 'Size, quantity and what the pallet has to carry. A photo of your current pallet works just as well as a drawing. For shavings, tell us the volume and whether you need bedding grade or bulk.' },
@@ -726,6 +832,36 @@ class Component extends DCLogic {
       quoteBoxes: () => this.quote('Wooden boxes & crates'),
       quoteHome: () => this.quote('Home & furniture pallet'),
       quoteSell: () => this.quote('Selling wood / pallets to Al Madhi'),
+      ...this.finderVals(),
+    };
+  }
+
+  finderVals() {
+    const f = this.state.finder;
+    const rec = this.recommendFinder();
+    const setF = (key) => (e) => this.setState((s) => ({ finder: Object.assign({}, s.finder, { [key]: e.target.value }) }));
+    const waLines = [
+      'Hello Al Madhi Carpentry, I used the "Find the right pallet" tool and would like a quotation.',
+      'Recommended: ' + rec.name,
+      'Moving: ' + f.moving,
+      'Approx. load: ' + f.load,
+      'Size: ' + f.size,
+      'New or used: ' + f.condition,
+      'Local or export: ' + f.use,
+      f.qty ? 'Quantity: ' + f.qty : '',
+      f.emirate !== 'Not sure yet' ? 'Delivery: ' + f.emirate : '',
+    ].filter(Boolean);
+    return {
+      fMoving: f.moving, setFMoving: setF('moving'),
+      fLoad: f.load, setFLoad: setF('load'),
+      fSize: f.size, setFSize: setF('size'),
+      fCondition: f.condition, setFCondition: setF('condition'),
+      fUse: f.use, setFUse: setF('use'),
+      fQty: f.qty, setFQty: setF('qty'),
+      fEmirate: f.emirate, setFEmirate: setF('emirate'),
+      fRecommendation: rec.name,
+      fRecommendationLink: rec.link,
+      fWaHref: 'https://wa.me/971505974922?text=' + encodeURIComponent(waLines.join('\n')),
     };
   }
 }

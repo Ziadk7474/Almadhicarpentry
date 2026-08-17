@@ -18,53 +18,50 @@
   body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased; }
   /* Page-opening transition — every navigation in this site is a full page
      load (there's no SPA router), so a body-level fade+settle is what a
-     "page open" animation actually means here. Pure CSS (no JS dependency,
-     no risk of a stuck opacity:0 if a script is slow), short enough (280ms)
-     that it reads as "the page arrived smoothly" rather than a deliberate
-     delay, and independent of the finer per-element reveals below it —
-     those still play out on their own schedule underneath this one. */
+     "page open" animation actually means here. */
+  /* opacity-only — a translateY was here too, but ANY computed transform
+     value other than the literal keyword `none` (yes, even a completed
+     animation resting on translateY(0)) establishes a new containing block
+     for this page's position:fixed header, silently turning it into
+     position:absolute relative to body instead of the viewport (it would
+     then scroll away with the page instead of staying pinned). Dropping
+     the transform avoids that entirely; fill-mode stays `both` so opacity
+     correctly holds at 1 once the fade-in completes. */
   body { opacity: 0; animation: pageIn 0.28s cubic-bezier(0.16,1,0.3,1) 0.02s both; }
-  @keyframes pageIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
   @media (prefers-reduced-motion: reduce) {
     body { opacity: 1; animation: none; }
   }
+  /* Mobile menu open: background scroll lock (class toggled on <html> from JS). */
+  html.amc-menu-open, html.amc-menu-open body { overflow: hidden; overscroll-behavior: contain; }
+
   img { display: block; max-width: 100%; }
   button, summary, [role='button'] { cursor: pointer; }
   :focus-visible { outline: 2px solid var(--color-accent-700); outline-offset: 3px; }
 
   /* premium button treatment, applied site-wide */
-  .btn { position: relative; overflow: hidden; transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.28s ease; }
+  .btn { position: relative; overflow: hidden; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.18s ease; }
   .btn:hover { transform: translateY(-2px); }
   .btn:active { transform: translateY(0) scale(0.96); transition-duration: 0.09s; }
   .btn-primary { background: var(--color-accent-600); border-color: var(--color-accent-600); color: #fff; box-shadow: 0 1px 2px rgba(36,31,27,0.10), 0 10px 22px -14px rgba(36,31,27,0.55); }
   .btn-primary:hover { background: var(--color-accent-700); border-color: var(--color-accent-700); box-shadow: 0 2px 5px rgba(36,31,27,0.12), 0 18px 34px -16px rgba(36,31,27,0.55); }
   .btn-secondary { background: transparent; border: 1px solid var(--color-info-500); color: var(--color-info-700); }
   .btn-secondary:hover { background: var(--color-info-100); border-color: var(--color-info-700); color: var(--color-info-800); box-shadow: 0 12px 26px -18px rgba(36,31,27,0.4); }
+  .btn .arrow, .btn svg { transition: transform 0.18s cubic-bezier(0.2,0.7,0.2,1); }
+  .btn:hover .arrow, .btn:hover svg { transform: translateX(3px); }
 
   /* Scroll reveal is progressive enhancement: content ships visible and is only
-     hidden once the logic class adds the js-reveal flag to the root element.
-     If the observer never fires, nothing is ever hidden.
-     Direction is set per-element via the attribute's VALUE — bare `data-reveal`
-     or `data-reveal="up"` rises in (the default, used everywhere already);
-     `data-reveal="down"/"left"/"right"` settle in from the other three sides.
-     Attribute-value selectors don't require every existing usage to change —
-     the bare form still matches [data-reveal] and falls through to the
-     default rule. Sped up from the original 0.75s to 0.4s: this is a
-     scroll-triggered reveal seen dozens of times per session, not a one-off
-     modal entrance, so it needs to read as immediate, not deliberate. */
-  html.js-reveal [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1) var(--d, 0ms), transform 0.4s cubic-bezier(0.16,1,0.3,1) var(--d, 0ms); }
-  html.js-reveal [data-reveal="down"] { transform: translateY(-20px); }
-  html.js-reveal [data-reveal="left"] { transform: translateX(-30px); }
-  html.js-reveal [data-reveal="right"] { transform: translateX(30px); }
+     hidden once the logic class adds the js-reveal flag to the root element. */
+  html.js-reveal [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1) var(--d, 0ms), transform 0.45s cubic-bezier(0.4,0,0.2,1) var(--d, 0ms); }
+  html.js-reveal [data-reveal="down"] { transform: translateY(-18px); }
+  html.js-reveal [data-reveal="left"] { transform: translateX(-26px); }
+  html.js-reveal [data-reveal="right"] { transform: translateX(26px); }
   html.js-reveal [data-reveal].is-in { opacity: 1; transform: none; }
 
-  /* Mask wipe — image panels uncover upward. Also additive: without .js-reveal
-     the clip is absent and the picture simply shows. */
-  html.js-reveal [data-wipe] { clip-path: inset(0 0 100% 0); transition: clip-path 0.65s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms); }
+  html.js-reveal [data-wipe] { clip-path: inset(0 0 100% 0); transition: clip-path 0.55s cubic-bezier(0.4,0,0.2,1) var(--d, 0ms); }
   html.js-reveal [data-wipe].is-in { clip-path: inset(0 0 0 0); }
 
-  /* Per-line text stagger. Lines are already in the markup as block spans. */
-  html.js-reveal [data-lines] > span { display: block; opacity: 0; transform: translateY(0.42em); transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+  html.js-reveal [data-lines] > span { display: block; opacity: 0; transform: translateY(0.42em); transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1); }
   html.js-reveal [data-lines] > span:nth-child(2) { transition-delay: 0.06s; }
   html.js-reveal [data-lines] > span:nth-child(3) { transition-delay: 0.12s; }
   html.js-reveal [data-lines].is-in > span { opacity: 1; transform: none; }
@@ -79,113 +76,33 @@
   [data-marquee]:hover > div { animation-play-state: paused; }
   @keyframes amc-marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-100%,0,0); } }
 
-  /* Buttons get a light sweep on hover */
-  .btn-primary::after { content: ''; position: absolute; inset: 0 auto 0 -60%; width: 45%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent); transform: translateX(0); transition: transform 0.75s cubic-bezier(0.2,0.7,0.2,1); pointer-events: none; }
+  .btn-primary::after { content: ''; position: absolute; inset: 0 auto 0 -60%; width: 45%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent); transform: translateX(0); transition: transform 0.7s cubic-bezier(0.2,0.7,0.2,1); pointer-events: none; }
   .btn-primary:hover::after { transform: translateX(360%); }
 
-  /* card + image micro-interactions — a hairline gold-orange top edge lifts
-     in on hover, echoing the shield mark's gold line without adding weight
-     at rest (border-top is present but transparent, so no layout shift). */
-  [data-card] { position: relative; border-top: 2px solid transparent; transition: transform 0.4s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.4s ease, border-color 0.35s ease; box-shadow: 0 1px 2px rgba(36,31,27,0.04), 0 10px 26px -18px rgba(36,31,27,0.30); }
-  html.js-reveal [data-card][data-reveal] { transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1) var(--d, 0ms), transform 0.4s cubic-bezier(0.16,1,0.3,1) var(--d, 0ms), box-shadow 0.4s ease; }
-  html.js-reveal [data-card][data-reveal].is-in { transition: opacity 0.35s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease; }
+  [data-card] { position: relative; border-top: 2px solid transparent; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease, border-color 0.3s ease; box-shadow: 0 1px 2px rgba(36,31,27,0.04), 0 10px 26px -18px rgba(36,31,27,0.30); }
+  html.js-reveal [data-card][data-reveal] { transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1) var(--d, 0ms), transform 0.45s cubic-bezier(0.4,0,0.2,1) var(--d, 0ms), box-shadow 0.3s ease; }
+  html.js-reveal [data-card][data-reveal].is-in { transition: opacity 0.35s ease, transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s ease; }
   [data-card]:hover { transform: translateY(-5px); box-shadow: 0 3px 6px rgba(36,31,27,0.06), 0 30px 56px -26px rgba(36,31,27,0.38); border-top-color: var(--color-accent-500); }
-  /* Interactive cards (the product-catalog buttons) get press feedback too —
-     without it a clickable card feels inert compared to the site's buttons. */
   a[data-card]:active, button[data-card]:active { transform: translateY(-2px) scale(0.985); transition-duration: 0.12s; }
   [data-zoom] { overflow: hidden; }
-  [data-zoom] img { transition: transform 0.9s cubic-bezier(0.2,0.7,0.2,1); }
-  [data-card]:hover [data-zoom] img, [data-zoom]:hover img { transform: scale(1.055); }
+  [data-zoom] img { transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  [data-card]:hover [data-zoom] img, [data-zoom]:hover img { transform: scale(1.05); }
 
-  /* link sweep in the header. --nav-color/--nav-color-strong default to the
-     normal light-header values and are overridden per-instance (see the
-     overlay header on the homepage) via inline custom properties on the
-     <nav> ancestor — custom properties inherit through the cascade the same
-     way regardless of selector specificity, so this doesn't disturb the
-     hover/current-page rules below (an inline `color` on each link would). */
-  [data-nav] { position: relative; color: var(--nav-color, color-mix(in srgb, var(--color-text) 70%, transparent)); transition: color 0.22s ease; }
-  [data-nav]::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--color-accent); transform: scaleX(0); transform-origin: 100% 50%; transition: transform 0.34s cubic-bezier(0.2,0.7,0.2,1); }
+  /* Specification rows (used on product pages) highlight on hover — shared
+     rule here so every page gets it without repeating the CSS. */
+  .spec-item, [data-spec-row] { transition: background-color 0.18s ease; }
+  .spec-item:hover, [data-spec-row]:hover { background: var(--color-neutral-100); }
 
-  /* Header entrance: each item fades/settles in on its own stagger delay
-     (--d, set per-item inline) the moment it mounts — a fresh full-page
-     load in this multi-page site, every single time, which is the point.
-     Uses `animation` rather than `transition` specifically so it can't
-     collide with the transition shorthand already declared on [data-nav]
-     (color) and .btn (background/color/border/transform/box-shadow) —
-     transition is a single property per element; a second rule setting it
-     would silently replace the first instead of merging. animation is a
-     wholly separate mechanism, so this layers on top of both without
-     touching either. Opacity + a small translateY only, a strong ease-out
-     so it reads as responsive, ~250ms so several items in quick succession
-     don't feel sluggish. Pointer events are never disabled, so every item
-     stays clickable throughout the reveal. */
-  @keyframes navItemIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  [data-nav-in] {
-    opacity: 0;
-    animation: navItemIn 0.42s cubic-bezier(0.23,1,0.32,1) both;
-    animation-delay: var(--d, 0ms);
-  }
+  /* Native <details> open smoothly (grid-rows trick — animatable, no JS,
+     no layout jump) instead of the browser's default instant snap. */
+  details > summary { transition: color 0.18s ease; }
+  details[data-smooth] { display: grid; grid-template-rows: auto 0fr; transition: grid-template-rows 0.32s cubic-bezier(0.4,0,0.2,1); }
+  details[data-smooth][open] { grid-template-rows: auto 1fr; }
+  details[data-smooth] > summary { grid-row: 1; }
+  details[data-smooth] > :not(summary) { overflow: hidden; }
   @media (prefers-reduced-motion: reduce) {
-    [data-nav-in] { animation: none; opacity: 1; }
+    details[data-smooth] { transition: none; }
   }
-
-  /* Global mobile stacking for fixed-ratio two-column layouts (image+text,
-     figure+copy, a stat panel beside a phone number, etc.) — a shared rule
-     here (this stylesheet loads on every page) instead of duplicating the
-     same media query per file. Auto-fit/auto-fill grids already collapse on
-     their own without this; this is specifically for the ones using a fixed
-     ratio (5fr/7fr, 1.3fr/1fr, and similar) that never had a mobile
-     breakpoint at all before and were squeezing both columns into narrow
-     screens instead of stacking. */
-  @media (max-width: 860px) {
-    [data-split] { grid-template-columns: 1fr !important; }
-  }
-  [data-nav]:hover { color: var(--nav-color-strong, var(--color-text)); }
-  [data-nav]:hover::after { transform: scaleX(1); transform-origin: 0 50%; }
-  [data-nav][aria-current='page'] { color: var(--nav-color-strong, var(--color-text)); }
-  [data-nav][aria-current='page']::after { transform: scaleX(1); }
-
-  /* Our Products mega-menu — a plain button (not a link) so it never
-     navigates on click, only toggles. transform-origin sits at the top so
-     it reads as unfolding from the trigger, not popping from nowhere; the
-     0.94 starting scale + opacity (never scale(0)) plus a short 180ms
-     ease-out keeps it feeling immediate, per the dropdown timing band. */
-  [data-products-trigger] { display: inline-flex; align-items: center; gap: 5px; background: none; border: 0; font: inherit; padding: 0; }
-  [data-products-trigger] svg { transition: transform 0.22s cubic-bezier(0.2,0.7,0.2,1); }
-  [data-products-trigger][aria-expanded='true'] svg { transform: rotate(180deg); }
-  [data-mega] {
-    position: absolute; top: calc(100% + 14px); left: 50%; transform: translate(-50%, -8px) scale(0.97);
-    width: min(760px, calc(100vw - 32px));
-    background: #ffffff; border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
-    box-shadow: 0 24px 60px -24px rgba(36,31,27,0.35), 0 4px 14px -6px rgba(36,31,27,0.12);
-    padding: clamp(22px, 2.6vw, 34px);
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px);
-    opacity: 0; pointer-events: none;
-    transform-origin: 50% 0%;
-    transition: opacity 0.18s cubic-bezier(0.16,1,0.3,1), transform 0.18s cubic-bezier(0.16,1,0.3,1), visibility 0.18s;
-    visibility: hidden;
-    z-index: 5;
-  }
-  [data-mega].is-open { opacity: 1; pointer-events: auto; visibility: visible; transform: translate(-50%, 0) scale(1); }
-  [data-mega-col] { display: flex; flex-direction: column; gap: 2px; }
-  [data-mega-thumb] { display: block; width: 100%; height: 78px; margin-bottom: 12px; background-color: var(--color-neutral-200); background-size: cover; background-position: center; }
-  [data-mega-col] > span:not([data-mega-thumb]) { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 8px; }
-  [data-mega-item] { display: flex; flex-direction: column; gap: 1px; padding: 8px 9px; margin: 0 -9px; color: var(--color-text); border-radius: 3px; transition: background-color 0.16s ease, transform 0.12s cubic-bezier(0.2,0.7,0.2,1); }
-  [data-mega-item]:hover { background: var(--color-neutral-100); }
-  [data-mega-item]:active { background: var(--color-neutral-200); transform: scale(0.98); }
-  [data-mega-item] > strong { font-size: 14px; font-weight: 500; }
-  [data-mega-item] > em { font-style: normal; font-size: 12px; color: color-mix(in srgb, var(--color-text) 58%, transparent); }
-  [data-mega-item][data-highlight] > strong { color: var(--color-accent-700); }
-  @media (prefers-reduced-motion: reduce) {
-    [data-mega], [data-products-trigger] svg { transition: none; }
-  }
-  @media (max-width: 1100px) {
-    [data-mega] { display: none; }
-  }
-
   summary::-webkit-details-marker { display: none; }
   summary::marker { content: ''; }
 
@@ -196,105 +113,297 @@
     [data-parallax] img { transform: none !important; }
     [data-marquee] > div { animation: none !important; }
     .btn-primary::after { display: none; }
-    .btn, [data-card], [data-zoom] img, [data-nav]::after { transition: none; }
+    .btn, [data-card], [data-zoom] img { transition: none; }
     .btn:hover, [data-card]:hover { transform: none; }
-    [data-card]:active, [data-mega-item]:active { transform: none; }
+    [data-card]:active { transform: none; }
   }
+
+  /* ============================================================
+     Floating capsule navigation
+     ============================================================
+     The page-level wrapper (each page's own <dc-import style="position:
+     sticky/fixed; top:16px"> around this component) is what actually
+     floats/sticks — this component only styles what's INSIDE it. That
+     wrapper reserves real flow height equal to its natural content size
+     (this bar), so page content below it is never covered; the visual
+     "floating" look comes from the 16px top offset plus this bar's own
+     pill shape sitting on transparent background around it. */
+  /* margin-top (not the sticky wrapper's own `top` offset — that only takes
+     effect once scrolled) is what gives the capsule its floating gap while
+     the page is still at rest/scrolled to the very top. Matches the parent
+     page's own `top: 16px` (`12px` on mobile) sticky offset exactly, so
+     there is zero visual jump the moment it starts sticking. */
+  [data-capsule-row] { padding: 0 clamp(12px, 3vw, 24px); margin-top: 16px; }
+  [data-capsule] {
+    position: relative; width: min(93vw, 1150px); margin: 0 auto; height: 64px;
+    border-radius: 999px; background: #ffffff;
+    border: 1px solid var(--color-accent-200);
+    box-shadow: 0 16px 34px -18px rgba(36,31,27,0.35), 0 3px 10px -4px rgba(98,45,0,0.14);
+    display: flex; align-items: center; gap: clamp(6px, 1.4vw, 18px);
+    padding: 0 8px 0 8px;
+    transition: height 0.22s cubic-bezier(0.4,0,0.2,1), box-shadow 0.22s ease;
+  }
+  [data-capsule].is-scrolled { height: 56px; box-shadow: 0 10px 26px -16px rgba(36,31,27,0.32), 0 2px 8px -3px rgba(98,45,0,0.12); }
+
+  [data-capsule-logo] { display: flex; align-items: center; gap: 10px; flex: none; padding-left: 3px; color: var(--color-text); text-decoration: none; min-width: 0; }
+  [data-capsule-logo-circle] {
+    width: 46px; height: 46px; border-radius: 50%; background: var(--color-accent-600); flex: none;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    transition: width 0.22s cubic-bezier(0.4,0,0.2,1), height 0.22s cubic-bezier(0.4,0,0.2,1);
+  }
+  [data-capsule].is-scrolled [data-capsule-logo-circle] { width: 40px; height: 40px; }
+  [data-capsule-logo-circle] svg { width: 22px; height: 28px; flex: none; }
+  [data-capsule-word] { font-family: var(--font-heading); font-weight: 700; font-size: 14px; letter-spacing: 0.035em; text-transform: uppercase; line-height: 1.15; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  [data-capsule-nav] { display: flex; align-items: center; gap: 2px; margin: 0 auto; }
+  [data-capsule-link] {
+    position: relative; display: inline-flex; align-items: center; gap: 5px;
+    padding: 9px 15px; border-radius: 999px; background: transparent; border: 0;
+    font-family: var(--font-body); font-weight: 500; font-size: 14px; color: color-mix(in srgb, var(--color-text) 78%, transparent);
+    white-space: nowrap; cursor: pointer; transition: background-color 0.16s ease, color 0.16s ease;
+  }
+  [data-capsule-link]:hover { background: var(--color-accent-100); color: var(--color-accent-700); }
+  [data-capsule-link][aria-current="page"] { background: var(--color-accent-600); color: #ffffff; font-weight: 600; }
+  [data-capsule-link] > svg { flex: none; transition: transform 0.2s cubic-bezier(0.4,0,0.2,1); }
+  [data-capsule-link][aria-expanded="true"] > svg { transform: rotate(180deg); }
+
+  [data-capsule-actions] { display: flex; align-items: center; gap: 10px; flex: none; margin-left: auto; padding-right: 3px; }
+  [data-capsule-phone] { display: inline-flex; align-items: center; gap: 7px; color: var(--color-text); font-size: 13.5px; font-weight: 500; white-space: nowrap; padding: 8px 6px; }
+  [data-capsule-phone] i { width: 6px; height: 6px; border-radius: 50%; display: block; flex: none; }
+  [data-capsule-cta] {
+    display: inline-flex; align-items: center; gap: 7px; background: var(--color-accent-600); color: #ffffff;
+    border: 0; border-radius: 999px; padding: 10px 18px; font-family: var(--font-heading); font-weight: 700;
+    font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; cursor: pointer;
+    transition: transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.16s ease, background-color 0.16s ease;
+  }
+  [data-capsule-cta]:hover { background: var(--color-accent-700); transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(98,45,0,0.4); }
+  [data-capsule-cta]:active { transform: translateY(0) scale(0.96); }
+  [data-capsule-cta] svg { transition: transform 0.18s cubic-bezier(0.2,0.7,0.2,1); }
+  [data-capsule-cta]:hover svg { transform: translateX(3px); }
+
+  /* Products mega panel */
+  [data-mega] {
+    position: absolute; top: calc(100% + 12px); left: 50%; transform: translate(-50%, -8px) scale(0.97);
+    width: min(760px, calc(100vw - 32px));
+    background: #ffffff; border-radius: 20px; overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    box-shadow: 0 30px 64px -22px rgba(36,31,27,0.38), 0 6px 18px -8px rgba(36,31,27,0.14);
+    opacity: 0; pointer-events: none; visibility: hidden;
+    transform-origin: 50% 0%;
+    transition: opacity 0.18s cubic-bezier(0.4,0,0.2,1), transform 0.18s cubic-bezier(0.4,0,0.2,1), visibility 0.18s;
+    z-index: 5;
+  }
+  [data-mega]::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--color-accent-600); }
+  [data-mega].is-open { opacity: 1; pointer-events: auto; visibility: visible; transform: translate(-50%, 0) scale(1); }
+  [data-mega-inner] { padding: clamp(24px, 2.8vw, 34px) clamp(22px, 2.6vw, 34px) clamp(22px, 2.6vw, 34px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 32px); }
+  [data-mega-col] { display: flex; flex-direction: column; gap: 2px; }
+  [data-mega-thumb] { display: block; width: 100%; height: 78px; margin-bottom: 12px; border-radius: 10px; background-color: var(--color-neutral-200); background-size: cover; background-position: center; }
+  [data-mega-col] > span:not([data-mega-thumb]) { font-family: var(--font-mono); font-weight: 500; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent-700); margin-bottom: 8px; }
+  [data-mega-item] { display: flex; flex-direction: column; gap: 1px; padding: 8px 9px; margin: 0 -9px; color: var(--color-text); border-radius: 8px; transition: background-color 0.16s ease, transform 0.12s cubic-bezier(0.2,0.7,0.2,1); }
+  [data-mega-item]:hover { background: var(--color-neutral-100); }
+  [data-mega-item]:active { background: var(--color-neutral-200); transform: scale(0.98); }
+  [data-mega-item] > strong { font-size: 14px; font-weight: 500; }
+  [data-mega-item] > em { font-style: normal; font-size: 12px; color: color-mix(in srgb, var(--color-text) 58%, transparent); }
+  [data-mega-item][data-highlight] > strong { color: var(--color-accent-700); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-mega], [data-capsule-link] > svg { transition: none; }
+  }
+  @media (max-width: 1100px) {
+    [data-mega] { display: none; }
+  }
+
+  /* Desktop-only elements collapse away below the nav breakpoint; mobile
+     gets its own two-piece composition (logo pill + burger) below. */
+  @media (max-width: 1100px) {
+    [data-capsule] {
+      background: transparent; border: 0; box-shadow: none; padding: 0; height: auto;
+      justify-content: space-between;
+    }
+    [data-capsule].is-scrolled { height: auto; }
+    [data-capsule-nav], [data-capsule-actions] { display: none !important; }
+    [data-capsule-logo] {
+      background: #ffffff; border-radius: 999px; padding: 7px 16px 7px 7px;
+      border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+      box-shadow: 0 10px 26px -12px rgba(36,31,27,0.35), 0 2px 8px -3px rgba(36,31,27,0.16);
+      color: var(--color-text); transition: padding 0.22s ease;
+    }
+    [data-capsule-logo-circle] { width: 40px; height: 40px; }
+    [data-capsule].is-scrolled [data-capsule-logo-circle] { width: 36px; height: 36px; }
+    [data-capsule-word] { color: var(--color-text); font-size: 12.5px; }
+  }
+  [data-capsule-burger] {
+    display: none; width: 48px; height: 48px; border-radius: 16px; flex: none;
+    background: var(--color-accent-600); border: 1px solid var(--color-accent-800);
+    align-items: center; justify-content: center; color: #fff;
+    box-shadow: 0 12px 26px -12px rgba(98,45,0,0.5), 0 2px 8px -3px rgba(98,45,0,0.3);
+    transition: transform 0.16s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  [data-capsule-burger]:active { transform: scale(0.94); }
+  [data-capsule-burger] svg { width: 20px; height: 20px; }
+  [data-capsule-burger] .bg-line { transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease; transform-origin: center; }
+  @media (max-width: 1100px) { [data-capsule-burger] { display: flex; } }
+
+  /* Mobile menu floating panel */
+  [data-mobile-panel] {
+    position: relative; z-index: 2;
+    width: min(93vw, 460px); margin: 10px auto 0; background: #ffffff;
+    border-radius: 24px; border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    box-shadow: 0 30px 60px -18px rgba(36,31,27,0.4), 0 6px 20px -8px rgba(36,31,27,0.16);
+    overflow: hidden; opacity: 0; transform: translateY(-10px) scale(0.98);
+    transition: opacity 0.22s cubic-bezier(0.4,0,0.2,1), transform 0.22s cubic-bezier(0.4,0,0.2,1);
+    max-height: calc(100dvh - 100px); display: flex; flex-direction: column;
+  }
+  [data-mobile-panel].is-open { opacity: 1; transform: translateY(0) scale(1); }
+  [data-mobile-panel-scroll] { overflow-y: auto; padding: 10px 10px 18px; }
+  [data-mobile-link] {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    font-family: var(--font-heading); font-weight: 600; font-size: 18px; letter-spacing: 0.02em; text-transform: uppercase;
+    padding: 15px 14px; border-radius: 14px; color: var(--color-text); min-height: 48px;
+    transition: background-color 0.16s ease, color 0.16s ease;
+  }
+  [data-mobile-link][aria-current="page"] { background: var(--color-accent-600); color: #ffffff; }
+  [data-mobile-link]:not([aria-current="page"]):hover { background: var(--color-neutral-100); }
+  /* Several pages declare a bare `summary::after { content: '+'; }` rule of
+     their own (for unrelated <details> elsewhere on that page) — a bare
+     tag+pseudo selector like that matches every <summary> in the document
+     regardless of which component rendered it, so without this override it
+     duplicated an extra "+" next to this accordion's own chevron SVG. The
+     attribute-scoped selector here outranks that plain-tag one on
+     specificity, so it wins regardless of the two <style> blocks' order. */
+  [data-mobile-products] > summary { list-style: none; }
+  [data-mobile-products] > summary::after,
+  [data-mobile-products][open] > summary::after { content: none !important; }
+  [data-mobile-products-grid] { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; padding: 4px 6px 12px; }
+  @media (max-width: 360px) { [data-mobile-products-grid] { grid-template-columns: 1fr; } }
+  [data-mobile-product-link] { display: block; padding: 11px 10px; border-radius: 10px; font-size: 14px; line-height: 19px; color: color-mix(in srgb, var(--color-text) 84%, transparent); min-height: 44px; transition: background-color 0.16s ease; }
+  [data-mobile-product-link]:hover { background: var(--color-neutral-100); }
+  [data-mobile-product-link][data-highlight] { color: var(--color-accent-700); font-weight: 600; }
+  [data-mobile-panel-footer] { padding: 14px 16px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent); display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-mobile-panel], [data-capsule-burger] .bg-line { transition: none; }
+  }
+
+  /* Backdrop behind the mobile panel — closes on tap, dims the page just
+     enough to signal focus is inside the menu without going full black. */
+  [data-mobile-backdrop] {
+    position: fixed; inset: 0; background: color-mix(in srgb, var(--color-ink-900, #171310) 38%, transparent);
+    opacity: 0; pointer-events: none; transition: opacity 0.22s ease; z-index: 1;
+  }
+  [data-mobile-backdrop].is-open { opacity: 1; pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) { [data-mobile-backdrop] { transition: none; } }
 </style>
 </helmet>
-<header ref="{{ headerRef }}" style="background: {{ headerBg }}; backdrop-filter: {{ headerBackdrop }}; -webkit-backdrop-filter: {{ headerBackdrop }}; border-bottom: 1px solid {{ borderColor }}; box-shadow: {{ shadow }}; transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;">
-  <div style="padding: 0 clamp(20px, 4vw, 64px); height: {{ barHeight }}; display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); transition: height 0.32s cubic-bezier(0.2,0.7,0.2,1);">
-    <a data-nav-in href="index.dc.html" style="--d: 0ms; display: flex; align-items: center; gap: 12px; flex: none; color: {{ logoColor }}; transition: color 0.3s ease;">
-      <svg width="30" height="38" viewBox="0 0 478 600" aria-hidden="true" style="flex: none;">
-        <path d="M239 28 L452 79 V300 C452 418 342 508 239 568 C136 508 26 418 26 300 V79 Z" fill="#F7F6F1" stroke="#C69320" stroke-width="24" stroke-linejoin="miter"/>
-        <g fill="#111318">
-          <path d="M83 156 H393 V217 H270 V205 H206 V217 H83 Z"/>
-          <path d="M83 246 H206 V256 H270 V246 H393 V306 H270 V294 H206 V306 H83 Z"/>
-          <path d="M83 334 H206 V344 H270 V334 H393 V395 H270 V383 H206 V395 H83 Z"/>
-        </g>
-      </svg>
-      <span style="font-family: var(--font-heading); font-weight: 600; font-size: 20px; line-height: 1; letter-spacing: 0.035em; text-transform: uppercase;">Al Madhi Carpentry</span>
-    </a>
-    <nav style="margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 1.9vw, 28px); {{ navVars }}" data-desktop-nav>
-      <a data-nav data-nav-in href="index.dc.html" aria-current="{{ isHome }}" style="--d: 60ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">Home</a>
-      <span style="position: relative;" ref="{{ megaWrapRef }}">
-        <button type="button" data-nav data-nav-in data-products-trigger aria-expanded="{{ productsOpen }}" aria-current="{{ isPallets }}" onClick="{{ toggleProducts }}" style="--d: 110ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">
-          Our products
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
-        </button>
-        <div data-mega class="{{ megaClass }}" role="menu">
-          <div data-mega-col role="group">
-            <span data-mega-thumb style="background-image: url('assets/pallet-studio-new-b.jpg');"></span>
-            <span>Wooden pallets</span>
-            <a data-mega-item href="New-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>New pallets</strong><em>Light &amp; heavy duty, any size</em></a>
-            <a data-mega-item href="Used-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Used pallets</strong><em>Graded, repaired, ready to go</em></a>
-            <a data-mega-item href="Heavy-Duty-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Heavy duty pallets</strong><em>High load capacity builds</em></a>
-            <a data-mega-item href="Custom-Sized-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Custom sized pallets</strong><em>Built to your exact drawing</em></a>
-            <a data-mega-item href="Custom-Quality-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Custom quality pallets</strong><em>Spec the grade, we build it</em></a>
-          </div>
-          <div data-mega-col role="group">
-            <span data-mega-thumb style="background-image: url('assets/plastic-pallet-blue.png'); background-color: #ffffff; background-size: contain; background-repeat: no-repeat;"></span>
-            <span>Plastic, boxes &amp; home</span>
-            <a data-mega-item href="Plastic-Pallets-New.dc.html" onClick="{{ closeProducts }}"><strong>New plastic pallets</strong><em>Washable, export-ready</em></a>
-            <a data-mega-item href="Plastic-Pallets-Used.dc.html" onClick="{{ closeProducts }}"><strong>Used plastic pallets</strong><em>Inspected and reusable</em></a>
-            <a data-mega-item href="Boxes-Crates.dc.html" onClick="{{ closeProducts }}"><strong>Wooden boxes &amp; crates</strong><em>Export crating, made to size</em></a>
-            <a data-mega-item href="Home-Furniture-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Home &amp; furniture pallets</strong><em>Sanded, ready to finish</em></a>
-          </div>
-          <div data-mega-col role="group">
-            <span data-mega-thumb style="background-image: url('assets/shavings-hand-chips.jpg');"></span>
-            <span>Materials &amp; trade-in</span>
-            <a data-mega-item href="Wood-Shavings.dc.html" onClick="{{ closeProducts }}"><strong>Wood shavings</strong><em>Bedding, absorbent, packing</em></a>
-            <a data-mega-item data-highlight href="We-Buy.dc.html" onClick="{{ closeProducts }}"><strong>We buy wood &amp; pallets</strong><em>Cash in hand, same-day pickup</em></a>
-          </div>
-        </div>
-      </span>
-      <a data-nav data-nav-in href="About.dc.html" aria-current="{{ isAbout }}" style="--d: 135ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">About</a>
-      <a data-nav data-nav-in href="Gallery.dc.html" aria-current="{{ isGallery }}" style="--d: 210ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">Factory</a>
-      <a data-nav data-nav-in href="Contact.dc.html" aria-current="{{ isContact }}" style="--d: 260ms; font-size: 14.5px; font-weight: 500; white-space: nowrap;">Contact</a>
-    </nav>
-    <span style="display: flex; align-items: center; gap: 16px; flex: none;" data-desktop-cta>
-      <a data-nav-in href="tel:+971505974922" style="--d: 310ms; display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 500; color: {{ phoneColor }}; transition: color 0.3s ease;" title="{{ statusHint }}">
-        <i style="width: 7px; height: 7px; border-radius: 50%; display: block; background: {{ statusColor }}; box-shadow: 0 0 0 3px {{ statusHalo }};"></i>050 597 4922
+<header ref="{{ headerRef }}" style="position: relative; z-index: 10;">
+  <div data-capsule-row>
+    <div data-capsule class="{{ capsuleClass }}">
+      <a data-capsule-logo href="index.dc.html" aria-label="Al Madhi Carpentry — home">
+        <span data-capsule-logo-circle>
+          <svg viewBox="0 0 478 600" aria-hidden="true">
+            <path d="M239 28 L452 79 V300 C452 418 342 508 239 568 C136 508 26 418 26 300 V79 Z" fill="#F7F6F1" stroke="#C69320" stroke-width="24" stroke-linejoin="miter"/>
+            <g fill="#111318">
+              <path d="M83 156 H393 V217 H270 V205 H206 V217 H83 Z"/>
+              <path d="M83 246 H206 V256 H270 V246 H393 V306 H270 V294 H206 V306 H83 Z"/>
+              <path d="M83 334 H206 V344 H270 V334 H393 V395 H270 V383 H206 V395 H83 Z"/>
+            </g>
+          </svg>
+        </span>
+        <span data-capsule-word>{{ wordmark }}</span>
       </a>
-      <button type="button" class="btn btn-primary" data-nav-in onClick="{{ requestQuote }}" style="--d: 360ms; font-size: 13.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 11px 20px; min-height: 42px; display: inline-flex; align-items: center; gap: 9px;">
-        Get a quote
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-      </button>
-    </span>
-    <button type="button" onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="flex: none; display: none; background: transparent; border: 1px solid {{ burgerBorderColor }}; width: 44px; height: 44px; align-items: center; justify-content: center; color: {{ burgerColor }}; transition: color 0.3s ease, border-color 0.3s ease;" data-burger>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">{{ burgerPath }}</svg>
-    </button>
-  </div>
-  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); background: #ffffff;">
-      <div style="padding: 8px clamp(20px, 4vw, 64px) 24px; display: flex; flex-direction: column;">
-        <a href="index.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Home</a>
-        <details style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); padding: 15px 0;">
-          <summary style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; color: var(--color-text); list-style: none; display: flex; align-items: center; justify-content: space-between;">Our products</summary>
-          <div style="display: flex; flex-direction: column; padding-top: 6px;">
-            <a href="New-Pallets.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">New pallets</a>
-            <a href="Used-Pallets.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Used pallets</a>
-            <a href="Heavy-Duty-Pallets.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Heavy duty pallets</a>
-            <a href="Custom-Sized-Pallets.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Custom sized pallets</a>
-            <a href="Custom-Quality-Pallets.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Custom quality pallets</a>
-            <a href="Plastic-Pallets-New.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">New plastic pallets</a>
-            <a href="Plastic-Pallets-Used.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Used plastic pallets</a>
-            <a href="Boxes-Crates.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Boxes &amp; crates</a>
-            <a href="Home-Furniture-Pallets.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Home &amp; furniture pallets</a>
-            <a href="Wood-Shavings.dc.html" style="font-size: 16px; padding: 10px 0; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Wood shavings</a>
-            <a href="We-Buy.dc.html" style="font-size: 16px; padding: 10px 0; color: var(--color-accent-700); font-weight: 500;">We buy wood &amp; pallets</a>
+
+      <nav data-capsule-nav aria-label="Primary">
+        <a data-capsule-link href="index.dc.html" aria-current="{{ isHome }}">Home</a>
+        <span style="position: relative;" ref="{{ megaWrapRef }}" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}">
+          <button type="button" data-capsule-link data-products-trigger aria-expanded="{{ productsOpen }}" aria-current="{{ isPallets }}" onClick="{{ toggleProducts }}">
+            Our products
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+          </button>
+          <div data-mega class="{{ megaClass }}" role="menu">
+            <div data-mega-inner>
+              <div data-mega-col role="group">
+                <span data-mega-thumb style="background-image: url('assets/pallet-studio-new-b.jpg');"></span>
+                <span>Wooden pallets</span>
+                <a data-mega-item href="New-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>New pallets</strong><em>Light &amp; heavy duty, any size</em></a>
+                <a data-mega-item href="Used-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Used pallets</strong><em>Graded, repaired, ready to go</em></a>
+                <a data-mega-item href="Heavy-Duty-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Heavy duty pallets</strong><em>High load capacity builds</em></a>
+                <a data-mega-item href="Custom-Sized-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Custom sized pallets</strong><em>Built to your exact drawing</em></a>
+                <a data-mega-item href="Custom-Quality-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Custom quality pallets</strong><em>Spec the grade, we build it</em></a>
+              </div>
+              <div data-mega-col role="group">
+                <span data-mega-thumb style="background-image: url('assets/plastic-pallet-blue.png'); background-color: #ffffff; background-size: contain; background-repeat: no-repeat;"></span>
+                <span>Plastic, boxes &amp; home</span>
+                <a data-mega-item href="Plastic-Pallets-New.dc.html" onClick="{{ closeProducts }}"><strong>New plastic pallets</strong><em>Washable, export-ready</em></a>
+                <a data-mega-item href="Plastic-Pallets-Used.dc.html" onClick="{{ closeProducts }}"><strong>Used plastic pallets</strong><em>Inspected and reusable</em></a>
+                <a data-mega-item href="Boxes-Crates.dc.html" onClick="{{ closeProducts }}"><strong>Wooden boxes &amp; crates</strong><em>Export crating, made to size</em></a>
+                <a data-mega-item href="Home-Furniture-Pallets.dc.html" onClick="{{ closeProducts }}"><strong>Home &amp; furniture pallets</strong><em>Sanded, ready to finish</em></a>
+              </div>
+              <div data-mega-col role="group">
+                <span data-mega-thumb style="background-image: url('assets/shavings-hand-chips.jpg');"></span>
+                <span>Materials &amp; trade-in</span>
+                <a data-mega-item href="Wood-Shavings.dc.html" onClick="{{ closeProducts }}"><strong>Wood shavings</strong><em>Bedding, absorbent, packing</em></a>
+                <a data-mega-item data-highlight href="We-Buy.dc.html" onClick="{{ closeProducts }}"><strong>We buy wood &amp; pallets</strong><em>Cash in hand, same-day pickup</em></a>
+              </div>
+            </div>
           </div>
-        </details>
-        <a href="About.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">About</a>
-        <a href="Gallery.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Factory</a>
-        <a href="Contact.dc.html" style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.045em; text-transform: uppercase; padding: 15px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);">Contact</a>
-        <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-          <button type="button" class="btn btn-primary" onClick="{{ requestQuote }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">Get a quote</button>
-          <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px;">050 597 4922</a>
-        </div>
+        </span>
+        <a data-capsule-link href="About.dc.html" aria-current="{{ isAbout }}">About</a>
+        <a data-capsule-link href="Gallery.dc.html" aria-current="{{ isGallery }}">Factory</a>
+        <a data-capsule-link href="Contact.dc.html" aria-current="{{ isContact }}">Contact</a>
+      </nav>
+
+      <div data-capsule-actions>
+        <a data-capsule-phone href="tel:+971505974922" title="{{ statusHint }}">
+          <i style="background: {{ statusColor }}; box-shadow: 0 0 0 3px {{ statusHalo }};"></i>050 597 4922
+        </a>
+        <button type="button" data-capsule-cta onClick="{{ requestQuote }}">
+          Get a Quote
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </button>
       </div>
+
+      <button type="button" data-capsule-burger ref="{{ burgerRef }}" onClick="{{ toggleMenu }}" aria-label="{{ burgerLabel }}" aria-expanded="{{ menuOpen }}" aria-controls="amc-mobile-panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line class="bg-line" x1="4" y1="7" x2="20" y2="7" style="transform: {{ line1Transform }};" />
+          <line class="bg-line" x1="4" y1="12" x2="20" y2="12" style="opacity: {{ line2Opacity }};" />
+          <line class="bg-line" x1="4" y1="17" x2="20" y2="17" style="transform: {{ line3Transform }};" />
+        </svg>
+      </button>
     </div>
-  </sc-if>
+  </div>
+
+  <div data-mobile-backdrop class="{{ backdropClass }}" onClick="{{ closeMenu }}" aria-hidden="true"></div>
+
+  <div id="amc-mobile-panel" data-mobile-panel class="{{ panelClass }}" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div data-mobile-panel-scroll>
+      <a data-mobile-link href="index.dc.html" aria-current="{{ isHome }}" onClick="{{ closeMenu }}">Home</a>
+      <details data-mobile-products data-smooth>
+        <summary data-mobile-link aria-current="{{ isPallets }}" style="cursor: pointer;">
+          Our products
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+        </summary>
+        <div data-mobile-products-grid>
+          <a data-mobile-product-link href="New-Pallets.dc.html" onClick="{{ closeMenu }}">New pallets</a>
+          <a data-mobile-product-link href="Used-Pallets.dc.html" onClick="{{ closeMenu }}">Used pallets</a>
+          <a data-mobile-product-link href="Heavy-Duty-Pallets.dc.html" onClick="{{ closeMenu }}">Heavy duty pallets</a>
+          <a data-mobile-product-link href="Custom-Sized-Pallets.dc.html" onClick="{{ closeMenu }}">Custom sized pallets</a>
+          <a data-mobile-product-link href="Custom-Quality-Pallets.dc.html" onClick="{{ closeMenu }}">Custom quality pallets</a>
+          <a data-mobile-product-link href="Plastic-Pallets-New.dc.html" onClick="{{ closeMenu }}">New plastic pallets</a>
+          <a data-mobile-product-link href="Plastic-Pallets-Used.dc.html" onClick="{{ closeMenu }}">Used plastic pallets</a>
+          <a data-mobile-product-link href="Boxes-Crates.dc.html" onClick="{{ closeMenu }}">Boxes &amp; crates</a>
+          <a data-mobile-product-link href="Home-Furniture-Pallets.dc.html" onClick="{{ closeMenu }}">Home &amp; furniture</a>
+          <a data-mobile-product-link href="Wood-Shavings.dc.html" onClick="{{ closeMenu }}">Wood shavings</a>
+          <a data-mobile-product-link data-highlight href="We-Buy.dc.html" onClick="{{ closeMenu }}" style="grid-column: 1 / -1;">We buy wood &amp; pallets</a>
+        </div>
+      </details>
+      <a data-mobile-link href="About.dc.html" aria-current="{{ isAbout }}" onClick="{{ closeMenu }}">About</a>
+      <a data-mobile-link href="Gallery.dc.html" aria-current="{{ isGallery }}" onClick="{{ closeMenu }}">Factory</a>
+      <a data-mobile-link href="Contact.dc.html" aria-current="{{ isContact }}" onClick="{{ closeMenu }}">Contact</a>
+    </div>
+    <div data-mobile-panel-footer>
+      <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px; flex: 1;">050 597 4922</a>
+      <button type="button" class="btn btn-primary" onClick="{{ requestQuoteMobile }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px; flex: 1; justify-content: center;">Get a Quote</button>
+    </div>
+  </div>
 </header>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:100},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;pallets&quot;,&quot;shavings&quot;,&quot;about&quot;,&quot;gallery&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
@@ -304,25 +413,22 @@ class Component extends DCLogic {
   componentDidMount() {
     this.tick();
     this.timer = setInterval(() => this.tick(), 60000);
-    this.applyResponsive();
-    this.onResize = () => this.applyResponsive();
-    window.addEventListener('resize', this.onResize);
 
-    // Outside click / Escape close the mega-menu — standard dropdown
-    // dismissal a visitor expects without being told about it.
+    // Outside click / Escape close the mega-menu and the mobile panel — both
+    // are standard dismissal behaviour a visitor expects without being told.
     this.onDocClick = (e) => {
-      if (!this.state.productsOpen) return;
-      if (this.megaWrap && this.megaWrap.contains(e.target)) return;
-      this.setState({ productsOpen: false });
+      if (this.state.productsOpen && !(this.megaWrap && this.megaWrap.contains(e.target))) {
+        this.setState({ productsOpen: false });
+      }
     };
     this.onKeyDown = (e) => {
-      if (e.key === 'Escape' && this.state.productsOpen) this.setState({ productsOpen: false });
+      if (e.key !== 'Escape') return;
+      if (this.state.productsOpen) this.setState({ productsOpen: false });
+      if (this.state.menuOpen) this.closeMenu();
     };
     document.addEventListener('click', this.onDocClick, true);
     document.addEventListener('keydown', this.onKeyDown);
 
-    // The guard tracks the last APPLIED value on an instance field — reading
-    // this.state here would be stale and would apply each update one event late.
     this._scrolled = null;
     const sync = () => {
       const s = (document.documentElement.scrollTop || window.pageYOffset || 0) > 24;
@@ -332,26 +438,12 @@ class Component extends DCLogic {
     };
     this.onScroll = sync;
     window.addEventListener('scroll', sync, { passive: true });
-    // A once-per-200ms poll is the fallback for hosts that throttle or never
-    // dispatch scroll events — cheap enough to leave running. A permanent
-    // per-frame rAF loop here (the previous approach) has no such excuse: it
-    // burns a slice of every single frame's budget for the entire time the
-    // tab is open, which is exactly the kind of main-thread contention that
-    // can tip the hero's own fps watchdog (see Hero3D) into a false reading
-    // during the first second of page load.
     this.slowSync = setInterval(sync, 200);
     sync();
 
     this.startReveals();
     this.startCounters();
 
-    // Safety net: whatever happens to rAF or IntersectionObserver in this host,
-    // nothing may stay hidden or stuck at zero.
-    // Recurring, not one-shot: child DCs (the quote form, filtered lists) mount
-    // after the first pass, so a single timeout would leave them hidden forever.
-    // Delayed ~1.6s before the first sweep: that's past the hero's own fps
-    // watchdog window, so this sweep's querySelectorAll-over-the-whole-page
-    // cost never lands inside the exact window Hero3D is timing itself against.
     let sweeps = 0;
     this.failsafeStart = setTimeout(() => {
       this.revealEverything();
@@ -362,13 +454,6 @@ class Component extends DCLogic {
     }, 1600);
   }
 
-  /* Scroll-linked parallax on [data-parallax] panels. Recomputes only in
-     response to an actual scroll/resize (rAF-coalesced so a burst of scroll
-     events still only costs one layout read+write per frame), instead of the
-     previous permanent per-frame rAF loop — that ran forever regardless of
-     whether the page was even scrolling, taxing every single frame for the
-     entire time the tab stayed open and competing with any other rAF work
-     on the page (the 3D hero's render loop chief among them). */
   startParallax() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let scheduled = false;
@@ -394,16 +479,6 @@ class Component extends DCLogic {
     request();
   }
 
-  /* Failsafe only — rescues elements that are ALREADY on/near screen and
-     somehow missed a real IntersectionObserver callback (e.g. a child DC
-     re-rendered and swapped the observed node out from under the observer).
-     It must never force-reveal something still below the fold: this ran on
-     a blind timer before with no position check at all, which meant that by
-     the time a visitor actually scrolled down to a section, this had
-     already marked it "is-in" seconds earlier — the reveal had already
-     fired with nobody watching, so scrolling there looked like no animation
-     ever played at all. The position check is what makes this a rescue
-     instead of a substitute for the real scroll-triggered reveal below. */
   revealEverything() {
     const vh = document.documentElement.clientHeight || window.innerHeight || 800;
     const isNearViewport = (el) => {
@@ -414,8 +489,6 @@ class Component extends DCLogic {
       if (!isNearViewport(el)) return;
       el.style.setProperty('--d', '0ms');
       el.classList.add('is-in');
-      // Inline as well as the class: a child DC re-render can swap the node the
-      // class was applied to, and inline styles survive what the cascade cannot.
       el.style.opacity = '1';
       el.style.transform = 'none';
       el.style.clipPath = 'none';
@@ -439,7 +512,6 @@ class Component extends DCLogic {
     clearTimeout(this.failsafeStart);
     clearInterval(this.failsafe);
     clearInterval(this.slowSync);
-    window.removeEventListener('resize', this.onResize);
     cancelAnimationFrame(this.rafPar);
     window.removeEventListener('scroll', this.onScroll);
     if (this.onParallax) {
@@ -448,25 +520,16 @@ class Component extends DCLogic {
     }
     document.removeEventListener('click', this.onDocClick, true);
     document.removeEventListener('keydown', this.onKeyDown);
+    document.documentElement.classList.remove('amc-menu-open');
     if (this.io) this.io.disconnect();
     if (this.cio) this.cio.disconnect();
     if (this.mo) this.mo.disconnect();
   }
 
-  /* Reveal every [data-reveal] on the page, staggered within its own group. */
   startReveals() {
     if (typeof IntersectionObserver === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // Only now, with an observer available, is it safe to hide anything.
     document.documentElement.classList.add('js-reveal');
-    // [data-wipe] clips itself to zero visible area before reveal (that's the
-    // wipe effect's starting state) — observing a [data-wipe] element directly
-    // means the browser always measures 0% visibility for it, since its own
-    // clip-path hides its whole box, so it can never cross the intersection
-    // threshold under its own steam. Observe its parent (never self-clipped)
-    // as a proxy instead and fan the hit back out to every real target it
-    // stands in for, so wipe elements still reveal off real scroll position
-    // rather than relying solely on the startup failsafe below.
     const proxyTargets = new WeakMap();
     this.io = new IntersectionObserver(
       (entries) => {
@@ -476,7 +539,7 @@ class Component extends DCLogic {
           targets.forEach((el) => {
             const group = el.parentElement ? Array.from(el.parentElement.children).filter((c) => c.hasAttribute && c.hasAttribute('data-reveal')) : [el];
             const idx = Math.max(0, group.indexOf(el));
-            el.style.setProperty('--d', Math.min(idx, 6) * 80 + 'ms');
+            el.style.setProperty('--d', Math.min(idx, 6) * 70 + 'ms');
             el.classList.add('is-in');
           });
           this.io.unobserve(proxy);
@@ -494,13 +557,6 @@ class Component extends DCLogic {
       });
     };
     observeAll();
-    // rAF-coalesced: during initial mount, many sibling components insert
-    // their own DOM in separate ticks (each dc-import resolving on its own
-    // schedule) — without this, every single one of those inserts would
-    // trigger its own synchronous full-page querySelectorAll right in the
-    // first second, on top of everything else already competing for that
-    // window. Batching to one query per frame keeps the same end result
-    // (every new [data-reveal] still gets observed) for a fraction of the cost.
     let moScheduled = false;
     this.mo = new MutationObserver(() => {
       if (moScheduled) return;
@@ -511,7 +567,6 @@ class Component extends DCLogic {
     this.startParallax();
   }
 
-  /* Count [data-count] numbers up when they scroll into view. */
   startCounters() {
     if (typeof IntersectionObserver === 'undefined') return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -531,7 +586,7 @@ class Component extends DCLogic {
           if (reduce) { render(el, target); return; }
           const t0 = performance.now();
           const step = (now) => {
-            const p = Math.min(1, (now - t0) / 1500);
+            const p = Math.min(1, (now - t0) / 1300);
             render(el, target * (1 - Math.pow(1 - p, 3)));
             if (p < 1) requestAnimationFrame(step);
           };
@@ -540,18 +595,11 @@ class Component extends DCLogic {
       },
       { threshold: 0.4 }
     );
-    document.querySelectorAll('[data-count]').forEach((el) => { render(el, 0); this.cio.observe(el); });
-  }
-
-  applyResponsive() {
-    const narrow = window.innerWidth <= 1100;
-    const nav = document.querySelector('[data-desktop-nav]');
-    const cta = document.querySelector('[data-desktop-cta]');
-    const burger = document.querySelector('[data-burger]');
-    if (nav) nav.style.display = narrow ? 'none' : 'flex';
-    if (cta) cta.style.display = narrow ? 'none' : 'flex';
-    if (burger) { burger.style.display = narrow ? 'flex' : 'none'; burger.style.marginLeft = narrow ? 'auto' : ''; }
-    if (!narrow && this.state.menuOpen) this.setState({ menuOpen: false });
+    // Elements already carry their real final value in the markup (see each
+    // page) — this only re-renders once truly counting from 0 is safe
+    // (JS confirmed running), so a crawler or a page where this never fires
+    // still sees the real number, never a placeholder zero.
+    document.querySelectorAll('[data-count]').forEach((el) => { this.cio.observe(el); });
   }
 
   tick() {
@@ -562,55 +610,65 @@ class Component extends DCLogic {
     this.setState({ status: { open: day >= 1 && day <= 6 && mins >= 360 && mins < 1080 } });
   }
 
+  openMenu() {
+    this._preFocus = document.activeElement;
+    document.documentElement.classList.add('amc-menu-open');
+    this.setState({ menuOpen: true });
+  }
+  closeMenu() {
+    document.documentElement.classList.remove('amc-menu-open');
+    this.setState({ menuOpen: false });
+    const restore = (this._preFocus && this._preFocus !== document.body) ? this._preFocus : this.burgerEl;
+    if (restore && restore.focus) setTimeout(() => restore.focus(), 0);
+  }
+
   renderVals() {
     const s = this.state.status;
     const open = !!(s && s.open);
     const cur = (k) => (this.props.active === k ? 'page' : undefined);
     const sc = this.state.scrolled;
-    // Overlay mode: only the homepage passes this (it's the only page with a
-    // full-bleed dark hero behind the header). Active only before the first
-    // scroll — past that point it falls back to the normal solid/blurred bar
-    // the rest of the site already uses, both for legibility over whatever
-    // content comes next and so the header still reads as "chrome" once the
-    // hero itself has scrolled out of view.
-    const overlay = this.props.overlay === true || this.props.overlay === 'true';
-    const overlayActive = overlay && !sc;
-    const navVars = overlayActive ? '--nav-color: rgba(255,255,255,0.82); --nav-color-strong: #ffffff;' : '';
+    const menuOpen = this.state.menuOpen;
     return {
       headerRef: (el) => { this.header = el; },
-      barHeight: sc ? '62px' : '78px',
-      // A flat transparent header only reads correctly if everything behind
-      // it is uniformly dark — this hero isn't (it fades from a dark scrim
-      // on the left to a bright product-shot backdrop on the right), so
-      // white nav text over the right side was going invisible against the
-      // light zone. A consistent tint of its own, independent of whatever
-      // hero content happens to sit underneath at that x-position, is what
-      // keeps every nav item readable regardless of where it lands.
-      headerBg: overlayActive ? 'linear-gradient(180deg, rgba(12,9,6,0.5) 0%, rgba(12,9,6,0.3) 100%)' : '#ffffff',
-      headerBackdrop: overlayActive ? 'blur(6px)' : 'none',
-      shadow: overlayActive ? 'none' : (sc ? '0 1px 0 rgba(36,31,27,0.04), 0 14px 30px -22px rgba(36,31,27,0.45)' : 'none'),
-      borderColor: overlayActive ? 'transparent' : (sc ? 'transparent' : 'var(--color-divider)'),
-      navVars,
-      logoColor: overlayActive ? '#ffffff' : 'var(--color-text)',
-      phoneColor: overlayActive ? 'rgba(255,255,255,0.94)' : 'var(--color-text)',
-      burgerBorderColor: overlayActive ? 'rgba(255,255,255,0.4)' : 'color-mix(in srgb, var(--color-text) 18%, transparent)',
-      burgerColor: overlayActive ? '#ffffff' : 'var(--color-text)',
-      menuOpen: this.state.menuOpen,
-      burgerPath: this.state.menuOpen
-        ? React.createElement('path', { d: 'M6 6l12 12M18 6L6 18' })
-        : React.createElement('path', { d: 'M3 6h18M3 12h18M3 18h18' }),
-      toggleMenu: () => this.setState((st) => ({ menuOpen: !st.menuOpen })),
+      capsuleClass: sc ? 'is-scrolled' : '',
+      wordmark: 'AL MADHI CARPENTRY',
       requestQuote: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
+      requestQuoteMobile: () => { this.closeMenu(); window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })); },
       megaWrapRef: (el) => { this.megaWrap = el; },
       productsOpen: this.state.productsOpen,
       megaClass: this.state.productsOpen ? 'is-open' : '',
       toggleProducts: () => this.setState((st) => ({ productsOpen: !st.productsOpen })),
       closeProducts: () => this.setState({ productsOpen: false }),
-      statusColor: open ? 'var(--color-success-500)' : 'var(--color-neutral-500)',
+      // Hover opens/closes the desktop dropdown immediately on enter and
+      // with a short grace delay on leave (so moving the cursor diagonally
+      // from the trigger down into the panel doesn't slam it shut) — click
+      // still works too, for touch and keyboard users.
+      onMegaEnter: () => {
+        if (window.matchMedia('(hover: none)').matches) return;
+        clearTimeout(this._megaCloseT);
+        if (!this.state.productsOpen) this.setState({ productsOpen: true });
+      },
+      onMegaLeave: () => {
+        if (window.matchMedia('(hover: none)').matches) return;
+        clearTimeout(this._megaCloseT);
+        this._megaCloseT = setTimeout(() => this.setState({ productsOpen: false }), 180);
+      },
+      statusColor: open ? 'var(--color-success-500)' : 'var(--color-neutral-400)',
       statusHalo: open ? 'rgba(63,145,83,0.18)' : 'transparent',
       statusHint: open ? 'The yard is open now — Monday to Saturday, 06:00–18:00' : 'Closed now — Monday to Saturday, 06:00–18:00',
       isHome: cur('home'), isPallets: cur('pallets'), isShavings: cur('shavings'),
       isAbout: cur('about'), isGallery: cur('gallery'), isContact: cur('contact'),
+      menuOpen,
+      burgerRef: (el) => { this.burgerEl = el; },
+      burgerLabel: menuOpen ? 'Close menu' : 'Open menu',
+      toggleMenu: () => (menuOpen ? this.closeMenu() : this.openMenu()),
+      closeMenu: () => this.closeMenu(),
+      backdropClass: menuOpen ? 'is-open' : '',
+      panelClass: menuOpen ? 'is-open' : '',
+      panelRef: (el) => { this.panelEl = el; },
+      line1Transform: menuOpen ? 'translateY(5px) rotate(45deg)' : 'none',
+      line2Opacity: menuOpen ? '0' : '1',
+      line3Transform: menuOpen ? 'translateY(-5px) rotate(-45deg)' : 'none',
     };
   }
 }

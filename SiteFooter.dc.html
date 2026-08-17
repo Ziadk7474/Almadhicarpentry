@@ -41,6 +41,35 @@
     [data-float-cta] a, [data-float-cta] button { transition: none; }
     [data-float-cta] a:hover, [data-float-cta] button:hover { transform: none; }
   }
+
+  /* Mobile sticky action bar — hidden by default (desktop keeps the
+     floating pill above); swaps in below 640px, where the floating pill
+     is fiddly to hit precisely and a full-width thumb-reach row serves the
+     same "Call / WhatsApp / Quote" job far better. */
+  [data-mobile-actionbar] { display: none; }
+  @media (max-width: 640px) {
+    /* !important: [data-float-cta] carries its own inline `display: flex`
+       (needed so it still lays out correctly wherever the design tool's
+       preview renders it with CSS disabled/mid-load) — a plain override
+       here can never outrank an inline style regardless of media query. */
+    [data-float-cta] { display: none !important; }
+    [data-mobile-actionbar] {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+      background: #ffffff; border-top: 1px solid var(--color-divider);
+      box-shadow: 0 -8px 24px -12px rgba(36,31,27,0.22);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    [data-mobile-actionbar] a, [data-mobile-actionbar] button {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+      min-height: 58px; padding: 8px 4px; background: none; border: 0; border-right: 1px solid var(--color-divider);
+      font-family: var(--font-heading); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--color-text); cursor: pointer; transition: background-color 0.16s ease;
+    }
+    [data-mobile-actionbar] a:last-child, [data-mobile-actionbar] button:last-child { border-right: 0; }
+    [data-mobile-actionbar] a:active, [data-mobile-actionbar] button:active { background: var(--color-neutral-100); }
+    [data-mobile-actionbar] [data-accent] { color: var(--color-accent-700); }
+  }
 </style>
 </helmet>
 <div>
@@ -124,6 +153,27 @@
       </a>
     </sc-if>
   </div>
+
+  <!-- Mobile-only sticky action bar — Call / WhatsApp / Quote in one thumb-
+       reach row, replacing the desktop floating pill (too fiddly to tap
+       precisely at phone widths) once the hero has scrolled past so it
+       never sits over the headline or the pallet. -->
+  <sc-if value="{{ showMobileBar }}" hint-placeholder-val="{{ false }}">
+    <div data-mobile-actionbar role="group" aria-label="Quick contact">
+      <a href="tel:+971505974922" aria-label="Call 050 597 4922">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.6 2.5a2 2 0 0 1-.5 1.9L8 9.3a16 16 0 0 0 6.7 6.7l1.2-1.2a2 2 0 0 1 1.9-.5l2.5.6a2 2 0 0 1 1.7 2z" /></svg>
+        Call
+      </a>
+      <a data-accent href="https://wa.me/971505974922?text=Hello%20Al%20Madhi%20Carpentry%2C%20I%20would%20like%20to%20request%20a%20quotation." target="_blank" rel="noopener noreferrer" aria-label="Message on WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
+        WhatsApp
+      </a>
+      <button type="button" onClick="{{ requestQuote }}" aria-label="Get a quote">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5" /><path d="M7 9h10M7 13h6" /></svg>
+        Quote
+      </button>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:520}}">
@@ -173,6 +223,8 @@ class Component extends DCLogic {
       progress: this.state.progress,
       scrolled: this.state.scrolled,
       showCta: this.state.pastHero,
+      showMobileBar: this.state.pastHero,
+      requestQuote: () => window.dispatchEvent(new CustomEvent('almadhi:quote', { detail: { product: '' } })),
       toTop: () => {
         const de = document.documentElement;
         const from = de.scrollTop || window.pageYOffset || 0;
