@@ -94,6 +94,27 @@
   @media (max-width: 560px) { [data-tenup] { grid-template-columns: 1fr !important; } }
   .arrow { transition: transform 0.32s cubic-bezier(0.2,0.7,0.2,1); }
   .btn:hover .arrow { transform: translateX(4px); }
+  /* Brochure CTA (finder section) — a filled accent card rather than the
+     plain outline the other secondary buttons use, so a PDF download reads
+     as its own distinct action instead of blending into "See this product". */
+  [data-brochure-cta] {
+    display: inline-flex; align-items: center; gap: 13px; white-space: nowrap;
+    background: var(--color-accent-600); border: 1px solid var(--color-accent-600); border-radius: 16px;
+    padding: 11px 20px 11px 14px; box-shadow: 0 10px 24px -12px rgba(98,45,0,0.55);
+    transition: transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.18s ease, background-color 0.18s ease;
+  }
+  [data-brochure-cta]:hover { background: var(--color-accent-700); transform: translateY(-2px); box-shadow: 0 16px 32px -12px rgba(98,45,0,0.62); }
+  [data-brochure-cta]:active { transform: translateY(0) scale(0.97); transition-duration: 0.09s; }
+  [data-brochure-icon] {
+    display: flex; align-items: center; justify-content: center; flex: none;
+    width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, #ffffff 18%, transparent); color: #ffffff;
+    transition: transform 0.18s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  [data-brochure-cta]:hover [data-brochure-icon] { transform: translateY(2px); }
+  [data-brochure-text] { display: flex; flex-direction: column; gap: 1px; align-items: flex-start; }
+  [data-brochure-text] strong { font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: #ffffff; }
+  [data-brochure-text] em { font-style: normal; font-size: 11.5px; line-height: 1.3; color: color-mix(in srgb, #ffffff 78%, transparent); }
+  @media (prefers-reduced-motion: reduce) { [data-brochure-cta], [data-brochure-icon] { transition: none; } }
   @media (max-width: 900px) {
     [data-quarter] { grid-column: span 6 !important; }
   }
@@ -290,7 +311,18 @@
         <span class="eyebrow" style="margin: 0 0 14px; color: var(--color-accent);"><i class="eyebrow-dash" style="background: var(--color-accent);"></i>Not sure where to start?</span>
         <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: clamp(22px, 2.8vw, 34px);">
           <h2 style="font-family: var(--font-heading); font-weight: 600; font-size: clamp(30px, 3.4vw, 46px); line-height: 1; letter-spacing: -0.005em; text-transform: uppercase; margin: 0; color: #ffffff;">Find the right pallet</h2>
-          <p style="font-size: 15px; line-height: 23px; max-width: 40ch; margin: 0; color: color-mix(in srgb, #ffffff 72%, transparent);">Answer a few quick questions and we will point you to the right product &mdash; then hand you straight to WhatsApp with everything filled in.</p>
+          <div style="display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+            <p style="font-size: 15px; line-height: 23px; max-width: 40ch; margin: 0; color: color-mix(in srgb, #ffffff 72%, transparent);">Answer a few quick questions and we will point you to the right product &mdash; then hand you straight to WhatsApp with everything filled in.</p>
+            <a data-brochure-cta href="assets/Al-Madhi-Carpentry-Wooden-Pallets-Brochure.pdf" download="Al-Madhi-Carpentry-Wooden-Pallets-Brochure.pdf" title="Download our wooden pallet &amp; wood shavings product brochure — sizes, specs and price guide (PDF)">
+              <span data-brochure-icon>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 19h16" /></svg>
+              </span>
+              <span data-brochure-text>
+                <strong>Download brochure</strong>
+                <em>Pallet sizes, specs &amp; price guide &middot; PDF</em>
+              </span>
+            </a>
+          </div>
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;">
           <label class="field" style="color: #fff;"><label style="color: color-mix(in srgb, #ffffff 75%, transparent);">What are you moving?</label>

@@ -22,11 +22,15 @@
 <style>
   /* ============ Hero shell ============ */
   [data-pallet-hero] {
-    position: relative; width: 100%; min-height: clamp(600px, 66vh, 700px); height: auto;
+    position: relative; width: 100%; min-height: 100vh; height: auto;
     /* dvh accounts for mobile browser chrome (address bar) showing/hiding —
        vh above is the fallback for browsers without dvh support; this
-       declaration simply wins the cascade wherever dvh is understood. */
-    min-height: clamp(600px, 66dvh, 700px);
+       declaration simply wins the cascade wherever dvh is understood. Full
+       viewport height at every breakpoint (see the mobile override below,
+       which used to zero this out) — the product photo strip section right
+       after the hero must never be visible until the visitor scrolls past
+       this one. */
+    min-height: 100dvh;
     overflow: hidden; background: linear-gradient(180deg, #ffffff 0%, var(--color-surface) 100%);
   }
   [data-pallet-grid-bg] {
@@ -71,7 +75,7 @@
       padding: clamp(104px, 20vw, 122px) clamp(16px, 4vw, 24px) 24px; height: auto;
       row-gap: 0;
     }
-    [data-pallet-hero] { height: auto; min-height: 0; }
+    [data-pallet-hero] { height: auto; min-height: 100vh; min-height: 100dvh; }
     [data-pallet-visual] { margin-top: clamp(14px, 3vw, 18px); }
     [data-pallet-ctas] { margin-top: clamp(20px, 5vw, 26px); }
     /* Tighter vertical rhythm than desktop so the 3D model clears the fold

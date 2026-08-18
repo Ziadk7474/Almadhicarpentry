@@ -207,6 +207,18 @@
   [data-capsule-link][aria-expanded="true"] > svg { transform: rotate(180deg); }
 
   [data-capsule-actions] { display: flex; align-items: center; gap: 14px; flex: none; margin-left: auto; padding-right: 4px; }
+  [data-capsule-brochure] {
+    display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+    background: color-mix(in srgb, var(--color-accent-600) 9%, transparent);
+    color: var(--color-accent-700); font-family: var(--font-body); font-size: 13.5px; font-weight: 600;
+    padding: 9px 16px 9px 13px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--color-accent-600) 30%, transparent);
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.16s ease;
+  }
+  [data-capsule-brochure]:hover { background: var(--color-accent-600); border-color: var(--color-accent-600); color: #ffffff; transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(98,45,0,0.45); }
+  [data-capsule-brochure]:active { transform: translateY(0) scale(0.96); transition-duration: 0.09s; }
+  [data-capsule-brochure] svg { flex: none; transition: transform 0.18s cubic-bezier(0.2,0.7,0.2,1); }
+  [data-capsule-brochure]:hover svg { transform: translateY(2px); }
+  @media (max-width: 1220px) { [data-capsule-brochure] span { display: none; } [data-capsule-brochure] { padding: 9px 12px; } }
   [data-capsule-phone] { display: inline-flex; align-items: center; gap: 8px; color: var(--color-text); font-size: 14px; font-weight: 600; white-space: nowrap; padding: 8px 6px; transition: color 0.16s ease; }
   [data-capsule-phone]:hover { color: var(--color-accent-700); }
   [data-capsule-phone] i { width: 6px; height: 6px; border-radius: 50%; display: block; flex: none; }
@@ -415,6 +427,10 @@
       </nav>
 
       <div data-capsule-actions>
+        <a data-capsule-brochure href="assets/Al-Madhi-Carpentry-Wooden-Pallets-Brochure.pdf" download="Al-Madhi-Carpentry-Wooden-Pallets-Brochure.pdf" title="Download our wooden pallet &amp; wood shavings product brochure — sizes, specs and price guide (PDF)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 19h16" /></svg>
+          <span>Brochure</span>
+        </a>
         <a data-capsule-phone href="tel:+971505974922" title="{{ statusHint }}">
           <i style="background: {{ statusColor }}; box-shadow: 0 0 0 3px {{ statusHalo }};"></i>050 597 4922
         </a>
@@ -463,8 +479,12 @@
       <a data-mobile-link href="Contact.dc.html" aria-current="{{ isContact }}" onClick="{{ closeMenu }}">Contact</a>
     </div>
     <div data-mobile-panel-footer>
-      <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px; flex: 1;">050 597 4922</a>
-      <button type="button" class="btn btn-primary" onClick="{{ requestQuoteMobile }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 22px; min-height: 48px; flex: 1; justify-content: center;">Get a Quote</button>
+      <a class="btn btn-secondary" href="assets/Al-Madhi-Carpentry-Wooden-Pallets-Brochure.pdf" download="Al-Madhi-Carpentry-Wooden-Pallets-Brochure.pdf" title="Download our wooden pallet &amp; wood shavings product brochure (PDF)" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 18px; min-height: 48px; flex: 1; justify-content: center; display: inline-flex; align-items: center; gap: 7px; background: color-mix(in srgb, var(--color-accent-600) 9%, transparent); border-color: color-mix(in srgb, var(--color-accent-600) 34%, transparent); color: var(--color-accent-700);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="M7 10l5 5 5-5" /><path d="M4 19h16" /></svg>
+        Brochure
+      </a>
+      <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 18px; min-height: 48px; flex: 1; justify-content: center;">Call us</a>
+      <button type="button" class="btn btn-primary" onClick="{{ requestQuoteMobile }}" style="text-transform: uppercase; letter-spacing: 0.05em; padding: 14px 18px; min-height: 48px; flex: 1 1 100%; justify-content: center;">Get a Quote</button>
     </div>
   </div>
 </header>
