@@ -28,6 +28,10 @@
             <a href="https://wa.me/971505974922?text=Hello%20Al%20Madhi%20Carpentry%2C%20I%20would%20like%20a%20quotation." target="_blank" rel="noopener" style="font-size: 15px;">Message us directly</a>
           </div>
           <div style="display: flex; gap: 12px; align-items: baseline;">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 84px; flex: none;">Email</span>
+            <a href="mailto:almadhicarpentry@yahoo.com" style="font-size: 15px;">almadhicarpentry@yahoo.com</a>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: baseline;">
             <span style="font-family: var(--font-heading); font-weight: 600; font-size: 12px; letter-spacing: 0.09em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 65%, transparent); width: 84px; flex: none;">Yard</span>
             <span style="font-size: 15px; line-height: 22px;">Al Sajaa Industrial Area, Sharjah<br />Monday to Saturday, 06:00 &ndash; 18:00</span>
           </div>
@@ -130,9 +134,13 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z" /><path d="M8.6 8.4c.4-.9 1.4-.6 1.7-.1l.7 1.4c.2.4 0 .8-.3 1l-.5.4c.6 1.1 1.6 2 2.7 2.6l.4-.5c.3-.3.7-.4 1-.2l1.5.7c.6.3.8 1.3-.1 1.7-1.4.7-3.2.2-4.9-1.4-1.7-1.6-2.4-3.4-2.2-5.6z" /></svg>
                 Send on WhatsApp
               </button>
+              <a class="btn btn-secondary" href="{{ mailtoHref }}" onClick="{{ sendEmail }}" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; min-height: 48px; display: inline-flex; gap: 8px; align-items: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18v12H3z" /><path d="m3 7 9 6 9-6" /></svg>
+                Send Email
+              </a>
               <a class="btn btn-secondary" href="tel:+971505974922" style="text-transform: uppercase; letter-spacing: 0.06em; padding: 14px 22px; min-height: 48px;">Call instead</a>
             </div>
-            <p style="margin: 14px 0 0; font-size: 13px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Name and phone are required. Sending opens WhatsApp with the enquiry written out &mdash; nothing is stored on this site, and we never ask for an email address.</p>
+            <p style="margin: 14px 0 0; font-size: 13px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 65%, transparent);">Name and phone are required. Send on WhatsApp opens WhatsApp with the enquiry written out; Send Email opens your email app addressed to almadhicarpentry@yahoo.com with the same details &mdash; nothing is stored on this site either way.</p>
           </form>
         </sc-if>
       </div>
@@ -215,6 +223,11 @@ class Component extends DCLogic {
     return lines.filter(Boolean).join('\n');
   }
 
+  emailSubject() {
+    const f = this.state.f;
+    return 'Quotation request' + (f.product ? ' — ' + f.product : '');
+  }
+
   renderVals() {
     const f = this.state.f;
     return {
@@ -224,6 +237,17 @@ class Component extends DCLogic {
       notSent: !this.state.sent,
       error: this.state.error,
       waHref: 'https://wa.me/971505974922?text=' + encodeURIComponent(this.waText()),
+      mailtoHref: 'mailto:almadhicarpentry@yahoo.com?subject=' + encodeURIComponent(this.emailSubject()) + '&body=' + encodeURIComponent(this.waText()),
+      // mailto: has no submit event to preventDefault on success — this only
+      // blocks the same-tab navigation when required fields are missing, so
+      // the validation message shows instead of opening a mail client
+      // addressed to nothing useful. Valid clicks fall through to the href.
+      sendEmail: (e) => {
+        if (!f.name.trim() || !f.phone.trim()) {
+          e.preventDefault();
+          this.setState({ error: 'Please add your name and a phone number so we can reach you with the price.' });
+        }
+      },
       vName: f.name, vCompany: f.company, vPhone: f.phone,
       vProduct: f.product, vCondition: f.condition, vQty: f.qty, vSize: f.size,
       vLoad: f.load, vEntry: f.entry, vHeat: f.heat, vPlace: f.place, vMessage: f.message,
