@@ -1,10 +1,4 @@
-.playwright-mcp/
 node_modules/
-uploads/
-assets/new-images/*
-!assets/new-images/normal.png
-!assets/new-images/heavy.png
-!assets/new-images/custom pallet crate.png
-assets/founder/
-assets/inspiration/
+.playwright-mcp/
 desktop.ini
+.DS_Store
