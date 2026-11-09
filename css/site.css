@@ -310,7 +310,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d;
   transition: transform 0.7s var(--e-ios), box-shadow 0.7s var(--e-ios);
 }
-.ptile-media { position: relative; aspect-ratio: 4 / 3.3; overflow: hidden; background: var(--bg-3); }
+.ptile-media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--bg-3); }
 .ptile-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--e-out); }
 .ptile-glare { position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(520px circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.35), transparent 45%); transition: opacity 0.5s ease; }
 .ptile-tag { position: absolute; top: 14px; left: 14px; font-size: 12px; font-weight: 720; padding: 6px 11px; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: var(--ink); }
@@ -470,7 +470,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .card3d-wrap { perspective: 1400px; }
 .card3d {
   --rx: 0deg; --ry: 0deg;
-  position: relative; aspect-ratio: 4 / 4.4; border-radius: var(--r-xl); transform-style: preserve-3d;
+  position: relative; aspect-ratio: 4 / 5; border-radius: var(--r-xl); transform-style: preserve-3d;
   transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform 0.9s var(--e-ios);
   animation: card3dIn 1.3s 0.15s var(--e-ios) backwards;
 }
@@ -672,7 +672,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .cta-band { grid-template-columns: 1fr; }
   .cta-band .btn-row { justify-content: flex-start; }
   .prod-hero { padding-top: 104px; }
-  .card3d { aspect-ratio: 4 / 3.4; }
+  .card3d { aspect-ratio: 4 / 5; max-width: 460px !important; }
   .page-hero { padding-top: 112px; }
   .fan { height: clamp(300px, 70vw, 440px); }
 
@@ -848,3 +848,5 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .psec-custom .size-chips { margin-top: 22px; }
 .psec-custom .checks { margin-top: 24px; }
 @media (min-width: 961px) { .psec-custom .size-stage { position: sticky; top: 150px; align-self: start; height: min(520px, calc(100vh - 190px)); } .psec-custom .sizes { align-items: start; } }
+
+.psec .card3d { max-width: 460px; }
