@@ -375,3 +375,112 @@
     $$('input, select, textarea', form).forEach(function (i) { i.addEventListener('input', function () { var f = i.closest('.f'); if (f) f.classList.remove('is-bad'); }); });
   }
 })();
+
+/* ---------- Cookie consent ----------
+   Essential storage only today. Optional groups stay off until switched on.
+   Future scripts: add <script type="text/plain" data-consent="analytics" data-src="..."></script>
+   and they will load only after consent. */
+(function () {
+  'use strict';
+  var KEY = 'amc-consent', VERSION = 1, MAX_AGE = 365 * 24 * 3600 * 1000;
+  var doc = document;
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (v && v.v === VERSION && Date.now() - v.t < MAX_AGE) return v;
+    } catch (_) {}
+    return null;
+  }
+  function write(c) {
+    var v = { v: VERSION, t: Date.now(), analytics: !!c.analytics, marketing: !!c.marketing };
+    try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (_) {}
+    apply(v);
+    return v;
+  }
+  function apply(v) {
+    window.amcConsent = v;
+    doc.querySelectorAll('script[type="text/plain"][data-consent]').forEach(function (s) {
+      if (!v[s.getAttribute('data-consent')] || s.dataset.loaded) return;
+      s.dataset.loaded = '1';
+      var n = doc.createElement('script'); n.src = s.getAttribute('data-src'); n.async = true; doc.head.appendChild(n);
+    });
+    try { window.dispatchEvent(new CustomEvent('amc-consent', { detail: v })); } catch (_) {}
+  }
+
+  var icoCookie = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.3A9 9 0 1 1 11.7 3a3.5 3.5 0 0 0 4.3 4.3 3.5 3.5 0 0 0 5 5Z"/><circle cx="8.5" cy="10" r="1"/><circle cx="12" cy="15.5" r="1"/><circle cx="16" cy="13" r=".8"/></svg>';
+  var wrap = doc.createElement('div');
+  wrap.innerHTML =
+    '<div class="ck" id="ck" role="region" aria-label="Cookie choice" hidden>' +
+      '<div class="ck-row"><span class="ck-ico">' + icoCookie + '</span><div><p class="ck-t">Your privacy, your choice</p>' +
+      '<p class="ck-d">We only use what the site needs to work. Optional cookies stay off unless you turn them on. <a href="cookies.html">Cookie policy</a></p></div></div>' +
+      '<div class="ck-btns"><button type="button" class="btn btn-ghost btn-sm" data-ck="reject">Reject all</button><button type="button" class="btn btn-dark btn-sm" data-ck="accept">Accept all</button></div>' +
+      '<button type="button" class="ck-more" data-ck="open">Choose what to allow</button>' +
+    '</div>' +
+    '<div class="ckp" id="ckp" hidden>' +
+      '<div class="ckp-scrim" data-ck="close"></div>' +
+      '<div class="ckp-panel" role="dialog" aria-modal="true" aria-labelledby="ckpT">' +
+        '<div class="ckp-head"><h2 id="ckpT">Cookie settings</h2><button type="button" class="ckp-x" data-ck="close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>' +
+        '<p class="ckp-lead">Choose which cookies this site may use. You can change this any time from “Cookie settings” at the bottom of every page.</p>' +
+        '<div class="ckp-list">' +
+          row('essential', 'Essential', 'Remembers this choice. The site needs it, so it is always on.', true, true) +
+          row('analytics', 'Analytics', 'Counts visits to see which pages help customers. Not in use today; off unless you allow it.', false, false) +
+          row('marketing', 'Marketing', 'Measures adverts. Not in use today; off unless you allow it.', false, false) +
+        '</div>' +
+        '<div class="ckp-btns"><button type="button" class="btn btn-ghost" data-ck="reject">Reject all</button><button type="button" class="btn btn-ghost" data-ck="accept">Accept all</button><button type="button" class="btn btn-acc" data-ck="save">Save choices</button></div>' +
+        '<p class="ckp-foot"><a href="cookies.html">Cookie policy</a><a href="privacy.html">Privacy policy</a></p>' +
+      '</div>' +
+    '</div>';
+  function row(id, name, text, on, locked) {
+    return '<div class="ckp-row"><div><p class="ckp-n">' + name + (locked ? ' <span>Always on</span>' : '') + '</p><p class="ckp-d" id="ckd-' + id + '">' + text + '</p></div>' +
+      '<button type="button" class="sw" role="switch" aria-checked="' + on + '" aria-describedby="ckd-' + id + '" aria-label="' + name + ' cookies" data-sw="' + id + '"' + (locked ? ' disabled' : '') + '><i></i></button></div>';
+  }
+  function init() {
+    while (wrap.firstChild) doc.body.appendChild(wrap.firstChild);
+    var bar = doc.getElementById('ck'), panel = doc.getElementById('ckp');
+    var current = read();
+    var lastFocus = null;
+    function showBar() { bar.hidden = false; requestAnimationFrame(function () { requestAnimationFrame(function () { bar.classList.add('is-on'); doc.documentElement.classList.add('ck-open'); }); }); }
+    function hideBar() { bar.classList.remove('is-on'); doc.documentElement.classList.remove('ck-open'); setTimeout(function () { bar.hidden = true; }, 450); }
+    function setSw(id, on) { var b = panel.querySelector('[data-sw="' + id + '"]'); if (b && !b.disabled) b.setAttribute('aria-checked', String(!!on)); }
+    function openPanel() {
+      var c = read() || { analytics: false, marketing: false };
+      setSw('analytics', c.analytics); setSw('marketing', c.marketing);
+      lastFocus = doc.activeElement;
+      panel.hidden = false;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { panel.classList.add('is-on'); panel.querySelector('.ckp-x').focus(); }); });
+    }
+    function closePanel() {
+      panel.classList.remove('is-on');
+      setTimeout(function () { panel.hidden = true; }, 400);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function done(c) { write(c); hideBar(); if (!panel.hidden) closePanel(); }
+    doc.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-ck],[data-sw],[data-cookie-settings]');
+      if (!t) return;
+      if (t.hasAttribute('data-cookie-settings')) { e.preventDefault(); openPanel(); return; }
+      if (t.hasAttribute('data-sw')) { if (!t.disabled) t.setAttribute('aria-checked', String(t.getAttribute('aria-checked') !== 'true')); return; }
+      var a = t.getAttribute('data-ck');
+      if (a === 'accept') done({ analytics: true, marketing: true });
+      else if (a === 'reject') done({ analytics: false, marketing: false });
+      else if (a === 'open') openPanel();
+      else if (a === 'close') closePanel();
+      else if (a === 'save') done({
+        analytics: panel.querySelector('[data-sw="analytics"]').getAttribute('aria-checked') === 'true',
+        marketing: panel.querySelector('[data-sw="marketing"]').getAttribute('aria-checked') === 'true'
+      });
+    });
+    doc.addEventListener('keydown', function (e) {
+      if (panel.hidden) return;
+      if (e.key === 'Escape') closePanel();
+      if (e.key === 'Tab') {
+        var f = panel.querySelectorAll('button:not([disabled]), a[href]'); if (!f.length) return;
+        if (e.shiftKey && doc.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && doc.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+      }
+    });
+    if (current) apply(current);
+    else setTimeout(showBar, 1600);
+  }
+  if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init); else init();
+})();
